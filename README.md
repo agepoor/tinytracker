@@ -10,3 +10,4 @@ Long-term or 'infinite' habit trackers can
   * [ ] Sort alphabetically
   * [ ] Sort by finished/unfinished 
 * [ ] Reset tracker option
+* [ ] Save habits object to file

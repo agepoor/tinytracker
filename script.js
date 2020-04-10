@@ -107,7 +107,7 @@ function addHabitDOM(habit) {
   habitItem.setAttribute("draggable", "true");
 
   habitItem.innerHTML = `
-    <div class="habit-grip"><i class="fas fa-grip-lines"></i></div>
+    <div class="habit-grip"><i class="fas fa-arrow-up"></i><i class="fas fa-arrow-down"></i></div>
     <div class="habit-name"><h3>${habit.name} <i class="fad fa-paint-brush color-edit"></i></div>
     <div class="habit-days">
       <div class="habit-day" data-h-day="${habit.days[0]}">✓</div>

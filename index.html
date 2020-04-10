@@ -9,7 +9,6 @@
   </head>
   <body>
     <h1>🔥 Habit Tracker</h1>
-    <!-- Add Dark Mode switch / Week (sun/mon) Mode / Month Mode-->
     <div class="container" id="container">
       <div class="cal">
         <div class="cal-left"></div>
@@ -23,33 +22,7 @@
           <div class="cal-day cal-day-7"><span>su</span></div>
         </div>
       </div>
-      <div class="habit-list" id="habit-list">
-        <!-- <div class="habit">
-          <div class="habit-name">Voetbal</div>
-          <div class="habit-days">
-            <div class="habit-day">x</div>
-            <div class="habit-day">x</div>
-            <div class="habit-day">x</div>
-            <div class="habit-day">x</div>
-            <div class="habit-day">x</div>
-            <div class="habit-day">x</div>
-            <div class="habit-day">x</div>
-          </div>
-        </div>
-        <div class="habit">
-          <div class="habit-name">Schaken</div>
-          <div class="habit-days">
-            <div class="habit-day"></div>
-            <div class="habit-day">x</div>
-            <div class="habit-day"></div>
-            <div class="habit-day">x</div>
-            <div class="habit-day"></div>
-            <div class="habit-day"></div>
-            <div class="habit-day"></div>
-          </div>
-        </div> -->
-        <!-- TODO: Add 'planned'-->
-      </div>
+      <div class="habit-list" id="habit-list"></div>
       <div class="habit-new" id="habit-new" onclick="showPrompt()">+</div>
     </div>
     <div class="habit-prompt-container" id="habit-prompt-container"></div>
@@ -81,12 +54,6 @@
           <div class="form-control">
             <label for="habit-color" class="habit-day-label">Habit color:</label>
             <div class="form-control color-picker" id="habit-color">
-              <!-- <label for="red">Red:</label> -->
-              <!-- <input type="radio" name="color" id="red" value="red" checked> -->
-              <!-- <label for="green">Green:</label> -->
-              <!-- <input type="radio" name="color" id="green" value="green"> -->
-              <!-- <label for="blue">Blue:</label> -->
-              <!-- <input type="radio" name="color" id="blue" value="blue"> -->
             </div>
           </div>
           <button class="prompt-button" id="add-habit">Add to habits list</button>

@@ -97,15 +97,30 @@ h1 {
 .habit:hover > .habit-grip,
 .habit:hover > .habit-delete {
   filter: opacity(1);
+  background-color: transparent;
 }
+
 .habit-grip {
-  filter: opacity(0);
-  cursor: move;
-  position: absolute;
-  left: -1.5rem;
   color: lightgray;
-  line-height: 2rem;
+  filter: opacity(0);
+
+  background: transparent;
+  position: absolute;
+  left: -2.5rem;
+  padding-right: 0.6rem;
+  &:hover > i {
+    color: lightgray;
+  }
+  i:hover {
+    cursor: pointer;
+    color: gray;
+  }
+  i:first-of-type {
+    color: light-gray;
+    margin-right: 0.25rem;
+  }
 }
+
 .habit-delete {
   filter: opacity(0);
   position: absolute;
@@ -221,6 +236,14 @@ h1 {
   justify-content: flex-start;
   align-items: stretch;
   flex-direction: column;
+}
+@media screen and (max-width: 600px) {
+  .habit-prompt {
+    top: 5%;
+    right: 10%;
+    //   bottom: 20%;
+    left: 10%;
+  }
 }
 .habit-prompt button {
   padding: 0.25rem;
