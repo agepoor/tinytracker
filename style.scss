@@ -1,0 +1,253 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import "open-color";
+
+$colors: (
+  gray: $oc-gray-7,
+  red: $oc-red-7,
+  pink: $oc-pink-7,
+  grape: $oc-grape-7,
+  violet: $oc-violet-7,
+  indigo: $oc-indigo-7,
+  blue: $oc-blue-7,
+  cyan: $oc-blue-7,
+  teal: $oc-teal-7,
+  green: $oc-green-7,
+  lime: $oc-lime-7,
+  yellow: $oc-yellow-7,
+  orange: $oc-orange-7,
+);
+// $new_colors: ;
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+
+  // font-family: "Varela Round", sans-serif;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 600px;
+  /* border: 1px solid grey; */
+}
+
+/* Calendar */
+.cal {
+  display: flex;
+}
+.cal-left {
+  flex: 1 1 0;
+}
+.cal-days {
+  display: flex;
+  flex: 2 1 0;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+.cal-day {
+  flex: 1 1 0;
+  text-align: center;
+  /* border: 1px solid grey; */
+  line-height: 1.9rem;
+}
+
+.past {
+  color: lightgray;
+}
+
+.today {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid black;
+  height: 2.1rem;
+  width: 2.1rem;
+  border-radius: 0.9rem;
+}
+
+/* Habits */
+.habit {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  line-height: 2rem;
+  margin-bottom: 1rem;
+}
+
+@each $color, $value in $colors {
+  .habit.#{$color} > .habit-name,
+  .habit.#{$color} > .habit-days {
+    border-color: lightgray;
+    color: #{$value};
+  }
+}
+
+@each $color, $value in $colors {
+  .habit.#{$color}.finished > .habit-name,
+  .habit.#{$color}.finished > .habit-days {
+    border-color: #{$value};
+    color: #{$value};
+  }
+}
+
+.habit:hover > .habit-grip,
+.habit:hover > .habit-delete {
+  filter: opacity(1);
+}
+.habit-grip {
+  filter: opacity(0);
+  cursor: move;
+  position: absolute;
+  left: -1.5rem;
+  color: lightgray;
+  line-height: 2rem;
+}
+.habit-delete {
+  filter: opacity(0);
+  position: absolute;
+  right: -1.5rem;
+  cursor: pointer;
+  color: lightgray;
+  line-height: 2rem;
+}
+.habit-delete:hover {
+  color: red;
+}
+.habit-name {
+  border-width: 2px;
+  border-style: solid;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  flex: 1 1 0;
+}
+.habit-name h3 {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 0 1rem;
+  i {
+    opacity: 0;
+  }
+}
+.habit-name h3:hover > i {
+  opacity: 0.2;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.75;
+  }
+}
+
+.habit-days {
+  display: flex;
+  border-width: 2px;
+  border-style: solid;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex: 2 1 0;
+}
+.habit-day {
+  background: transparent;
+  flex: 1 1 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.habit-day > span {
+  cursor: pointer;
+  color: transparent;
+}
+.habit-day > span:hover {
+  color: lightgray;
+}
+
+.habit-day > span.planned {
+  color: silver;
+}
+
+@each $color, $value in $colors {
+  .habit.#{$color} > .habit-days > .habit-day > span.executed {
+    color: #{$value};
+  }
+}
+
+.h-day-1 {
+  background: red;
+}
+
+/* Buttons */
+.habit-new {
+  border: 2px solid lightgray;
+  cursor: pointer;
+  color: lightgray;
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  transition-duration: 300ms;
+}
+.habit-new:hover {
+  color: white;
+  background: #e0e0e0;
+}
+
+/* Habit prompt */
+.habit-prompt-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  height: 100%;
+  width: 100%;
+  background: rgba(5, 5, 5, 0.5);
+}
+.habit-prompt {
+  display: flex;
+  position: fixed;
+  top: 20%;
+  right: 25%;
+  //   bottom: 20%;
+  left: 25%;
+  visibility: hidden;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
+}
+.habit-prompt button {
+  padding: 0.25rem;
+}
+
+.habit-prompt > .form-control {
+  margin-bottom: 1rem;
+}
+
+.habit-prompt > .form-control > label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.color-picker label {
+  display: inline-block;
+  height: 2rem;
+  width: 120px;
+  input {
+    float: left;
+    margin-right: 1rem;
+  }
+}
+
+@each $color, $value in $colors {
+  label.#{$color} {
+    color: #{$value};
+  }
+}

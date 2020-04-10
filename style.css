@@ -1,0 +1,529 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 600px;
+  /* border: 1px solid grey; */
+}
+
+/* Calendar */
+.cal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.cal-left {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 0px;
+  flex: 1 1 0;
+}
+
+.cal-days {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 2;
+  -ms-flex: 2 1 0px;
+  flex: 2 1 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.cal-day {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 0px;
+  flex: 1 1 0;
+  text-align: center;
+  /* border: 1px solid grey; */
+  line-height: 1.9rem;
+}
+
+.past {
+  color: lightgray;
+}
+
+.today {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid black;
+  height: 2.1rem;
+  width: 2.1rem;
+  border-radius: 0.9rem;
+}
+
+/* Habits */
+.habit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  line-height: 2rem;
+  margin-bottom: 1rem;
+}
+
+.habit.gray > .habit-name,
+.habit.gray > .habit-days {
+  border-color: lightgray;
+  color: #495057;
+}
+
+.habit.red > .habit-name,
+.habit.red > .habit-days {
+  border-color: lightgray;
+  color: #f03e3e;
+}
+
+.habit.pink > .habit-name,
+.habit.pink > .habit-days {
+  border-color: lightgray;
+  color: #d6336c;
+}
+
+.habit.grape > .habit-name,
+.habit.grape > .habit-days {
+  border-color: lightgray;
+  color: #ae3ec9;
+}
+
+.habit.violet > .habit-name,
+.habit.violet > .habit-days {
+  border-color: lightgray;
+  color: #7048e8;
+}
+
+.habit.indigo > .habit-name,
+.habit.indigo > .habit-days {
+  border-color: lightgray;
+  color: #4263eb;
+}
+
+.habit.blue > .habit-name,
+.habit.blue > .habit-days {
+  border-color: lightgray;
+  color: #1c7ed6;
+}
+
+.habit.cyan > .habit-name,
+.habit.cyan > .habit-days {
+  border-color: lightgray;
+  color: #1c7ed6;
+}
+
+.habit.teal > .habit-name,
+.habit.teal > .habit-days {
+  border-color: lightgray;
+  color: #0ca678;
+}
+
+.habit.green > .habit-name,
+.habit.green > .habit-days {
+  border-color: lightgray;
+  color: #37b24d;
+}
+
+.habit.lime > .habit-name,
+.habit.lime > .habit-days {
+  border-color: lightgray;
+  color: #74b816;
+}
+
+.habit.yellow > .habit-name,
+.habit.yellow > .habit-days {
+  border-color: lightgray;
+  color: #f59f00;
+}
+
+.habit.orange > .habit-name,
+.habit.orange > .habit-days {
+  border-color: lightgray;
+  color: #f76707;
+}
+
+.habit.gray.finished > .habit-name,
+.habit.gray.finished > .habit-days {
+  border-color: #495057;
+  color: #495057;
+}
+
+.habit.red.finished > .habit-name,
+.habit.red.finished > .habit-days {
+  border-color: #f03e3e;
+  color: #f03e3e;
+}
+
+.habit.pink.finished > .habit-name,
+.habit.pink.finished > .habit-days {
+  border-color: #d6336c;
+  color: #d6336c;
+}
+
+.habit.grape.finished > .habit-name,
+.habit.grape.finished > .habit-days {
+  border-color: #ae3ec9;
+  color: #ae3ec9;
+}
+
+.habit.violet.finished > .habit-name,
+.habit.violet.finished > .habit-days {
+  border-color: #7048e8;
+  color: #7048e8;
+}
+
+.habit.indigo.finished > .habit-name,
+.habit.indigo.finished > .habit-days {
+  border-color: #4263eb;
+  color: #4263eb;
+}
+
+.habit.blue.finished > .habit-name,
+.habit.blue.finished > .habit-days {
+  border-color: #1c7ed6;
+  color: #1c7ed6;
+}
+
+.habit.cyan.finished > .habit-name,
+.habit.cyan.finished > .habit-days {
+  border-color: #1c7ed6;
+  color: #1c7ed6;
+}
+
+.habit.teal.finished > .habit-name,
+.habit.teal.finished > .habit-days {
+  border-color: #0ca678;
+  color: #0ca678;
+}
+
+.habit.green.finished > .habit-name,
+.habit.green.finished > .habit-days {
+  border-color: #37b24d;
+  color: #37b24d;
+}
+
+.habit.lime.finished > .habit-name,
+.habit.lime.finished > .habit-days {
+  border-color: #74b816;
+  color: #74b816;
+}
+
+.habit.yellow.finished > .habit-name,
+.habit.yellow.finished > .habit-days {
+  border-color: #f59f00;
+  color: #f59f00;
+}
+
+.habit.orange.finished > .habit-name,
+.habit.orange.finished > .habit-days {
+  border-color: #f76707;
+  color: #f76707;
+}
+
+.habit:hover > .habit-grip,
+.habit:hover > .habit-delete {
+  -webkit-filter: opacity(1);
+  filter: opacity(1);
+}
+
+.habit-grip {
+  -webkit-filter: opacity(0);
+  filter: opacity(0);
+  cursor: move;
+  position: absolute;
+  left: -1.5rem;
+  color: lightgray;
+  line-height: 2rem;
+}
+
+.habit-delete {
+  -webkit-filter: opacity(0);
+  filter: opacity(0);
+  position: absolute;
+  right: -1.5rem;
+  cursor: pointer;
+  color: lightgray;
+  line-height: 2rem;
+}
+
+.habit-delete:hover {
+  color: red;
+}
+
+.habit-name {
+  border-width: 2px;
+  border-style: solid;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 0px;
+  flex: 1 1 0;
+}
+
+.habit-name h3 {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 0 1rem;
+}
+
+.habit-name h3 i {
+  opacity: 0;
+}
+
+.habit-name h3:hover > i {
+  opacity: 0.2;
+}
+
+.habit-name h3:hover > i:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.habit-days {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-width: 2px;
+  border-style: solid;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-flex: 2;
+  -ms-flex: 2 1 0px;
+  flex: 2 1 0;
+}
+
+.habit-day {
+  background: transparent;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 0px;
+  flex: 1 1 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.habit-day > span {
+  cursor: pointer;
+  color: transparent;
+}
+
+.habit-day > span:hover {
+  color: lightgray;
+}
+
+.habit-day > span.planned {
+  color: silver;
+}
+
+.habit.gray > .habit-days > .habit-day > span.executed {
+  color: #495057;
+}
+
+.habit.red > .habit-days > .habit-day > span.executed {
+  color: #f03e3e;
+}
+
+.habit.pink > .habit-days > .habit-day > span.executed {
+  color: #d6336c;
+}
+
+.habit.grape > .habit-days > .habit-day > span.executed {
+  color: #ae3ec9;
+}
+
+.habit.violet > .habit-days > .habit-day > span.executed {
+  color: #7048e8;
+}
+
+.habit.indigo > .habit-days > .habit-day > span.executed {
+  color: #4263eb;
+}
+
+.habit.blue > .habit-days > .habit-day > span.executed {
+  color: #1c7ed6;
+}
+
+.habit.cyan > .habit-days > .habit-day > span.executed {
+  color: #1c7ed6;
+}
+
+.habit.teal > .habit-days > .habit-day > span.executed {
+  color: #0ca678;
+}
+
+.habit.green > .habit-days > .habit-day > span.executed {
+  color: #37b24d;
+}
+
+.habit.lime > .habit-days > .habit-day > span.executed {
+  color: #74b816;
+}
+
+.habit.yellow > .habit-days > .habit-day > span.executed {
+  color: #f59f00;
+}
+
+.habit.orange > .habit-days > .habit-day > span.executed {
+  color: #f76707;
+}
+
+.h-day-1 {
+  background: red;
+}
+
+/* Buttons */
+.habit-new {
+  border: 2px solid lightgray;
+  cursor: pointer;
+  color: lightgray;
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+
+.habit-new:hover {
+  color: white;
+  background: #e0e0e0;
+}
+
+/* Habit prompt */
+.habit-prompt-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  height: 100%;
+  width: 100%;
+  background: rgba(5, 5, 5, 0.5);
+}
+
+.habit-prompt {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  top: 20%;
+  right: 25%;
+  left: 25%;
+  visibility: hidden;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.habit-prompt button {
+  padding: 0.25rem;
+}
+
+.habit-prompt > .form-control {
+  margin-bottom: 1rem;
+}
+
+.habit-prompt > .form-control > label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.color-picker label {
+  display: inline-block;
+  height: 2rem;
+  width: 120px;
+}
+
+.color-picker label input {
+  float: left;
+  margin-right: 1rem;
+}
+
+label.gray {
+  color: #495057;
+}
+
+label.red {
+  color: #f03e3e;
+}
+
+label.pink {
+  color: #d6336c;
+}
+
+label.grape {
+  color: #ae3ec9;
+}
+
+label.violet {
+  color: #7048e8;
+}
+
+label.indigo {
+  color: #4263eb;
+}
+
+label.blue {
+  color: #1c7ed6;
+}
+
+label.cyan {
+  color: #1c7ed6;
+}
+
+label.teal {
+  color: #0ca678;
+}
+
+label.green {
+  color: #37b24d;
+}
+
+label.lime {
+  color: #74b816;
+}
+
+label.yellow {
+  color: #f59f00;
+}
+
+label.orange {
+  color: #f76707;
+}
+/*# sourceMappingURL=style.css.map */
