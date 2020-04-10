@@ -343,11 +343,18 @@ h1 {
 
 .habit-day > span {
   cursor: pointer;
+  padding: 5px;
+  background-color: transparent;
   color: transparent;
 }
 
+.habit-day > span i {
+  background-color: transparent;
+}
+
 .habit-day > span:hover {
-  color: lightgray;
+  background-color: rgba(211, 211, 211, 0.2);
+  border-radius: 13px;
 }
 
 .habit-day > span.planned {
