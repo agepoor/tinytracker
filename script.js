@@ -69,7 +69,7 @@ function addHabits() {
 }
 // Style calendar days
 function styleCalendar() {
-  const days = [...caldays.children].slice(0, current_day);
+  const days = [...caldays.children].slice(0, current_day - 1);
   // console.log(days);
   days.forEach((item) => {
     item.firstChild.classList.add("past");

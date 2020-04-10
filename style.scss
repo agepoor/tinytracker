@@ -174,8 +174,10 @@ h1 {
 }
 
 .habit-day > span {
+  display: block;
+  height: 100%;
+  width: 100%;
   cursor: pointer;
-  padding: 5px;
   background-color: transparent;
   color: transparent;
   i {
@@ -184,7 +186,6 @@ h1 {
 }
 .habit-day > span:hover {
   background-color: rgba(211, 211, 211, 0.2);
-  border-radius: 13px;
 }
 .habit-day > span.planned {
   color: silver;
