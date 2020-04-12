@@ -104,7 +104,7 @@ function addHabitDOM(habit) {
   }
 
   habitItem.setAttribute("data-h-title", habit.name);
-  habitItem.setAttribute("draggable", "true");
+  // habitItem.setAttribute("draggable", "true");
 
   habitItem.innerHTML = `
     <div class="habit-grip"><i class="fas fa-arrow-up"></i><i class="fas fa-arrow-down"></i></div>
@@ -227,6 +227,7 @@ close_prompt.addEventListener("click", closePrompt);
 function addEventListeners() {
   const deleteElements = document.querySelectorAll(".habit-delete");
   const colorElements = document.querySelectorAll(".color-edit");
+  // const habitElements = document.querySelectorAll("habit");
   deleteElements.forEach((item) => {
     item.addEventListener("click", deleteHabit);
   });
@@ -234,6 +235,7 @@ function addEventListeners() {
     item.addEventListener("click", changeColor);
     item.addEventListener("contextmenu", changeColor);
   });
+  // habitElements.forEach(i => )
 }
 
 function deleteHabit() {

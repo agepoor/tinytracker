@@ -281,6 +281,7 @@ h1 {
 }
 
 .habit-name {
+  background: transparent;
   border-width: 2px;
   border-style: solid;
   border-right: none;
@@ -291,6 +292,7 @@ h1 {
 }
 
 .habit-name h3 {
+  background: transparent;
   font-weight: 600;
   font-size: 0.9rem;
   margin: 0 0 0 1rem;

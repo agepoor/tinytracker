@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🔥 Habit Tracker</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://kit.fontawesome.com/afd4ea9c89.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/afd4ea9c89.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <h1>🔥 Habit Tracker</h1>
@@ -25,42 +28,63 @@
       <div class="habit-list" id="habit-list"></div>
       <div class="habit-new" id="habit-new" onclick="showPrompt()">+</div>
     </div>
-    <div class="habit-prompt-container" id="habit-prompt-container"></div>
-        <form id="habit-prompt" class="habit-prompt">
-          <h2>New Habit</h2>
-          <div class="form-control">
-            <label for="habit-name">Habit name:</label>
-            <input type="text" id="habit-name" placeholder="Enter habit" />
+    <div class="habit-prompt-container" id="habit-prompt-container">
+      <form id="habit-prompt" class="habit-prompt">
+        <h2>New Habit</h2>
+        <div class="form-control">
+          <label for="habit-name">Habit name:</label>
+          <input type="text" id="habit-name" placeholder="Enter habit" />
+        </div>
+        <div class="form-control">
+          <label for="habit-days">Habit days:</label>
+          <div class="form-control" id="habit-days">
+            <label for="day-0">mo</label>
+            <input type="checkbox" name="day-0" id="day-0" />
+            <label for="day-1">tu</label>
+            <input type="checkbox" name="day-1" id="day-1" />
+            <label for="day-2">we</label>
+            <input type="checkbox" name="day-2" id="day-2" />
+            <label for="day-3">th</label>
+            <input type="checkbox" name="day-3" id="day-3" />
+            <label for="day-4">fr</label>
+            <input type="checkbox" name="day-4" id="day-4" />
+            <label for="day-5">sa</label>
+            <input type="checkbox" name="day-5" id="day-5" />
+            <label for="day-6">su</label>
+            <input type="checkbox" name="day-6" id="day-6" />
           </div>
-          <div class="form-control">
-            <label for="habit-days">Habit days:</label>
-            <div class="form-control" id="habit-days">
-              <label for="day-0">mo</label>
-              <input type="checkbox" name="day-0" id="day-0">
-              <label for="day-1">tu</label>
-              <input type="checkbox" name="day-1" id="day-1">
-              <label for="day-2">we</label>
-              <input type="checkbox" name="day-2" id="day-2">
-              <label for="day-3">th</label>
-              <input type="checkbox" name="day-3" id="day-3">
-              <label for="day-4">fr</label>
-              <input type="checkbox" name="day-4" id="day-4">
-              <label for="day-5">sa</label>
-              <input type="checkbox" name="day-5" id="day-5">
-              <label for="day-6">su</label>
-              <input type="checkbox" name="day-6" id="day-6">
-            </div>
-          </div>
-          <div class="form-control">
-            <label for="habit-color" class="habit-day-label">Habit color:</label>
-            <div class="form-control color-picker" id="habit-color">
-            </div>
-          </div>
-          <button class="prompt-button" id="add-habit">Add to habits list</button>
-          <button class="close-prompt" id="close-prompt">Close</button>
-        </form>
-      </div>
+        </div>
+        <div class="form-control">
+          <label for="habit-color" class="habit-day-label">Habit color:</label>
+          <div class="form-control color-picker" id="habit-color"></div>
+        </div>
+        <button class="prompt-button" id="add-habit">Add to habits list</button>
+        <button class="close-prompt" id="close-prompt">Close</button>
+      </form>
+    </div>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+      var el = document.getElementById("habit-list");
+      var sortable = new Sortable(el, {
+        animation: 150,
+        onEnd: function (evt) {
+          const evtTo = evt.to.children;
+          // console.log(evtTo);
+          let newHabitsOrder = [...evtTo].map((i) => {
+            return i.dataset.hTitle;
+          });
+          let newHabits = newHabitsOrder.map((i) => {
+            return habits.find((item) => {
+              return item.name == i;
+            });
+          });
+          habits = newHabits;
+          console.log(habits);
+          updateLocalStorage();
+        },
+      });
+    </script>
   </body>
 </html>
