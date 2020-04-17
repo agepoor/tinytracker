@@ -569,9 +569,9 @@ h1 {
   display: -ms-flexbox;
   display: flex;
   position: fixed;
-  top: 20%;
-  right: 25%;
-  left: 25%;
+  top: 5%;
+  left: 10%;
+  width: 80%;
   visibility: hidden;
   border: 2px solid black;
   border-radius: 5px;
@@ -590,6 +590,7 @@ h1 {
 
 @media screen and (max-width: 600px) {
   .habit-prompt {
+    font-size: 75%;
     top: 5%;
     right: 10%;
     left: 10%;
