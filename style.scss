@@ -53,29 +53,20 @@ h1 {
 }
 
 .cal-days {
-  display: flex;
-  flex: 2 2 0;
-  flex-direction: row;
+  flex: 2 1 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   margin-bottom: 1rem;
+  height: 2rem;
 }
-
 .cal-day {
-  flex: 1 1 0;
+  position: relative;
   text-align: center;
-  /* border: 1px solid grey; */
   line-height: 1.9rem;
 }
 
 .past {
   color: lightgray;
-}
-
-.today {
-  display: block;
-  margin: 0 auto;
-  border: 2px solid black;
-  height: 2.1rem;
-  width: 2.1rem;
 }
 
 /* Habits */
@@ -90,8 +81,8 @@ h1 {
   display: flex;
   position: relative;
   flex-direction: row;
-  line-height: 2.2rem;
-  margin: 0.5rem 0;
+  line-height: 2rem;
+  margin: 0.4rem 0;
   border-radius: 3px;
 }
 
@@ -132,7 +123,7 @@ h1 {
   right: -1.5rem;
   cursor: pointer;
   color: lightgray;
-  line-height: 2.2;
+  line-height: 2rem;
 }
 
 .habit:hover > .habit-delete {
@@ -165,22 +156,17 @@ h1 {
 }
 
 .habit-days {
-  display: flex;
-  border-width: 0px;
-  border-style: solid;
-  border-left: none;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   border-radius: 0 3px 3px 0;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   flex: 2 1 0;
 }
 
 .habit-day {
   background: transparent;
-  flex: 1 1 0;
   font-weight: bold;
   text-align: center;
+  line-height: 1.9rem;
 }
 
 .habit-day > span {
@@ -225,11 +211,10 @@ h1 {
   color: silver;
   background: rgba(211, 211, 211, 0.2);
   text-align: center;
-  line-height: 2.2rem;
+  line-height: 2rem;
   // padding: 0.3rem;
-  border-radius: 2px;
   transition-duration: 300ms;
-  margin: 0.4rem 0;
+  margin: 1rem 0;
 }
 
 .habit-new:hover {
