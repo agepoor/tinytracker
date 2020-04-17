@@ -38,8 +38,8 @@ h1 {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-flex: 2;
-      -ms-flex: 2 1 0px;
-          flex: 2 1 0;
+      -ms-flex: 2 2 0px;
+          flex: 2 2 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
