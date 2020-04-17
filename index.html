@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🔥 Habit Tracker</title>
+    <title>Habit Tracker</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
     <script
       src="https://kit.fontawesome.com/afd4ea9c89.js"
       crossorigin="anonymous"
@@ -12,6 +14,11 @@
   </head>
   <body>
     <h1>🔥 Habit Tracker</h1>
+    <p class="creator">
+      <marquee>
+        - This Habit Tracker was created by <strong>Age P.</strong> -
+      </marquee>
+    </p>
     <div class="container" id="container">
       <div class="cal">
         <div class="cal-left"></div>
@@ -58,18 +65,35 @@
           <label for="habit-color" class="habit-day-label">Habit color:</label>
           <div class="form-control color-picker" id="habit-color"></div>
         </div>
-        <button class="prompt-button" id="add-habit">Add to habits list</button>
-        <button class="close-prompt" id="close-prompt">Close</button>
+        <div class="btns">
+          <button class="close-prompt btn close-btn" id="close-prompt">
+            Close
+          </button>
+          <button class="prompt-button add-btn btn" id="add-habit">
+            Add to habits
+          </button>
+        </div>
       </form>
     </div>
-
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script>
       var el = document.getElementById("habit-list");
       var sortable = new Sortable(el, {
         animation: 150,
+        handle: ".habit-name",
+        forceFallback: true,
+        onStart: function (evt) {
+          let habit_handles = document.querySelectorAll(".habit-name");
+          habit_handles.forEach((element) => {
+            element.classList.add("grabbing");
+          });
+        },
         onEnd: function (evt) {
+          let all = document.querySelectorAll(".habit-name");
+          all.forEach(function (element) {
+            element.classList.remove("grabbing");
+          });
           const evtTo = evt.to.children;
           // console.log(evtTo);
           let newHabitsOrder = [...evtTo].map((i) => {

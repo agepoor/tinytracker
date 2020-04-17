@@ -3,6 +3,8 @@ const container = document.getElementById("container");
 const title = document.getElementsByTagName("H1")[0];
 const habitlist = document.getElementById("habit-list");
 const caldays = document.getElementById("cal-days");
+const habitedit = document.getElementById("habit-edit");
+const habiteditname = document.getElementById("habit-edit-name");
 const current_day = new Date().getDay();
 
 /* Prompt screen */
@@ -107,8 +109,8 @@ function addHabitDOM(habit) {
   // habitItem.setAttribute("draggable", "true");
 
   habitItem.innerHTML = `
-    <div class="habit-grip"><i class="fas fa-arrow-up"></i><i class="fas fa-arrow-down"></i></div>
-    <div class="habit-name"><h3>${habit.name} <i class="fad fa-paint-brush color-edit"></i></div>
+    <div class="habit-edit-button"><i class="far fa-ellipsis-h"></i></div>
+    <div class="habit-name"><h3>${habit.name}</div>
     <div class="habit-days">
       <div class="habit-day" data-h-day="${habit.days[0]}">✓</div>
       <div class="habit-day" data-h-day="${habit.days[1]}"></div>
@@ -172,24 +174,35 @@ function updateHabits() {
     .map((x) => x.dataset.hDay)
     .some(checkHDay);
 
-  // console.log(day_children_some);
+  console.log(day_children_some);
 
   const day_children_none = [...this.parentElement.children]
     .map((x) => Math.floor(x.dataset.hDay))
     .reduce((x, y) => x + y);
 
-  // console.log(day_children_none);
+  console.log(day_children_none);
 
-  if (day_children_some == false && day_children_none > 0) {
-    habit_container.classList.add("finished");
-    console.log("finished!");
+  if (
+    day_children_some == false &&
+    day_children_none > 0 &&
+    habit_state == false
+  ) {
     habit_state = true;
-  } else {
-    habit_container.classList.remove("finished");
+    setTimeout(() => {
+      habit_container.classList.add("finished");
+    }, 500);
+  } else if (habit_state == false) {
     habit_state = false;
+    setTimeout(() => {
+      habit_container.classList.remove("finished");
+    }, 500);
+  } else {
+    habit_state = false;
+    habit_container.classList.remove("finished");
   }
 
-  console.log(habit_state);
+  // console.log(habit_state);
+  console.log(habits);
 
   const day_data = this.dataset.hDay;
   updateHabitsData(habit_title, day_index, day_data, habit_state);
@@ -227,7 +240,7 @@ close_prompt.addEventListener("click", closePrompt);
 function addEventListeners() {
   const deleteElements = document.querySelectorAll(".habit-delete");
   const colorElements = document.querySelectorAll(".color-edit");
-  // const habitElements = document.querySelectorAll("habit");
+
   deleteElements.forEach((item) => {
     item.addEventListener("click", deleteHabit);
   });
@@ -235,7 +248,148 @@ function addEventListeners() {
     item.addEventListener("click", changeColor);
     item.addEventListener("contextmenu", changeColor);
   });
-  // habitElements.forEach(i => )
+  addEditListeners();
+}
+
+function addEditListeners() {
+  const editButtons = document.querySelectorAll(".habit-edit-button");
+  editButtons.forEach((item) => {
+    item.addEventListener("click", openEditHabit);
+  });
+}
+
+function openEditHabit() {
+  const editButtons = document.querySelectorAll(".habit-edit-button");
+  editButtons.forEach((element) => {
+    element.classList.remove("clicked");
+  });
+  addEditListeners();
+  this.removeEventListener("click", openEditHabit);
+  closeEditElements();
+  this.classList.add("clicked");
+  const thisElement = this.closest(".habit").dataset.hTitle;
+  const editElement = document.createElement("div");
+  editElement.id = "habit-edit";
+  editElement.classList.add("habit-edit");
+  colorElements = ``;
+  colors.forEach((i) => {
+    colorElements += `<div class="color-btn"><input type="radio" id="${i}" name="color-edit"><label for="${i}" class="color-btn ${i}"></label></div>`;
+  });
+  // console.log(colorElements);
+  editElement.innerHTML = `
+      <h5>Edit habit</h5>
+      <form id="habit-edit-form">
+        <div class="form-control">
+          <label for="habit-edit-name"><input
+            type="text"
+            name="habit-edit-name"
+            id="habit-edit-name"
+            placeholder="Habit name"
+            value="${thisElement}"
+          /></label>
+          
+        </div>
+        <div class="clrs form-control">
+          ${colorElements}
+        </div>
+        <div class="btns form-control">
+          <button id="close-btn" class="close-btn btn">Close</button>
+          <button id="save-btn" class="save-btn btn">Save</button>
+        </div>
+      </form>`;
+  this.appendChild(editElement);
+
+  /* TODO: set selected color */
+  const returnCurrentColor = colors
+    .filter((i) => {
+      return this.closest(".habit").classList.contains(i);
+    })
+    .toString();
+  const colorInput = document.querySelector(
+    `[name="color-edit"]#${returnCurrentColor}`
+  );
+  colorInput.checked = true;
+
+  // console.log(returnCurrentColor, colorInput, colorInput.checked);
+
+  const habiteditclose = document.getElementById("close-btn");
+  const habiteditsave = document.getElementById("save-btn");
+  habiteditclose.addEventListener("click", closeEditHabit);
+  habiteditsave.addEventListener("click", saveEditHabit);
+}
+
+function saveEditHabit() {
+  event.preventDefault();
+  const newName = document.getElementById("habit-edit-name").value;
+  const thisElement = this.closest(".habit");
+  const oldHabit = habits.find((i) => i.name == thisElement.dataset.hTitle);
+
+  const DOMHabitIndex = [...thisElement.parentElement.children].findIndex(
+    (i) => i == thisElement
+  );
+  const checkIfExists = habits.some((i) => i.name == newName);
+  const existingIndex = habits.findIndex((i) => i.name == newName);
+
+  /* update habit name */
+  if (checkIfExists == true && DOMHabitIndex !== existingIndex) {
+    alert("Name already exists!");
+  } else {
+    /* Update habit list*/
+    oldHabit.name = newName;
+
+    /* DOM Updates */
+    const elementName = thisElement.getElementsByClassName("habit-name");
+    [...elementName].forEach((i) => {
+      i.innerHTML = `<h3>${newName}</h3>`;
+    });
+    thisElement.dataset.hTitle = `${newName}`;
+  }
+
+  /* update color */
+  const selectedClr = document.querySelector('input[name="color-edit"]:checked')
+    .id;
+  console.log(selectedClr);
+  colors.forEach((element) => {
+    if (thisElement.classList.contains(element)) {
+      thisElement.classList.remove(element);
+    }
+  });
+  oldHabit.color = selectedClr;
+  thisElement.classList.add(selectedClr);
+
+  /* DOM Removals */
+  this.closest(".habit-edit-button").classList.remove("clicked");
+  this.closest(".habit-edit").remove();
+
+  setTimeout(addEditListeners, 100);
+  updateLocalStorage();
+}
+
+function closeEditElements() {
+  const editElements = document.querySelectorAll(".habit-edit");
+  editElements.forEach((i) => {
+    i.parentNode.removeChild(i);
+    console.log(i);
+  });
+}
+
+/* From https://www.blustemy.io/detecting-a-click-outside-an-element-in-javascript/ */
+
+/* Fires when clicked outside of box or with close button */
+function closeEditHabit() {
+  event.preventDefault();
+  const closestEditButton = this.closest(".habit-edit-button");
+  closestEditButton.classList.remove("clicked");
+
+  closeEditElements();
+  setTimeout(addEditListeners, 100);
+  // editElementButton.parentNode.removeChild(editElementChild);
+  /* Option 1a: Clicked close */
+
+  /* Option 1: Clicked outside of box */
+
+  /* Option 2: CLicked different */
+  // addEditListeners();
 }
 
 function deleteHabit() {
@@ -293,6 +447,7 @@ function addHabit(e) {
   const names = habits.map((item) => {
     return item.name;
   });
+
   const doubleCheck = (item) => item === habit_name.value;
 
   if (names.some(doubleCheck) === false) {
@@ -320,6 +475,7 @@ function addHabit(e) {
       name: habit_name.value,
       days: days,
       color: color,
+      finished: false,
     };
 
     habits.push(habit);

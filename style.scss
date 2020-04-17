@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import "open-color";
 
 $colors: (
@@ -9,21 +9,27 @@ $colors: (
   violet: $oc-violet-7,
   indigo: $oc-indigo-7,
   blue: $oc-blue-7,
-  cyan: $oc-blue-7,
+  cyan: $oc-cyan-7,
   teal: $oc-teal-7,
   green: $oc-green-7,
   lime: $oc-lime-7,
   yellow: $oc-yellow-7,
   orange: $oc-orange-7,
 );
+$background: #f5f5f5;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+$box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
+  0 1px 3px 1px rgba(60, 64, 67, 0.16);
+
 // $new_colors: ;
-
 * {
-  font-family: Arial, Helvetica, sans-serif;
-
-  // font-family: "Varela Round", sans-serif;
-  background-color: #f5f5f5;
   box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: $background;
 }
 
 h1 {
@@ -33,22 +39,24 @@ h1 {
 .container {
   margin: 0 auto;
   max-width: 600px;
-  /* border: 1px solid grey; */
 }
 
 /* Calendar */
 .cal {
   display: flex;
 }
+
 .cal-left {
   flex: 1 1 0;
 }
+
 .cal-days {
   display: flex;
   flex: 2 1 0;
   flex-direction: row;
   margin-bottom: 1rem;
 }
+
 .cal-day {
   flex: 1 1 0;
   text-align: center;
@@ -66,21 +74,40 @@ h1 {
   border: 2px solid black;
   height: 2.1rem;
   width: 2.1rem;
-  border-radius: 0.9rem;
 }
 
 /* Habits */
+.habit-list {
+  display: flex;
+  flex-direction: column;
+}
+
 .habit {
+  box-shadow: $box-shadow;
+  background: white;
   display: flex;
   position: relative;
   flex-direction: row;
-  line-height: 2rem;
-  margin-bottom: 1rem;
+  line-height: 2.2rem;
+  margin: 0.5rem 0;
+  border-radius: 3px;
+}
+
+.habit-name {
+  cursor: grab !important;
+  background: white;
+}
+
+.grabbing,
+.is-grabbed,
+.is-grabbed > .habit-name {
+  cursor: grabbing !important;
 }
 
 @each $color, $value in $colors {
   .habit.#{$color} > .habit-name,
   .habit.#{$color} > .habit-days {
+    background: white;
     border-color: lightgray;
     color: #{$value};
   }
@@ -89,35 +116,11 @@ h1 {
 @each $color, $value in $colors {
   .habit.#{$color}.finished > .habit-name,
   .habit.#{$color}.finished > .habit-days {
+    transition-duration: 1000ms;
     border-color: #{$value};
-    color: #{$value};
-  }
-}
-
-.habit:hover > .habit-grip,
-.habit:hover > .habit-delete {
-  filter: opacity(1);
-  background-color: transparent;
-}
-
-.habit-grip {
-  color: lightgray;
-  filter: opacity(0);
-
-  background: transparent;
-  position: absolute;
-  left: -2.5rem;
-  padding-right: 0.6rem;
-  &:hover > i {
-    color: lightgray;
-  }
-  i:hover {
-    cursor: pointer;
-    color: gray;
-  }
-  i:first-of-type {
-    color: light-gray;
-    margin-right: 0.25rem;
+    font-style: italic;
+    text-decoration: line-through;
+    color: rgba($value, 0.5);
   }
 }
 
@@ -127,47 +130,50 @@ h1 {
   right: -1.5rem;
   cursor: pointer;
   color: lightgray;
-  line-height: 2rem;
+  line-height: 2.2;
 }
+
+.habit:hover > .habit-delete {
+  filter: opacity(1);
+}
+
 .habit-delete:hover {
   color: red;
 }
+
 .habit-name {
   background: transparent;
-  border-width: 2px;
+  cursor: grab;
+  border-width: 0px;
   border-style: solid;
   border-right: none;
-  border-radius: 5px 0 0 5px;
+  border-radius: 3px 0 0 3px;
   flex: 1 1 0;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
+
 .habit-name h3 {
   background: transparent;
   font-weight: 600;
   font-size: 0.9rem;
   margin: 0 0 0 1rem;
-  i {
-    opacity: 0;
-  }
-}
-.habit-name h3:hover > i {
-  opacity: 0.2;
-  &:hover {
-    cursor: pointer;
-    opacity: 0.75;
-  }
 }
 
 .habit-days {
   display: flex;
-  border-width: 2px;
+  border-width: 0px;
   border-style: solid;
   border-left: none;
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 3px 3px 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   flex: 2 1 0;
 }
+
 .habit-day {
   background: transparent;
   flex: 1 1 0;
@@ -182,20 +188,28 @@ h1 {
   cursor: pointer;
   background-color: transparent;
   color: transparent;
+
   i {
     background-color: transparent;
   }
 }
+
 .habit-day > span:hover {
   background-color: rgba(211, 211, 211, 0.2);
 }
+
 .habit-day > span.planned {
   color: silver;
 }
 
 @each $color, $value in $colors {
-  .habit.#{$color} > .habit-days > .habit-day > span.executed {
+  .habit.#{$color} > .habit-days > .habit-day > span.executed > i {
     color: #{$value};
+  }
+
+  .habit.#{$color}.finished > .habit-days > .habit-day > span.executed > i {
+    transition-duration: 1s;
+    color: rgba($value, 0.5);
   }
 }
 
@@ -205,17 +219,19 @@ h1 {
 
 /* Buttons */
 .habit-new {
-  border: 2px solid lightgray;
   cursor: pointer;
-  color: lightgray;
+  color: silver;
+  background: rgba(211, 211, 211, 0.2);
   text-align: center;
-  padding: 0.25rem;
-  border-radius: 5px;
+  line-height: 2.2rem;
+  // padding: 0.3rem;
+  border-radius: 2px;
   transition-duration: 300ms;
+  margin: 0.4rem 0;
 }
+
 .habit-new:hover {
-  color: white;
-  background: #e0e0e0;
+  background: rgba(211, 211, 211, 0.4);
 }
 
 /* Habit prompt */
@@ -230,12 +246,13 @@ h1 {
   width: 100%;
   background: rgba(5, 5, 5, 0.5);
 }
+
 .habit-prompt {
+  background: white;
   display: flex;
   position: fixed;
   top: 20%;
   right: 25%;
-  //   bottom: 20%;
   left: 25%;
   visibility: hidden;
   border: 2px solid black;
@@ -245,16 +262,13 @@ h1 {
   align-items: stretch;
   flex-direction: column;
 }
+
 @media screen and (max-width: 600px) {
   .habit-prompt {
     top: 5%;
     right: 10%;
-    //   bottom: 20%;
     left: 10%;
   }
-}
-.habit-prompt button {
-  padding: 0.25rem;
 }
 
 .habit-prompt > .form-control {
@@ -271,6 +285,7 @@ h1 {
   display: inline-block;
   height: 2rem;
   width: 120px;
+
   input {
     float: left;
     margin-right: 1rem;
@@ -278,7 +293,168 @@ h1 {
 }
 
 @each $color, $value in $colors {
-  label.#{$color} {
+  .color-picker .#{$color} {
     color: #{$value};
   }
+}
+
+/* Habit Edit */
+.habit:hover > .habit-edit-button {
+  color: lightgray;
+}
+
+.habit-edit-button {
+  background: transparent;
+  color: transparent;
+  position: absolute;
+  left: -1.8rem;
+  padding-right: 0.6rem;
+
+  &.clicked {
+    z-index: 999;
+  }
+
+  i {
+    margin-right: 0.25rem;
+    padding: 0.2rem;
+  }
+
+  i:hover {
+    cursor: pointer;
+    color: gray;
+  }
+
+  &.clicked > i {
+    background: rgba(211, 211, 211, 0.5);
+    color: $background;
+    border-radius: 0.7rem;
+  }
+
+  &.clicked > .habit-edit {
+    color: black;
+    background: white;
+    box-shadow: $box-shadow;
+    border-radius: 3px;
+    visibility: visible;
+    filter: opacity(1);
+
+    h5 {
+      border-radius: 3px 3px 0 0;
+      text-transform: uppercase;
+      text-align: center;
+      background: darkslategray;
+      color: white;
+      margin: 0;
+    }
+  }
+
+  #habit-edit-form {
+    max-width: 220px;
+    display: flex;
+    flex-direction: column;
+
+    .form-control {
+      width: 100%;
+      padding: 0.5rem;
+      &:last-child {
+        border-top: 1px solid lighten(darkslategray, 50%);
+      }
+    }
+  }
+}
+
+#habit-edit-name {
+  width: 100%;
+}
+
+.btns {
+  text-transform: uppercase;
+  align-self: flex-end;
+  text-align: right;
+  margin-top: auto;
+  padding: 0.25rem;
+}
+
+.clrs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
+
+  input {
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+  }
+
+  label {
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+  }
+}
+
+@each $color, $value in $colors {
+  .color-btn {
+    [type="radio"]:not(:checked) + label.#{$color} {
+      background: lighten($value, 10%);
+    }
+
+    [type="radio"]:checked + label.#{$color} {
+      background: darken($value, 10%);
+      border: 4px solid lighten($value, 10%);
+    }
+  }
+}
+
+.btn {
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  padding: 0.5rem 0.75rem;
+
+  &.close-btn {
+    background: none;
+    border: none;
+  }
+
+  &.save-btn,
+  &.add-btn {
+    background: grey;
+    color: white;
+  }
+}
+
+.creator {
+  position: absolute;
+  background: rgba(173, 216, 230, 0.5);
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  color: gray;
+  font-style: italic;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
