@@ -30,6 +30,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: $background;
+  margin: 0;
 }
 
 h1 {
@@ -38,7 +39,8 @@ h1 {
 
 .container {
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 660px;
+  padding: 0 2.25rem;
 }
 
 /* Calendar */
@@ -299,6 +301,18 @@ h1 {
 }
 
 /* Habit Edit */
+@media (hover: none) {
+  .habit {
+    .habit-edit-button {
+      color: lightgray;
+    }
+    .habit-delete {
+      color: pink;
+      filter: opacity(1);
+    }
+  }
+}
+
 .habit:hover > .habit-edit-button {
   color: lightgray;
 }
@@ -440,21 +454,26 @@ h1 {
     color: white;
   }
 }
-
 .creator {
-  position: absolute;
-  background: rgba(173, 216, 230, 0.5);
-  bottom: 1rem;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  color: gray;
-  font-style: italic;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.75rem;
-  margin-bottom: 2rem;
-  text-align: center;
+  display: none;
+}
+@media screen and (min-height: 600px) {
+  .creator {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 1rem;
+    left: 0;
+    background: rgba(173, 216, 230, 0.5);
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    color: gray;
+    font-style: italic;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.75rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 }
