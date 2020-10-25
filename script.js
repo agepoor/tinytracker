@@ -42,19 +42,7 @@ let habitsList = [
   //   color: "red",
   //   days: [0, 0, 0, 0, 0, 0, 0],
   //   finished: false,
-  // },
-  // {
-  //   name: "Roken",
-  //   color: "blue",
-  //   days: [0, 0, 0, 0, 0, 0, 0],
-  //   finished: false,
-  // },
-  // {
-  //   name: "Vroeg opstaan",
-  //   color: "green",
-  //   days: [0, 0, 0, 0, 0, 0, 0],
-  //   finished: false,
-  // },
+  // }
 ];
 
 const localStorageHabits = JSON.parse(localStorage.getItem("habits"));
