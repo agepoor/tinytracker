@@ -16,6 +16,7 @@ h1 {
   text-align: center;
   margin-top: 4rem;
   margin-bottom: 2.5rem;
+  color: #1c7ed6; /* Bright blue colour */
 }
 
 @media screen and (max-width: 600px) {
@@ -262,7 +263,7 @@ h1 {
     background: transparent;
     font-weight: bold;
     text-align: center;
-    line-height: 1.9rem;
+    /* line-height: 1.9rem; */
     font-size: 0.8rem;
 
     > span {
@@ -273,9 +274,9 @@ h1 {
       background-color: transparent;
       color: transparent;
 
-      &:hover {
+      /* &:hover {
         background-color: rgba(211, 211, 211, 0.2);
-      }
+      } */
 
       &.planned {
         color: silver;
@@ -423,53 +424,123 @@ h1 {
 /* Buttons */
 .habit-new {
   cursor: pointer;
-  color: silver;
-  background: rgba(211, 211, 211, 0.2);
+  color: var(--oc-gray-7);
+  background: var(--oc-gray-0);
   text-align: center;
   line-height: 2rem;
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
+  border: 1px solid var(--oc-gray-3);
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   margin: 1rem 0;
-
-  &:hover {
-    background: rgba(211, 211, 211, 0.4);
-  }
 }
 
+.habit-new:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background-color: var(--oc-gray-1);
+}
+
+/* Button Styles */
 .btn {
-  text-transform: uppercase;
+  background-color: var(--oc-gray-0);
+  color: var(--oc-gray-7);
+  border: 2px solid var(--oc-gray-2);
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  border: none;
-  border-radius: 2px;
-  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin: 0.5rem;
+}
 
-  &.close-btn {
-    background: none;
-    border: none;
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--oc-gray-1);
+}
+
+/* Action Buttons */
+.btn.save-btn,
+.btn.add-btn {
+  background-color: var(--oc-teal-2);
+  border-color: var(--oc-teal-5);
+  color: var(--oc-teal-9);
+}
+
+.btn.save-btn:hover,
+.btn.add-btn:hover {
+  background-color: var(--oc-teal-3);
+}
+
+/* Warning Button */
+.btn.reset-btn {
+  background-color: var(--oc-red-2);
+  border-color: var(--oc-red-5);
+  color: var(--oc-red-9);
+}
+
+.btn.reset-btn:hover {
+  background-color: var(--oc-red-3);
+}
+
+/* Template Buttons */
+.btn.template-btn {
+  background-color: var(--oc-indigo-2);
+  border-color: var(--oc-indigo-5);
+  color: var(--oc-indigo-9);
+}
+
+.btn.template-btn:hover {
+  background-color: var(--oc-indigo-3);
+}
+
+/* Utility Buttons */
+.btn.close-btn {
+  background-color: transparent;
+  border-color: var(--oc-gray-3);
+  color: var(--oc-gray-6);
+}
+
+.btn.close-btn:hover {
+  background-color: var(--oc-gray-1);
+  color: var(--oc-gray-7);
+}
+
+/* Button Groups */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.button-group + .button-group {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--oc-gray-2);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 600px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
   }
 
-  &.save-btn,
-  &.add-btn {
-    background: grey;
-    color: white;
+  .button-group {
+    flex-direction: column;
   }
 
-  &.reset-btn {
-    background: red;
-    color: white;
-    margin-top: 1rem;
-  }
-
-  &.save-btn {
-    background: green;
-    color: white;
-    margin-top: 1rem;
-  }
-
-  &.template-btn {
-    background: blue;
-    color: white;
-    margin-top: 1rem;
+  .button-group .btn {
+    width: 100%;
   }
 }
 
@@ -850,117 +921,6 @@ h1 {
   }
 }
 
-.creator {
-  display: none;
-
-  @media screen and (min-height: 600px) {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 1.5rem;
-    left: 0;
-    padding: 0.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 300px;
-    text-align: center;
-  }
-}
-
-.credits-container {
-  position: relative;
-  background: #2d2d2d;
-  border: 2px solid #ffd700;
-  border-radius: 8px;
-  padding: 1rem;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-}
-
-.credits-text {
-  color: #ffd700;
-  font-family: "Courier New", monospace;
-  font-size: 1rem;
-  letter-spacing: 2px;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-  position: relative;
-  z-index: 2;
-}
-
-.bolt {
-  display: inline-block;
-  animation: zap 2s infinite;
-  filter: drop-shadow(0 0 5px #ffd700);
-}
-
-.credits-scan {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 215, 0, 0.15),
-    transparent
-  );
-  animation: scan 3s linear infinite;
-}
-
-@keyframes zap {
-  0%,
-  100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 5px #ffd700);
-  }
-  50% {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 10px #ffd700);
-  }
-}
-
-@keyframes scan {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(200%);
-  }
-}
-
-.credits-container {
-  position: relative;
-  background: rgba(26, 26, 26, 0.05);
-  border: 1px solid rgba(51, 51, 51, 0.1);
-  border-radius: 3px;
-  padding: 0.25rem;
-  overflow: hidden;
-}
-
-.credits-text {
-  color: #666;
-  font-family: "Courier New", monospace;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  animation: subtle-pulse 4s infinite;
-}
-
-.credits-glow {
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.05),
-    transparent
-  );
-  animation: subtle-glow 6s infinite;
-}
-
 @keyframes subtle-pulse {
   0%,
   100% {
@@ -1003,4 +963,219 @@ h1 {
     left: 5%;
   }
 }
+
+/* Button Layout */
+.button-groups-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.button-group-wrapper {
+  flex: 1;
+}
+
+.button-group-title {
+  font-size: 0.85rem;
+  color: var(--oc-gray-6);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Updated Button Groups */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Refined Button Styles */
+.btn {
+  background-color: var(--oc-gray-0);
+  color: var(--oc-gray-7);
+  border: 1px solid var(--oc-gray-3);
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Template Buttons */
+.btn.template-btn {
+  background-color: var(--oc-violet-1);
+  border-color: var(--oc-violet-3);
+  color: var(--oc-violet-9);
+}
+
+.btn.template-btn:hover {
+  background-color: var(--oc-violet-2);
+}
+
+/* Action Buttons */
+.btn.save-btn {
+  background-color: var(--oc-green-1);
+  border-color: var(--oc-green-3);
+  color: var(--oc-green-9);
+}
+
+.btn.save-btn:hover {
+  background-color: var(--oc-green-2);
+}
+
+.btn.reset-btn {
+  background-color: var(--oc-red-1);
+  border-color: var(--oc-red-3);
+  color: var(--oc-red-9);
+}
+
+.btn.reset-btn:hover {
+  background-color: var(--oc-red-2);
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 600px) {
+  .button-groups-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group .btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  .button-group-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+@media (max-width: 500px) {
+  .github-corner > svg {
+    width: 50px;
+    height: 50px;
+  }
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
+}
+
+.creator {
+  display: none;
+}
+
+@media screen and (min-height: 600px) {
+  .creator {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 1.5rem;
+    left: 0;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    border: 1px solid #dee2e6;
+  }
+
+  .credits-text {
+    color: #343a40;
+    font-family: "Roboto", sans-serif;
+    text-shadow: none;
+  }
+
+  .credits-text a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s ease;
+  }
+
+  .credits-text a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+
+  .credits-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .credits-scan {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    animation: scan 3s infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scan {
+    from {
+      left: -100%;
+    }
+    to {
+      left: 100%;
+    }
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
