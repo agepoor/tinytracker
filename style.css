@@ -14,8 +14,8 @@ body {
 
 h1 {
   text-align: center;
-  margin-top: 4rem;
-  margin-bottom: 2.5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
   color: #1c7ed6; /* Bright blue colour */
 }
 
@@ -74,33 +74,18 @@ h1 {
 
 /* Habits */
 .habit-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  /* Remove all flexbox related styles */
 }
 
 .habit {
-  -webkit-box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
-    0 1px 3px 1px rgba(60, 64, 67, 0.16);
-  box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
-    0 1px 3px 1px rgba(60, 64, 67, 0.16);
   background: white;
-  /* display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex; */
   position: relative;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
   line-height: 2rem;
   margin: 0.4rem 0;
   border-radius: 3px;
   padding: 0.25rem 0;
+  box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
+    0 1px 3px 1px rgba(60, 64, 67, 0.16);
 
   &.gray,
   &.red,
@@ -228,38 +213,54 @@ h1 {
 
   .habit-name {
     background: transparent;
-    cursor: -webkit-grab;
     cursor: grab;
-    border-width: 0px;
-    border-style: solid;
-    border-right: none;
+    position: relative;
     border-radius: 3px 0 0 3px;
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 0px;
-    flex: 1 1 0;
+    min-height: 3rem;
+    padding: 0.5rem 1rem;
 
     &:active {
-      cursor: -webkit-grabbing;
       cursor: grabbing;
     }
 
     h3 {
-      background: transparent;
+      margin: 0;
       font-weight: 600;
       font-size: 1rem;
-      margin: 0 0 0 0rem;
     }
   }
 
+  .habit-context-btn {
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0; /* Prevent button from shrinking */
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: all 0.2s ease;
+    color: var(--habit-color, #666);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .habit-context-btn:hover,
+  .habit-context-btn.active {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .habit:hover .habit-context-btn {
+    opacity: 0.7;
+  }
+
   .habit-days {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (1fr) [7];
     grid-template-columns: repeat(7, 1fr);
     border-radius: 0 3px 3px 0;
-    -webkit-box-flex: 2;
-    -ms-flex: 2 1 0px;
-    flex: 2 1 0;
   }
 
   .habit-day {
@@ -320,7 +321,7 @@ h1 {
 
 .habit-table .habit-header,
 .habit-table td:first-child {
-  width: 30%; /* Changed from 23% to match the above change */
+  width: 30%; Changed from 23% to match the above change
   text-align: left;
   padding-left: 1.5rem;
   font-weight: 500;
