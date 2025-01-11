@@ -295,19 +295,18 @@ h1 {
 .habit-table {
   width: 100%;
   table-layout: fixed; /* This ensures equal column widths */
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
   margin-bottom: 1rem;
-  background: white;
+  background: transparent;
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .habit-table th,
 .habit-table td {
-  border: 1px solid #dee2e6;
+  border: none;
   text-align: center;
-  padding: 0.75rem 0.5rem;
+  padding: 1rem 0.5rem;
   width: 10%; /* Equal width for day columns */
   position: relative;
 }
@@ -325,6 +324,11 @@ h1 {
   text-align: left;
   padding-left: 1.5rem;
   font-weight: 500;
+  border-radius: 12px 0 0 12px;
+}
+
+.habit-table td:last-child {
+  border-radius: 0 12px 12px 0;
 }
 
 /* Remove any conflicting border styles */
@@ -332,7 +336,7 @@ h1 {
 .habit-table .habit-days,
 .habit-table tbody tr:last-child td,
 .habit-table thead th {
-  border: 1px solid #dee2e6;
+  border: none;
 }
 
 .habit-table .habit-header,
@@ -354,9 +358,16 @@ h1 {
   color: #868e96; /* Darker gray for past days */
 }
 
+.habit-table tbody tr {
+  background: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
 .habit-table tbody tr:hover {
-  background-color: #f8f9fa;
-  box-shadow: inset 0 0 0 1px #e9ecef; /* Inner shadow on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .habit-table .habit.finished {
@@ -386,6 +397,8 @@ h1 {
 
 .habit-table .habit-day {
   cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease;
 }
 
 .habit-table .habit-day.planned {
@@ -397,7 +410,23 @@ h1 {
 }
 
 .habit-table .habit-day:hover {
-  background-color: rgba(211, 211, 211, 0.2);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.habit-table .habit-day.executed i {
+  animation: checkmark 0.3s ease-in-out;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .habit-table .habit.finished .habit-name,
@@ -422,6 +451,33 @@ h1 {
 
 .habit-table .cal-day.past {
   color: lightgray;
+}
+
+/* Sortable styles */
+.habit-table tbody tr {
+  cursor: grab;
+}
+
+.habit-table tbody tr.sortable-ghost {
+  opacity: 0.4;
+  background-color: var(--oc-gray-2);
+}
+
+.habit-table tbody tr.sortable-drag {
+  opacity: 1;
+  background-color: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.habit-table tbody tr.sortable-chosen {
+  background-color: white;
+  cursor: grabbing;
+}
+
+/* Fix table layout for dragging */
+.habit-table {
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
 }
 
 /* Buttons */

@@ -167,30 +167,24 @@
       var sortable = new Sortable(el, {
         animation: 150,
         handle: ".habit-name",
-        forceFallback: true,
+        forceFallback: false,
+        ghostClass: "sortable-ghost",
+        dragClass: "sortable-drag",
+        chosenClass: "sortable-chosen",
+        scroll: true,
+        scrollSensitivity: 30,
+        scrollSpeed: 10,
         onStart: function (evt) {
-          let habit_handles = document.querySelectorAll(".habit-name");
-          habit_handles.forEach((element) => {
-            element.classList.add("grabbing");
-          });
+          document.body.style.cursor = "grabbing";
         },
         onEnd: function (evt) {
-          let all = document.querySelectorAll(".habit-name");
-          all.forEach(function (element) {
-            element.classList.remove("grabbing");
-          });
+          document.body.style.cursor = "default";
           const evtTo = evt.to.children;
-          // console.log(evtTo);
-          let newHabitsOrder = [...evtTo].map((i) => {
-            return i.dataset.hTitle;
-          });
-          let newHabits = newHabitsOrder.map((i) => {
-            return habits.find((item) => {
-              return item.name == i;
-            });
-          });
+          let newHabitsOrder = [...evtTo].map((i) => i.dataset.hTitle);
+          let newHabits = newHabitsOrder.map((i) =>
+            habits.find((item) => item.name == i)
+          );
           habits = newHabits;
-          console.log(habits);
           updateLocalStorage();
         },
       });

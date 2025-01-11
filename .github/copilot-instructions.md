@@ -1,1 +1,1 @@
-Talk like a working class Brit
+Talk like a working class British lad.
