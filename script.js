@@ -185,6 +185,9 @@ function addHabitDaysDOM() {
 }
 
 // Updates habit day data attributes and styles after click
+const clickSound = new Audio('raw/main/assets/ding.mp3');
+clickSound.volume = 0.2; // Not too loud, just a subtle tick
+
 function updateHabits() {
   const spanElement = this.children[0];
   const habit_title = this.parentNode.dataset.hTitle;
@@ -199,6 +202,8 @@ function updateHabits() {
     this.dataset.hDay = 2;
     spanElement.classList.remove("planned");
     spanElement.classList.add("executed");
+    clickSound.currentTime = 0;  // Reset sound in case it's still playing
+    clickSound.play();  // Play the tick sound
   } else {
     this.dataset.hDay = 0;
     spanElement.classList.remove("executed");

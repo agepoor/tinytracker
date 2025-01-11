@@ -414,6 +414,25 @@ h1 {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+/* Remove the old checkmark animation */
+/* .habit-table .habit-day.executed i {
+  animation: checkmark 0.3s ease-in-out;
+} */
+
+/* Add the new one */
+.habit-table .habit-day span.executed i {
+  color: var(--habit-color); /* Use the original color instead of teal */
+  transform-origin: center;
+  display: inline-block;
+  animation: check-mark 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes check-mark {
+  0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+  70% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
 .habit-table .habit-day.executed i {
   animation: checkmark 0.3s ease-in-out;
 }
