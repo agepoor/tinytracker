@@ -118,12 +118,11 @@ function addHabits() {
   });
   addEventListeners();
 }
-// Style calendar days
+// Update styleCalendar function to work with table header cells
 function styleCalendar() {
-  const days = [...caldays.children].slice(0, current_day - 1);
-  // console.log(days);
+  const days = [...document.querySelectorAll('.cal-day')].slice(0, current_day - 1);
   days.forEach((item) => {
-    item.firstChild.classList.add("past");
+    item.classList.add("past");
   });
 }
 
@@ -145,32 +144,26 @@ addColors();
 
 // Adds habit items to DOM
 function addHabitDOM(habit) {
-  const habitItem = document.createElement("div");
-  // console.log(habit.color);
-
-  habitItem.classList.add("habit");
-  habitItem.classList.add(habit.color);
-  if (habit.finished == true) {
-    habitItem.classList.add("finished");
+  const habitRow = document.createElement("tr");
+  habitRow.classList.add("habit");
+  habitRow.classList.add(habit.color);
+  if (habit.finished) {
+    habitRow.classList.add("finished");
   }
 
-  habitItem.setAttribute("data-h-title", habit.name);
-  // habitItem.setAttribute("draggable", "true");
+  habitRow.setAttribute("data-h-title", habit.name);
 
-  habitItem.innerHTML = `
-    <div class="habit-name"><h3>${habit.name}</div>
-    <div class="habit-days">
-      <div class="habit-day" data-h-day="${habit.days[0]}">✓</div>
-      <div class="habit-day" data-h-day="${habit.days[1]}"></div>
-      <div class="habit-day" data-h-day="${habit.days[2]}">✓</div>
-      <div class="habit-day" data-h-day="${habit.days[3]}"></div>
-      <div class="habit-day" data-h-day="${habit.days[4]}"></div>
-      <div class="habit-day" data-h-day="${habit.days[5]}"></div>
-      <div class="habit-day" data-h-day="${habit.days[6]}"></div>
-    </div>`;
+  let habitDaysHTML = "";
+  habit.days.forEach((day, index) => {
+    habitDaysHTML += `<td class="habit-day" data-h-day="${day}"></td>`;
+  });
 
-  habitlist.appendChild(habitItem);
+  habitRow.innerHTML = `
+    <td class="habit-name"><h3>${habit.name}</h3></td>
+    ${habitDaysHTML}
+  `;
 
+  habitlist.appendChild(habitRow);
   addHabitDaysDOM();
 }
 
@@ -182,8 +175,7 @@ function addHabitDaysDOM() {
     if (item.dataset.hDay == 0) {
       item.innerHTML = `<span><i class="fas fa-check"></i></span>`;
     } else if (item.dataset.hDay == 1) {
-      item.innerHTML = `<span class="planned"><i class="fas fa-check"></i>	
-</span>`;
+      item.innerHTML = `<span class="planned"><i class="fas fa-check"></i></span>`;
     } else {
       item.innerHTML = `<span class="executed"><i class="fas fa-check"></i></span>`;
     }
@@ -195,10 +187,10 @@ function addHabitDaysDOM() {
 // Updates habit day data attributes and styles after click
 function updateHabits() {
   const spanElement = this.children[0];
-  const habit_title = this.parentNode.parentNode.dataset.hTitle;
-  const habit_container = this.parentNode.parentNode;
-  const day_index = [...this.parentElement.children].indexOf(this);
-  let habit_state = "";
+  const habit_title = this.parentNode.dataset.hTitle;
+  const habit_container = this.parentNode;
+  const day_index = [...this.parentNode.children].indexOf(this) - 1; // Subtract 1 to account for habit name cell
+  let habit_state = false;
 
   if (this.dataset.hDay == 0) {
     this.dataset.hDay = 1;
@@ -212,47 +204,21 @@ function updateHabits() {
     spanElement.classList.remove("executed");
   }
 
-  /* Check if there are unfinished days and updates container element */
-  function checkHDay(day) {
-    return day == 1;
-  }
-
-  const day_children_some = [...this.parentElement.children]
-    .map((x) => x.dataset.hDay)
-    .some(checkHDay);
-
-  console.log(day_children_some);
-
-  const day_children_none = [...this.parentElement.children]
-    .map((x) => Math.floor(x.dataset.hDay))
-    .reduce((x, y) => x + y);
-
-  console.log(day_children_none);
-
-  if (
-    day_children_some == false &&
-    day_children_none > 0 &&
-    habit_state == false
-  ) {
+  // Check if all days are either executed (2) or empty (0) - no planned days (1)
+  const days = [...habit_container.children].slice(1); // Skip the habit name cell
+  const hasPlannedDays = days.some(day => day.dataset.hDay == 1);
+  const hasExecutedDays = days.some(day => day.dataset.hDay == 2);
+  
+  // Set finished state if there are no planned days and at least one executed day
+  if (!hasPlannedDays && hasExecutedDays) {
     habit_state = true;
-    setTimeout(() => {
-      habit_container.classList.add("finished");
-    }, 500);
-  } else if (habit_state == false) {
-    habit_state = false;
-    setTimeout(() => {
-      habit_container.classList.remove("finished");
-    }, 500);
+    habit_container.classList.add("finished");
   } else {
     habit_state = false;
     habit_container.classList.remove("finished");
   }
 
-  // console.log(habit_state);
-  console.log(habits);
-
-  const day_data = this.dataset.hDay;
-  updateHabitsData(habit_title, day_index, day_data, habit_state);
+  updateHabitsData(habit_title, day_index, this.dataset.hDay, habit_state);
 }
 
 // Updates Habits Object
@@ -475,7 +441,7 @@ function changeColor(e) {
     if (indexCurrentColor == 0) {
       habits[indexCurrentName].color = colors[colors.length - 1];
     } else {
-      habits[indexCurrentName].color = colors[indexCurrentColor - 1];
+      habits[indexCurrentColor].color = colors[indexCurrentColor - 1];
     }
   }
 

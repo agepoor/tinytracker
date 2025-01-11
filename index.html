@@ -27,19 +27,23 @@
     </div>
 
     <div class="container" id="container">
-      <div class="cal">
-        <div class="cal-left"></div>
-        <div class="cal-days" id="cal-days">
-          <div class="cal-day cal-day-1"><span>mo</span></div>
-          <div class="cal-day cal-day-2"><span>tu</span></div>
-          <div class="cal-day cal-day-3"><span>we</span></div>
-          <div class="cal-day cal-day-4"><span>th</span></div>
-          <div class="cal-day cal-day-5"><span>fr</span></div>
-          <div class="cal-day cal-day-6"><span>sa</span></div>
-          <div class="cal-day cal-day-7"><span>su</span></div>
-        </div>
-      </div>
-      <div class="habit-list" id="habit-list"></div>
+      <table class="habit-table">
+        <thead>
+          <tr id="cal-days">
+            <th class="habit-header"></th>
+            <th class="cal-day">mo</th>
+            <th class="cal-day">tu</th>
+            <th class="cal-day">we</th>
+            <th class="cal-day">th</th>
+            <th class="cal-day">fr</th>
+            <th class="cal-day">sa</th>
+            <th class="cal-day">su</th>
+          </tr>
+        </thead>
+        <tbody id="habit-list">
+          <!-- Habit rows will be dynamically added here -->
+        </tbody>
+      </table>
       <div class="habit-new" id="habit-new" onclick="showPrompt()">+</div>
       <button id="reset-tracker" class="btn reset-btn">Reset Tracker</button>
       <button id="save-habits" class="btn save-btn">Save Habits</button>
