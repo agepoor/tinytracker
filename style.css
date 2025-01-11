@@ -28,7 +28,7 @@ h1 {
 
 .container {
   margin: 0 auto;
-  max-width: 660px;
+  max-width: 1000px;
   padding: 1rem;
 }
 
@@ -243,7 +243,7 @@ h1 {
       background: transparent;
       font-weight: 600;
       font-size: 1rem;
-      margin: 0 0 0 1rem;
+      margin: 0 0 0 0rem;
     }
   }
 
@@ -290,34 +290,37 @@ h1 {
 
 .habit-table {
   width: 100%;
-  border-collapse: collapse; /* Change from separate to collapse for consistent borders */
+  table-layout: fixed; /* This ensures equal column widths */
+  border-collapse: collapse;
   margin-bottom: 1rem;
-  table-layout: fixed;
   background: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Stronger shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .habit-table th,
 .habit-table td {
-  border: 1px solid #dee2e6; /* Darker borders */
+  border: 1px solid #dee2e6;
   text-align: center;
   padding: 0.75rem 0.5rem;
-  width: 11%;
+  width: 10%; /* Equal width for day columns */
   position: relative;
-}
-
-/* Simplify border rules - remove all individual border overrides */
-.habit-table thead tr {
-  background: #f1f3f5; /* Slightly darker header */
 }
 
 .habit-table th:first-child,
 .habit-table td:first-child {
-  width: 23%;
+  width: 30%; /* More space for habit names */
   text-align: left;
   padding-left: 1.5rem;
+}
+
+.habit-table .habit-header,
+.habit-table td:first-child {
+  width: 30%; /* Changed from 23% to match the above change */
+  text-align: left;
+  padding-left: 1.5rem;
+  font-weight: 500;
 }
 
 /* Remove any conflicting border styles */
@@ -330,7 +333,6 @@ h1 {
 
 .habit-table .habit-header,
 .habit-table td:first-child {
-  width: 23%;
   text-align: left;
   padding-left: 1.5rem;
   font-weight: 500;
@@ -403,7 +405,7 @@ h1 {
 
 .habit-table .habit-header,
 .habit-table td:first-child {
-  width: 23%;
+  width: 30%; /* Changed from 23% to match the above change */
   text-align: left;
   padding-left: 1rem;
 }
