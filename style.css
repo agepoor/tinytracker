@@ -5,7 +5,8 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+ Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: #f5f5f5;
   margin: 0;
 }
@@ -560,6 +561,42 @@ h1 {
   background: rgba(211, 211, 211, 0.4);
 }
 
+.btn {
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  padding: 0.5rem 0.75rem;
+}
+
+.btn.close-btn {
+  background: none;
+  border: none;
+}
+
+.btn.save-btn, .btn.add-btn {
+  background: grey;
+  color: white;
+}
+
+.btn.reset-btn {
+  background: red;
+  color: white;
+  margin-top: 1rem;
+}
+
+.btn.save-btn {
+  background: green;
+  color: white;
+  margin-top: 1rem;
+}
+
+.btn.template-btn {
+  background: blue;
+  color: white;
+  margin-top: 1rem;
+}
+
 /* Habit prompt */
 .habit-prompt-container {
   position: fixed;
@@ -931,24 +968,6 @@ h1 {
 .color-btn [type="radio"]:checked + label.orange {
   background: #c55206;
   border: 4px solid #f98538;
-}
-
-.btn {
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none;
-  border-radius: 2px;
-  padding: 0.5rem 0.75rem;
-}
-
-.btn.close-btn {
-  background: none;
-  border: none;
-}
-
-.btn.save-btn, .btn.add-btn {
-  background: grey;
-  color: white;
 }
 
 .creator {

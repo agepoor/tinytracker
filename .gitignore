@@ -1,4 +1,10 @@
+node_modules
 .vscode
 backups
 style.css.map
 habit_template.js
+.git
+_open-color.scss
+content_snapshot.txt
+favicon.ico
+.gitignore

@@ -20,6 +20,67 @@ const habit_colors = document
   .getElementById("habit-color")
   .getElementsByTagName("input");
 
+const reset_tracker = document.getElementById("reset-tracker");
+const save_habits = document.getElementById("save-habits");
+
+reset_tracker.addEventListener("click", resetTracker);
+save_habits.addEventListener("click", saveHabitsToFile);
+
+function resetTracker() {
+  if (confirm("Are you sure you want to reset the tracker? This will delete all habits.")) {
+    habits = [];
+    habitlist.innerHTML = "";
+    updateLocalStorage();
+  }
+}
+
+function saveHabitsToFile() {
+  const blob = new Blob([JSON.stringify(habits, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "habits.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+const template_beginner = document.getElementById("template-beginner");
+const template_medium = document.getElementById("template-medium");
+const template_advanced = document.getElementById("template-advanced");
+
+template_beginner.addEventListener("click", () => loadTemplate("beginner"));
+template_medium.addEventListener("click", () => loadTemplate("medium"));
+template_advanced.addEventListener("click", () => loadTemplate("advanced"));
+
+function loadTemplate(level) {
+  let templateHabits = [];
+  if (level === "beginner") {
+    templateHabits = [
+      { name: "Drink Water", color: "blue", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "Walk 10 Minutes", color: "green", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+    ];
+  } else if (level === "medium") {
+    templateHabits = [
+      { name: "Exercise", color: "red", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "Read a Book", color: "yellow", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "Meditate", color: "purple", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+    ];
+  } else if (level === "advanced") {
+    templateHabits = [
+      { name: "Run 5km", color: "orange", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "Learn a New Skill", color: "cyan", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "Cook a New Recipe", color: "pink", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "Write a Journal", color: "violet", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+    ];
+  }
+
+  habits = templateHabits;
+  habitlist.innerHTML = "";
+  addHabits();
+  updateLocalStorage();
+}
+
 let colors = [
   "gray",
   "red",
@@ -408,7 +469,7 @@ function changeColor() {
     if (colors.length - 1 == indexCurrentColor) {
       habits[indexCurrentName].color = colors[0];
     } else {
-      habits[indexCurrentName].color = colors[indexCurrentColor + 1];
+      habits[indexCurrentColor].color = colors[indexCurrentColor + 1];
     }
   }
 
