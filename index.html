@@ -15,11 +15,17 @@
   <body>
     <h1>🔥 Habit Tracker</h1>
 
-    <p class="creator">
-      <marquee>
-        - This Habit Tracker was created by <strong>Age P.</strong> -
-      </marquee>
-    </p>
+    <div class="creator">
+      <div class="credits-container">
+        <div class="credits-scan"></div>
+        <div class="credits-text">
+          <span class="bolt">⚡</span> POWERED BY <span class="bolt">⚡</span
+          ><br />
+          <strong>AGE P.</strong>
+        </div>
+      </div>
+    </div>
+
     <div class="container" id="container">
       <div class="cal">
         <div class="cal-left"></div>
@@ -37,9 +43,15 @@
       <div class="habit-new" id="habit-new" onclick="showPrompt()">+</div>
       <button id="reset-tracker" class="btn reset-btn">Reset Tracker</button>
       <button id="save-habits" class="btn save-btn">Save Habits</button>
-      <button id="template-beginner" class="btn template-btn">Beginner Template</button>
-      <button id="template-medium" class="btn template-btn">Medium Template</button>
-      <button id="template-advanced" class="btn template-btn">Advanced Template</button>
+      <button id="template-beginner" class="btn template-btn">
+        Beginner Template
+      </button>
+      <button id="template-medium" class="btn template-btn">
+        Medium Template
+      </button>
+      <button id="template-advanced" class="btn template-btn">
+        Advanced Template
+      </button>
     </div>
     <div class="habit-prompt-container" id="habit-prompt-container">
       <form id="habit-prompt" class="habit-prompt">
