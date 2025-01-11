@@ -95,7 +95,7 @@ h1 {
   line-height: 2rem;
   margin: 0.4rem 0;
   border-radius: 3px;
-  padding: 0.5rem;
+  padding: 0.25rem 0;
 
   &.gray,
   &.red,
@@ -850,10 +850,6 @@ h1 {
 @media screen and (max-width: 600px) {
   .container {
     padding: 1rem;
-  }
-
-  .habit {
-    padding: 0.5rem;
   }
 
   .habit-name h3 {
