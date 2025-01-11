@@ -158,7 +158,6 @@ function addHabitDOM(habit) {
   // habitItem.setAttribute("draggable", "true");
 
   habitItem.innerHTML = `
-    <div class="habit-edit-button"><i class="fas fa-edit"></i></div>
     <div class="habit-name"><h3>${habit.name}</div>
     <div class="habit-days">
       <div class="habit-day" data-h-day="${habit.days[0]}">✓</div>
@@ -168,8 +167,7 @@ function addHabitDOM(habit) {
       <div class="habit-day" data-h-day="${habit.days[4]}"></div>
       <div class="habit-day" data-h-day="${habit.days[5]}"></div>
       <div class="habit-day" data-h-day="${habit.days[6]}"></div>
-    </div>
-    <div class="habit-delete"><i class="fas fa-trash"></i></div>`;
+    </div>`;
 
   habitlist.appendChild(habitItem);
 
