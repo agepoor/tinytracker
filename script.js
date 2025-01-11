@@ -365,8 +365,8 @@ function openEditHabit() {
   habiteditsave.addEventListener("click", saveEditHabit);
 }
 
-function saveEditHabit() {
-  event.preventDefault();
+function saveEditHabit(e) {  // Add 'e' parameter here
+  e.preventDefault();
   const newName = document.getElementById("habit-edit-name").value;
   const thisElement = this.closest(".habit");
   const oldHabit = habits.find((i) => i.name == thisElement.dataset.hTitle);
@@ -423,8 +423,8 @@ function closeEditElements() {
 /* From https://www.blustemy.io/detecting-a-click-outside-an-element-in-javascript/ */
 
 /* Fires when clicked outside of box or with close button */
-function closeEditHabit() {
-  event.preventDefault();
+function closeEditHabit(e) {  // Already has 'e' parameter, no change needed
+  e.preventDefault();
   const closestEditButton = this.closest(".habit-edit-button");
   closestEditButton.classList.remove("clicked");
 
@@ -448,8 +448,8 @@ function deleteHabit() {
   updateLocalStorage();
 }
 
-function changeColor() {
-  event.preventDefault();
+function changeColor(e) {
+  e.preventDefault();
   const currentName = this.parentNode.innerText.trim();
   let indexCurrentColor = colors.findIndex(
     (i) => i == habits.filter((item) => item.name == currentName)[0].color
@@ -457,7 +457,7 @@ function changeColor() {
   const indexCurrentName = habits.findIndex((i) => i.name == currentName);
   const oldColor = habits[indexCurrentName].color;
 
-  if (event.type === "click") {
+  if (e.type === "click") {
     leftClick();
   } else if ("contextmenu") {
     rightClick();
