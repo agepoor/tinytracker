@@ -64,7 +64,7 @@ function loadTemplate(level) {
     templateHabits = [
       { name: "Exercise", color: "red", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
       { name: "Read a Book", color: "yellow", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Meditate", color: "purple", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+      { name: "Meditate", color: "violet", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
     ];
   } else if (level === "advanced") {
     templateHabits = [
