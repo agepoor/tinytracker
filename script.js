@@ -27,11 +27,50 @@ reset_tracker.addEventListener("click", resetTracker);
 save_habits.addEventListener("click", saveHabitsToFile);
 
 function resetTracker() {
-  if (confirm("Are you sure you want to reset the tracker? This will delete all habits.")) {
-    habits = [];
-    habitlist.innerHTML = "";
+  const modal = document.getElementById('reset-modal');
+  const confirmBtn = document.getElementById('confirm-reset');
+  const cancelBtn = document.getElementById('cancel-reset');
+
+  modal.style.display = 'flex';
+  
+  const handleConfirm = () => {
+    habits.forEach(habit => {
+      habit.days = habit.days.map(day => day === 2 ? 1 : day);
+      habit.finished = false;
+    });
+    
+    // Reset DOM
+    const habitRows = document.querySelectorAll('.habit');
+    habitRows.forEach(row => {
+      row.classList.remove('finished');
+      const days = row.querySelectorAll('.habit-day');
+      days.forEach(day => {
+        if (day.dataset.hDay == 2) {
+          day.dataset.hDay = 1;
+          const span = day.querySelector('span');
+          span.classList.remove('executed');
+          span.classList.add('planned');
+        }
+      });
+    });
+    
     updateLocalStorage();
-  }
+    modal.style.display = 'none';
+    cleanup();
+  };
+  
+  const handleCancel = () => {
+    modal.style.display = 'none';
+    cleanup();
+  };
+  
+  const cleanup = () => {
+    confirmBtn.removeEventListener('click', handleConfirm);
+    cancelBtn.removeEventListener('click', handleCancel);
+  };
+  
+  confirmBtn.addEventListener('click', handleConfirm);
+  cancelBtn.addEventListener('click', handleCancel);
 }
 
 function saveHabitsToFile() {
@@ -188,6 +227,12 @@ function addHabitDaysDOM() {
 const clickSound = new Audio('raw/main/assets/ding.mp3');
 clickSound.volume = 0.2; // Not too loud, just a subtle tick
 
+const applauseSound = new Audio('raw/main/assets/applause.mp3');
+applauseSound.volume = 0.5; // A bit louder for the applause
+
+const applauseCheerSound = new Audio('raw/main/assets/applause-cheer.mp3');
+applauseCheerSound.volume = 0.5; // Even louder for the cheer
+
 function updateHabits() {
   const spanElement = this.children[0];
   const habit_title = this.parentNode.dataset.hTitle;
@@ -215,15 +260,30 @@ function updateHabits() {
   const hasExecutedDays = days.some(day => day.dataset.hDay == 2);
   
   // Set finished state if there are no planned days and at least one executed day
-  if (!hasPlannedDays && hasExecutedDays) {
+  if (!hasPlannedDays && hasExecutedDays && this.dataset.hDay != 0) {
     habit_state = true;
     habit_container.classList.add("finished");
+    applauseSound.currentTime = 0;  // Reset sound in case it's still playing
+    applauseSound.play();  // Play the applause sound
+    habit_container.classList.add("celebrate");  // Add celebration animation
+    setTimeout(() => habit_container.classList.remove("celebrate"), 2000);  // Remove animation after 2 seconds
   } else {
     habit_state = false;
     habit_container.classList.remove("finished");
   }
 
   updateHabitsData(habit_title, day_index, this.dataset.hDay, habit_state);
+
+  // Check if all habits are finished and no checkmark was set to 0
+  if (this.dataset.hDay != 0) {
+    const allFinished = habits.every(habit => habit.finished);
+    if (allFinished) {
+      applauseCheerSound.currentTime = 0;  // Reset sound in case it's still playing
+      applauseCheerSound.play();  // Play the applause cheer sound
+      document.body.classList.add("ecstatic");  // Add ecstatic animation to body
+      setTimeout(() => document.body.classList.remove("ecstatic"), 3000);  // Remove animation after 3 seconds
+    }
+  }
 }
 
 // Updates Habits Object
