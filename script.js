@@ -495,149 +495,8 @@ function addEventListeners() {
     item.addEventListener("click", changeColor);
     item.addEventListener("contextmenu", changeColor);
   });
-  addEditListeners();
 }
 
-function addEditListeners() {
-  const editButtons = document.querySelectorAll(".habit-edit-button");
-  editButtons.forEach((item) => {
-    item.addEventListener("click", openEditHabit);
-  });
-}
-
-// Old edit functionality
-// function openEditHabit() {
-//   const editButtons = document.querySelectorAll(".habit-edit-button");
-//   editButtons.forEach((element) => {
-//     element.classList.remove("clicked");
-//   });
-//   addEditListeners();
-//   this.removeEventListener("click", openEditHabit);
-//   closeEditElements();
-//   this.classList.add("clicked");
-//   const thisElement = this.closest(".habit").dataset.hTitle;
-//   const editElement = document.createElement("div");
-//   editElement.id = "habit-edit";
-//   editElement.classList.add("habit-edit");
-//   colorElements = ``;
-//   colors.forEach((i) => {
-//     colorElements += `<div class="color-btn"><input type="radio" id="${i}" name="color-edit"><label for="${i}" class="color-btn ${i}"></label></div>`;
-//   });
-//   // console.log(colorElements);
-//   editElement.innerHTML = `
-//       <h5>Edit habit</h5>
-//       <form id="habit-edit-form">
-//         <div class="form-control">
-//           <label for="habit-edit-name"><input
-//             type="text"
-//             name="habit-edit-name"
-//             id="habit-edit-name"
-//             placeholder="Habit name"
-//             value="${thisElement}"
-//           /></label>
-          
-//         </div>
-//         <div class="clrs form-control">
-//           ${colorElements}
-//         </div>
-//         <div class="btns form-control">
-//           <button id="close-btn" class="close-btn btn">Close</button>
-//           <button id="save-btn" class="save-btn btn">Save</button>
-//         </div>
-//       </form>`;
-//   this.appendChild(editElement);
-
-//   /* TODO: set selected color */
-//   const returnCurrentColor = colors
-//     .filter((i) => {
-//       return this.closest(".habit").classList.contains(i);
-//     })
-//     .toString();
-//   const colorInput = document.querySelector(
-//     `[name="color-edit"]#${returnCurrentColor}`
-//   );
-//   colorInput.checked = true;
-
-//   // console.log(returnCurrentColor, colorInput, colorInput.checked);
-
-//   const habiteditclose = document.getElementById("close-btn");
-//   const habiteditsave = document.getElementById("save-btn");
-//   habiteditclose.addEventListener("click", closeEditHabit);
-//   habiteditsave.addEventListener("click", saveEditHabit);
-// }
-
-// function saveEditHabit(e) {  // Add 'e' parameter here
-//   e.preventDefault();
-//   const newName = document.getElementById("habit-edit-name").value;
-//   const thisElement = this.closest(".habit");
-//   const oldHabit = habits.find((i) => i.name == thisElement.dataset.hTitle);
-
-//   const DOMHabitIndex = [...thisElement.parentElement.children].findIndex(
-//     (i) => i == thisElement
-//   );
-//   const checkIfExists = habits.some((i) => i.name == newName);
-//   const existingIndex = habits.findIndex((i) => i.name == newName);
-
-//   /* update habit name */
-//   if (checkIfExists == true && DOMHabitIndex !== existingIndex) {
-//     alert("Name already exists!");
-//   } else {
-//     /* Update habit list*/
-//     oldHabit.name = newName;
-
-//     /* DOM Updates */
-//     const elementName = thisElement.getElementsByClassName("habit-name");
-//     [...elementName].forEach((i) => {
-//       i.innerHTML = `<h3>${newName}</h3>`;
-//     });
-//     thisElement.dataset.hTitle = `${newName}`;
-//   }
-
-//   /* update color */
-//   const selectedClr = document.querySelector('input[name="color-edit"]:checked')
-//     .id;
-//   console.log(selectedClr);
-//   colors.forEach((element) => {
-//     if (thisElement.classList.contains(element)) {
-//       thisElement.classList.remove(element);
-//     }
-//   });
-//   oldHabit.color = selectedClr;
-//   thisElement.classList.add(selectedClr);
-
-//   /* DOM Removals */
-//   this.closest(".habit-edit-button").classList.remove("clicked");
-//   this.closest(".habit-edit").remove();
-
-//   setTimeout(addEditListeners, 100);
-//   updateLocalStorage();
-// }
-
-// function closeEditElements() {
-//   const editElements = document.querySelectorAll(".habit-edit");
-//   editElements.forEach((i) => {
-//     i.parentNode.removeChild(i);
-//   });
-// }
-
-// /* From https://www.blustemy.io/detecting-a-click-outside-an-element-in-javascript/ */
-
-// /* Fires when clicked outside of box or with close button */
-// function closeEditHabit(e) {  // Already has 'e' parameter, no change needed
-//   e.preventDefault();
-//   const closestEditButton = this.closest(".habit-edit-button");
-//   closestEditButton.classList.remove("clicked");
-
-//   closeEditElements();
-//   setTimeout(addEditListeners, 100);
-//   // editElementButton.parentNode.removeChild(editElementChild);
-//   /* Option 1a: Clicked close */
-
-//   /* Option 1: Clicked outside of box */
-
-//   /* Option 2: CLicked different */
-//   // addEditListeners();
-// }
 
 function deleteHabit() {
   const nameHabit = this.parentNode.dataset.hTitle;
@@ -786,6 +645,15 @@ const currentDayIndex = new Date().getDay();
 const calDays = document.querySelectorAll('.cal-day');
 calDays[currentDayIndex === 0 ? 6 : currentDayIndex - 1].classList.add('current-day');
 
+function handleEnterKey(modal, confirmButton) {
+  modal.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      confirmButton.click();
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const helpButton = document.getElementById("help-button");
   const helpModal = document.getElementById("help-modal");
@@ -892,4 +760,96 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmBtn.addEventListener('click', handleConfirm);
     cancelBtn.addEventListener('click', handleCancel);
   };
+
+  const editModal = document.getElementById("edit-modal");
+  const editForm = document.getElementById("edit-form");
+  const editNameInput = document.getElementById("edit-name");
+  const editColorsContainer = document.getElementById("edit-colors");
+  const cancelEditButton = document.getElementById("cancel-edit");
+  const saveEditButton = document.getElementById("save-edit");
+
+  let currentEditHabit = null;
+
+  document.querySelectorAll(".habit-context-btn").forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const habitRow = e.target.closest(".habit");
+      contextMenu.style.display = "flex";
+      // Adjust for scrolling
+      contextMenu.style.top = `${e.clientY + window.scrollY}px`;
+      contextMenu.style.left = `${e.clientX + window.scrollX}px`;
+
+      const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
+      const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+
+      editItem.onclick = () => {
+        showEditModal(habitRow);
+        contextMenu.style.display = "none";
+      };
+
+      deleteItem.onclick = () => {
+        showDeleteConfirmation(habitRow);
+        contextMenu.style.display = "none";
+      };
+    });
+  });
+
+  function showEditModal(habitRow) {
+    currentEditHabit = habitRow;
+    const habitName = habitRow.querySelector(".habit-name h3").textContent;
+    const habitColor = habitRow.classList[1];
+
+    editNameInput.value = habitName;
+    editColorsContainer.innerHTML = colors.map(color => `
+      <label class="color-btn">
+        <input type="radio" name="edit-color" value="${color}" ${color === habitColor ? 'checked' : ''}>
+        <span class="radio ${color}"></span>
+      </label>
+    `).join('');
+
+    editModal.style.display = "flex";
+  }
+
+  cancelEditButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    editModal.style.display = "none";
+  });
+
+  saveEditButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const newName = editNameInput.value.trim();
+    const newColor = editForm.querySelector('input[name="edit-color"]:checked').value;
+
+    if (newName && newColor) {
+      const oldName = currentEditHabit.querySelector(".habit-name h3").textContent;
+      currentEditHabit.querySelector(".habit-name h3").textContent = newName;
+      currentEditHabit.classList.remove(currentEditHabit.classList[1]);
+      currentEditHabit.classList.add(newColor);
+
+      const habitIndex = habits.findIndex(habit => habit.name === oldName);
+      habits[habitIndex].name = newName;
+      habits[habitIndex].color = newColor;
+
+      updateLocalStorage();
+      editModal.style.display = "none";
+    } else {
+      alert("Please enter a valid name and select a color.");
+    }
+  });
+
+  const resetModal = document.getElementById('reset-modal');
+  const confirmResetButton = document.getElementById('confirm-reset');
+  handleEnterKey(resetModal, confirmResetButton);
+
+  const templateModal = document.getElementById('template-modal');
+  const confirmTemplateButton = document.getElementById('confirm-template');
+  handleEnterKey(templateModal, confirmTemplateButton);
+
+  const deleteModal = document.getElementById('delete-modal');
+  const confirmDeleteButton = document.getElementById('confirm-delete');
+  handleEnterKey(deleteModal, confirmDeleteButton);
+
+  handleEnterKey(helpModal, closeHelpButton);
+
+  handleEnterKey(editModal, saveEditButton);
 });

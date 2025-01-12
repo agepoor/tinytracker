@@ -930,6 +930,18 @@ h1.title {
 
 .habit-edit-button {
   background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.habit-edit-button:hover {
+  color: var(--text-main);
+}
+
+.habit-edit-button {
+  background: transparent;
   color: transparent;
   position: absolute;
   left: -1.8rem;
@@ -1687,4 +1699,42 @@ body.banana {
 
 [data-theme="dark"] .context-menu-item:hover {
   background-color: var(--oc-gray-7);
+}
+
+.modal-content {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 90%;
+  color: var(--text-main);
+}
+
+.modal-content h3 {
+  margin: 0 0 1rem;
+  color: var(--text-main);
+}
+
+.modal-content .form-control {
+  margin-bottom: 1rem;
+}
+
+.modal-content .form-control label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.modal-content .form-control input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.modal-content .btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
