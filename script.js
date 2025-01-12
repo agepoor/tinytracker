@@ -233,6 +233,28 @@ applauseSound.volume = 0.5; // A bit louder for the applause
 const applauseCheerSound = new Audio('raw/main/assets/applause-cheer.mp3');
 applauseCheerSound.volume = 0.5; // Even louder for the cheer
 
+const discoFunkSound = new Audio('raw/main/assets/disco-funk.mp3');
+discoFunkSound.volume = 0.5; // Funky disco sound
+
+const bongoDrumSound = new Audio('raw/main/assets/bongo-and-drum.mp3');
+bongoDrumSound.volume = 0.5; // Bongo and drum sound
+
+let currentAnimationTimeout = null;
+let currentSound = null;
+
+function stopCurrentEffect() {
+  if (currentAnimationTimeout) {
+    clearTimeout(currentAnimationTimeout);
+    currentAnimationTimeout = null;
+  }
+  if (currentSound) {
+    currentSound.pause();
+    currentSound.currentTime = 0;
+    currentSound = null;
+  }
+  document.body.classList.remove("ecstatic", "disco", "banana");
+}
+
 function updateHabits() {
   const spanElement = this.children[0];
   const habit_title = this.parentNode.dataset.hTitle;
@@ -263,10 +285,6 @@ function updateHabits() {
   if (!hasPlannedDays && hasExecutedDays && this.dataset.hDay != 0) {
     habit_state = true;
     habit_container.classList.add("finished");
-    applauseSound.currentTime = 0;  // Reset sound in case it's still playing
-    applauseSound.play();  // Play the applause sound
-    habit_container.classList.add("celebrate");  // Add celebration animation
-    setTimeout(() => habit_container.classList.remove("celebrate"), 2000);  // Remove animation after 2 seconds
   } else {
     habit_state = false;
     habit_container.classList.remove("finished");
@@ -275,14 +293,34 @@ function updateHabits() {
   updateHabitsData(habit_title, day_index, this.dataset.hDay, habit_state);
 
   // Check if all habits are finished and no checkmark was set to 0
-  if (this.dataset.hDay != 0) {
-    const allFinished = habits.every(habit => habit.finished);
-    if (allFinished) {
-      applauseCheerSound.currentTime = 0;  // Reset sound in case it's still playing
-      applauseCheerSound.play();  // Play the applause cheer sound
-      document.body.classList.add("ecstatic");  // Add ecstatic animation to body
-      setTimeout(() => document.body.classList.remove("ecstatic"), 3000);  // Remove animation after 3 seconds
-    }
+  const allFinished = habits.every(habit => habit.finished);
+  if (allFinished) {
+    stopCurrentEffect();
+    const effects = [
+      { sound: applauseCheerSound, animation: "ecstatic", duration: 8000 },
+      { sound: discoFunkSound, animation: "disco", duration: 15000 },
+      { sound: bongoDrumSound, animation: "banana", duration: 15000 }
+    ];
+    const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+    
+    randomEffect.sound.currentTime = 0;  // Reset sound in case it's still playing
+    randomEffect.sound.play();  // Play the random sound
+    currentSound = randomEffect.sound;
+    document.body.classList.add(randomEffect.animation);  // Add random animation to body
+    currentAnimationTimeout = setTimeout(() => {
+      document.body.classList.remove(randomEffect.animation);
+      currentSound = null;
+    }, randomEffect.duration);  // Remove animation after specified duration
+  } else if (habit_state) {
+    stopCurrentEffect();
+    applauseSound.currentTime = 0;  // Reset sound in case it's still playing
+    applauseSound.play();  // Play the applause sound
+    currentSound = applauseSound;
+    habit_container.classList.add("celebrate");  // Add celebration animation
+    currentAnimationTimeout = setTimeout(() => {
+      habit_container.classList.remove("celebrate");
+      currentSound = null;
+    }, 15000);  // Remove animation after 15 seconds
   }
 }
 

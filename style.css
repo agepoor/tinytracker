@@ -998,6 +998,27 @@ body.ecstatic {
   animation: ecstatic 1s ease-in-out infinite;
 }
 
+@keyframes disco {
+  0%, 100% { background-color: var(--oc-blue-0); }
+  25% { background-color: var(--oc-pink-0); }
+  50% { background-color: var(--oc-yellow-0); }
+  75% { background-color: var(--oc-green-0); }
+}
+
+body.disco {
+  animation: disco 0.5s linear infinite;
+}
+
+@keyframes banana {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+body.banana {
+  background: url('raw/main/assets/banana.gif') center center / cover no-repeat;
+  animation: banana 1s ease-in-out forwards;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     padding: 1rem;
