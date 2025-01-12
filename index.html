@@ -68,6 +68,9 @@
             <button id="dark-mode-toggle" class="btn theme-btn">
               <i class="fas fa-moon"></i>Theme
             </button>
+            <button id="help-button" class="btn help-btn">
+              <i class="fas fa-question-circle"></i>Help
+            </button>
           </div>
           <input
             type="file"
@@ -226,6 +229,76 @@
           <button class="btn template-btn" id="confirm-template">
             Load Template
           </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-container" id="help-modal">
+      <div class="modal">
+        <h3>Help & Principles</h3>
+        <p>
+          Welcome to the Tiny Habit Tracker! This tool helps you track your
+          habits weekly.
+        </p>
+
+        <h4>📅 Why Weekly Tracking?</h4>
+        <ul>
+          <li>Focus on short-term goals for better habit formation</li>
+          <li>Stay motivated with weekly progress</li>
+          <li>Make quick adjustments to your routine</li>
+          <li>For long-term tracking, consider using a different app</li>
+        </ul>
+
+        <h4>💡 General Tips on Habit Formation</h4>
+        <ul>
+          <li><strong>Start Small:</strong> Begin with manageable habits</li>
+          <li>
+            <strong>Be Consistent:</strong> Perform habits at the same time
+            daily
+          </li>
+          <li>
+            <strong>Track Progress:</strong> Monitor and celebrate small wins
+          </li>
+          <li>
+            <strong>Learn More:</strong> Read books like:
+            <ul>
+              <li>"Atomic Habits" by James Clear</li>
+              <li>"The Power of Habit" by Charles Duhigg</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4>🛠️ How to Use</h4>
+        <ul>
+          <li><strong>Add habits:</strong> Click the "+" button</li>
+          <li><strong>Edit habits:</strong> Click on a habit name</li>
+          <li>
+            <strong>Track daily:</strong> Click day cells to mark progress
+          </li>
+          <li>
+            <strong>Manage data:</strong>
+            <ul>
+              <li>Export habits to save them</li>
+              <li>Import habits from a file</li>
+              <li>Reset to clear all progress</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4>✨ Hidden Surprises</h4>
+        <ul>
+          <li>
+            <strong>Complete a habit:</strong> Watch your habit row light up
+            when you finish all planned days
+          </li>
+          <li>
+            <strong>Perfect week:</strong> Complete all habits for a special
+            celebration effect
+          </li>
+        </ul>
+
+        <div class="modal-buttons">
+          <button class="btn close-btn" id="close-help">Close</button>
         </div>
       </div>
     </div>

@@ -676,6 +676,7 @@ function addHabit(e) {
 
     // let color = "red";
 
+    let color = '';
     [...habit_colors].forEach((i) => {
       if (i.checked == true) {
         color = i.value;
@@ -753,3 +754,17 @@ darkModeToggle.addEventListener("click", () => {
 const currentDayIndex = new Date().getDay();
 const calDays = document.querySelectorAll('.cal-day');
 calDays[currentDayIndex === 0 ? 6 : currentDayIndex - 1].classList.add('current-day');
+
+document.addEventListener("DOMContentLoaded", () => {
+  const helpButton = document.getElementById("help-button");
+  const helpModal = document.getElementById("help-modal");
+  const closeHelpButton = document.getElementById("close-help");
+
+  helpButton.addEventListener("click", () => {
+    helpModal.style.display = "flex";
+  });
+
+  closeHelpButton.addEventListener("click", () => {
+    helpModal.style.display = "none";
+  });
+});

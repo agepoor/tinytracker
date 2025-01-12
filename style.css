@@ -1346,6 +1346,16 @@ body.banana {
   background-color: var(--oc-violet-2);
 }
 
+.btn.help-btn {
+  background-color: var(--oc-blue-2);
+  border-color: var(--oc-blue-5);
+  color: var(--oc-blue-9);
+}
+
+.btn.help-btn:hover {
+  background-color: var(--oc-blue-3);
+}
+
 [data-theme="dark"] .btn {
   background-color: var(--oc-gray-8);
   color: var(--oc-gray-0);
@@ -1578,19 +1588,21 @@ body.banana {
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  max-width: 500px;
   width: 90%;
   color: var(--text-main);
+  overflow-y: auto;
+  max-height: 80%;
 }
 
 .modal h3 {
   margin: 0 0 1rem;
-  color: var(--oc-gray-9);
+  color: var(--text-main);
 }
 
 .modal p {
   margin: 0 0 1.5rem;
-  color: var(--oc-gray-7);
+  color: var(--text-muted);
   line-height: 1.5;
 }
 
@@ -1600,14 +1612,17 @@ body.banana {
   gap: 1rem;
 }
 
-.modal .template-btn {
-  background-color: var(--oc-indigo-2);
-  border-color: var(--oc-indigo-5);
-  color: var(--oc-indigo-9);
+[data-theme="dark"] .modal {
+  background: var(--oc-gray-8);
+  color: var(--oc-gray-1);
 }
 
-.modal .template-btn:hover {
-  background-color: var(--oc-indigo-3);
+[data-theme="dark"] .modal h3 {
+  color: var(--oc-gray-1);
+}
+
+[data-theme="dark"] .modal p {
+  color: var(--oc-gray-4);
 }
 
 .habit-table .habit-day span i {
