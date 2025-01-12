@@ -829,7 +829,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       deleteItem.onclick = () => {
-        habitRow.querySelector(".habit-delete").click();
+        showDeleteConfirmation(habitRow);
         contextMenu.style.display = "none";
       };
     } else {
@@ -854,9 +854,39 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       deleteItem.onclick = () => {
-        habitRow.querySelector(".habit-delete").click();
+        showDeleteConfirmation(habitRow);
         contextMenu.style.display = "none";
       };
     });
   });
+
+  const showDeleteConfirmation = (habitRow) => {
+    const modal = document.getElementById('delete-modal');
+    const confirmBtn = document.getElementById('confirm-delete');
+    const cancelBtn = document.getElementById('cancel-delete');
+
+    modal.style.display = 'flex';
+
+    const handleConfirm = () => {
+      habitRow.remove();
+      const nameHabit = habitRow.dataset.hTitle;
+      habits = habits.filter(habit => habit.name !== nameHabit);
+      updateLocalStorage();
+      modal.style.display = 'none';
+      cleanup();
+    };
+
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      cleanup();
+    };
+
+    const cleanup = () => {
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  };
 });
