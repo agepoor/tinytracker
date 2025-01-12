@@ -334,7 +334,38 @@ function addHabitDOM(habit) {
   `;
 
   habitlist.appendChild(habitRow);
+  
+  // Add context menu handlers for the new habit
+  const contextBtn = habitRow.querySelector(".habit-context-btn");
+  contextBtn.addEventListener("click", handleContextMenu);
+  contextBtn.addEventListener("contextmenu", handleContextMenu);
+
   addHabitDaysDOM();
+}
+
+// Add this new function to handle context menu events
+function handleContextMenu(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const habitRow = e.target.closest(".habit");
+  const contextMenu = document.querySelector(".context-menu");
+  
+  contextMenu.style.display = "flex";
+  contextMenu.style.top = `${e.clientY + window.scrollY}px`;
+  contextMenu.style.left = `${e.clientX + window.scrollX}px`;
+
+  const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
+  const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+
+  editItem.onclick = () => {
+    showEditModal(habitRow);
+    contextMenu.style.display = "none";
+  };
+
+  deleteItem.onclick = () => {
+    showDeleteConfirmation(habitRow);
+    contextMenu.style.display = "none";
+  };
 }
 
 // Inserts habit states into DOM
@@ -405,7 +436,7 @@ function updateHabits() {
     clickSound.play();
   } else {
     this.dataset.hDay = 0;
-    spanElement.classList.remove("executed");
+    spanElement.classList.remove('executed');
   }
 
   // Check all days excluding context menu and name columns
@@ -471,12 +502,81 @@ function updateLocalStorage() {
   localStorage.setItem("habits", JSON.stringify(habits));
 }
 
-// Show prompt
+// Replace the showPrompt function
 function showPrompt() {
-  prompt_container.style.visibility = "visible";
-  prompt.style.visibility = "visible";
-  title.style.filter = "blur(5px)";
-  container.style.filter = "blur(5px)";
+  const promptContainer = document.getElementById("habit-prompt-container");
+  promptContainer.style.display = "flex";
+  
+  // Reset form
+  habit_name.value = "";
+  habit_days.forEach(day => day.checked = false);
+  habit_colors[0].checked = true;
+  
+  // Focus on input
+  habit_name.focus();
+
+  // Add escape key handler
+  const handleEscape = (e) => {
+    if (e.key === "Escape") {
+      closePrompt(e);
+      document.removeEventListener("keydown", handleEscape);
+    }
+  };
+  document.addEventListener("keydown", handleEscape);
+}
+
+// Update closePrompt
+function closePrompt(e) {
+  e.preventDefault();
+  document.getElementById("habit-prompt-container").style.display = "none";
+}
+
+// Update the addHabit function to close the modal properly
+function addHabit(e) {
+  e.preventDefault();
+
+  // Boolean function for namecheck
+  const names = habits.map((item) => item.name);
+  const doubleCheck = (item) => item === habit_name.value;
+
+  if (habit_name.value.trim() === "") {
+    alert("Please enter a habit name");
+    return;
+  }
+
+  if (names.some(doubleCheck) === false) {
+    const days = [];
+
+    habit_days.forEach((item) => {
+      if (item.checked == false) {
+        days.push(0);
+      } else {
+        days.push(1);
+      }
+    });
+
+    let color = '';
+    [...habit_colors].forEach((i) => {
+      if (i.checked == true) {
+        color = i.value;
+      }
+    });
+
+    const habit = {
+      name: habit_name.value,
+      days: days,
+      color: color,
+      finished: false,
+    };
+
+    habits.push(habit);
+    addHabitDOM(habit);
+    addEventListeners();
+    updateLocalStorage();
+    document.getElementById("habit-prompt-container").style.display = "none";
+  } else {
+    alert("A habit with this name already exists");
+  }
 }
 
 // Event listeners
@@ -545,64 +645,6 @@ function changeColor(e) {
   updateLocalStorage();
 }
 
-function addHabit(e) {
-  e.preventDefault();
-
-  // Boolean function for namecheck
-  const names = habits.map((item) => {
-    return item.name;
-  });
-
-  const doubleCheck = (item) => item === habit_name.value;
-
-  if (names.some(doubleCheck) === false) {
-    const days = [];
-
-    habit_days.forEach((item) => {
-      if (item.checked == false) {
-        days.push(0);
-      } else {
-        days.push(1);
-      }
-    });
-
-    // let color = "red";
-
-    let color = '';
-    [...habit_colors].forEach((i) => {
-      if (i.checked == true) {
-        color = i.value;
-      }
-    });
-
-    const habit = {
-      name: habit_name.value,
-      days: days,
-      color: color,
-      finished: false,
-    };
-
-    habits.push(habit);
-
-    addHabitDOM(habit);
-
-    addEventListeners();
-
-    updateLocalStorage();
-  } else {
-    alert("Did you already add a habit with this name?");
-  }
-}
-
-function closePrompt(e) {
-  e.preventDefault();
-
-  prompt_container.style.visibility = "hidden";
-  prompt.style.visibility = "hidden";
-  title.style.filter = "blur(0px)";
-  container.style.filter = "blur(0px)";
-}
-
 /* Swap elements (not used yet) */
 function swapElements(list, position1, position2) {
   temp = list[position1];
@@ -613,11 +655,9 @@ function swapElements(list, position1, position2) {
   updateLocalStorage();
 }
 
-// Dark mode toggle
+// Dark mode toggle (Move these lines before using them)
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const moonIcon = darkModeToggle.querySelector("i");
-
-// Check for saved theme preference or use system preference
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 const currentTheme = localStorage.getItem("theme");
 
@@ -688,7 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
       contextMenu.style.display = "flex";
       // Adjust for scrolling
       contextMenu.style.top = `${e.clientY + window.scrollY}px`;
-      contextMenu.style.left = `${e.clientX + window.scrollX}px`;
+      contextMenu.style.left = `${e.clientX + window.scrollY}px`;
 
       const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
       const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
@@ -714,7 +754,7 @@ document.addEventListener("DOMContentLoaded", () => {
       contextMenu.style.display = "flex";
       // Adjust for scrolling
       contextMenu.style.top = `${e.clientY + window.scrollY}px`;
-      contextMenu.style.left = `${e.clientX + window.scrollX}px`;
+      contextMenu.style.left = `${e.clientX + window.scrollY}px`;
 
       const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
       const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
@@ -777,7 +817,7 @@ document.addEventListener("DOMContentLoaded", () => {
       contextMenu.style.display = "flex";
       // Adjust for scrolling
       contextMenu.style.top = `${e.clientY + window.scrollY}px`;
-      contextMenu.style.left = `${e.clientX + window.scrollX}px`;
+      contextMenu.style.left = `${e.clientX + window.scrollY}px`;
 
       const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
       const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
