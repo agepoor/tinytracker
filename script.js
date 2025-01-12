@@ -641,7 +641,7 @@ function changeColor(e) {
     if (indexCurrentColor == 0) {
       habits[indexCurrentName].color = colors[colors.length - 1];
     } else {
-      habits[indexCurrentColor].color = colors[indexCurrentColor - 1];
+      habits[indexCurrentName].color = colors[indexCurrentColor - 1];
     }
   }
 
@@ -749,3 +749,7 @@ darkModeToggle.addEventListener("click", () => {
     moonIcon.classList.add("fa-sun");
   }
 });
+
+const currentDayIndex = new Date().getDay();
+const calDays = document.querySelectorAll('.cal-day');
+calDays[currentDayIndex === 0 ? 6 : currentDayIndex - 1].classList.add('current-day');
