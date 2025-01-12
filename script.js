@@ -721,3 +721,31 @@ function swapElements(list, position1, position2) {
 
   updateLocalStorage();
 }
+
+// Dark mode toggle
+const darkModeToggle = document.getElementById("dark-mode-toggle");
+const moonIcon = darkModeToggle.querySelector("i");
+
+// Check for saved theme preference or use system preference
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+const currentTheme = localStorage.getItem("theme");
+
+if (currentTheme === "dark" || (!currentTheme && prefersDarkScheme.matches)) {
+  document.body.setAttribute("data-theme", "dark");
+  moonIcon.classList.remove("fa-moon");
+  moonIcon.classList.add("fa-sun");
+}
+
+darkModeToggle.addEventListener("click", () => {
+  if (document.body.getAttribute("data-theme") === "dark") {
+    document.body.removeAttribute("data-theme");
+    localStorage.setItem("theme", "light");
+    moonIcon.classList.remove("fa-sun");
+    moonIcon.classList.add("fa-moon");
+  } else {
+    document.body.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+    moonIcon.classList.remove("fa-moon");
+    moonIcon.classList.add("fa-sun");
+  }
+});

@@ -4,10 +4,72 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Light theme (default) */
+  --bg-main: var(--oc-gray-1);
+  --bg-card: var(--oc-white);
+  --text-main: var(--oc-gray-9);
+  --text-muted: var(--oc-gray-6);
+  --border-color: var(--oc-gray-3);
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-main: var(--oc-gray-9);
+  --bg-card: var(--oc-gray-8);
+  --text-main: var(--oc-gray-1);
+  --text-muted: var(--oc-gray-4);
+  --border-color: var(--oc-gray-7);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+
+  /* Dark theme specific table styles */
+  .habit-table tbody tr:hover {
+    background: var(--oc-gray-7);
+  }
+  
+  .habit-table .habit.finished {
+    background-color: var(--oc-gray-7);  /* Darker for dark mode */
+  }
+
+  .habit-table .habit.finished .habit-name,
+  .habit-table .habit.finished .habit-day {
+    color: var(--oc-gray-5);
+  }
+
+  .habit-prompt {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+  }
+
+  .github-corner svg {
+    fill: var(--oc-gray-7);
+    color: var(--bg-card);
+  }
+
+  .habit-table .habit-day span.executed i {
+    /* Better contrast in dark mode */
+    text-shadow: 0 0 1px var(--oc-gray-9);
+    filter: brightness(1.2);
+  }
+
+  .habit-table .habit.finished:hover {
+    background-color: var(--oc-gray-6);  /* Dark hover */
+  }
+
+  .habit-table .habit.finished .habit-day span.executed i {
+    /* Slightly different treatment for dark mode */
+    opacity: 0.4;
+    filter: blur(1px) saturate(0.7) brightness(0.9);
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background-color: #e9ecef; /* Slightly darker background */
+  background-color: var(--bg-main);
+  color: var(--text-main);
   margin: 0;
   padding: 1rem;
 }
@@ -37,7 +99,7 @@ h1 {
 }
 
 .habit {
-  background: white;
+  background: var(--bg-card);
   position: relative;
   line-height: 2rem;
   margin: 0.4rem 0;
@@ -184,8 +246,9 @@ h1 {
 
     h3 {
       margin: 0;
+      font-size: 1.1rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-weight: 500;
     }
   }
 
@@ -307,7 +370,7 @@ h1 {
 }
 
 .habit-table .cal-day {
-  color: #343a40; /* Darker text for better contrast */
+  color: var(--text-main);
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.85rem;
@@ -315,14 +378,15 @@ h1 {
 }
 
 .habit-table .cal-day.past {
-  color: #868e96; /* Darker gray for past days */
+  color: var(--text-muted);
 }
 
 .habit-table tbody tr {
-  background: white;
+  background: var(--bg-card);
+  color: var(--text-main);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .habit-table tbody tr:hover {
@@ -330,24 +394,66 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Update the finished state styles */
 .habit-table .habit.finished {
-  background-color: #f1f3f5; /* Darker background for finished state */
+  background-color: var(--oc-gray-2);  /* Light default */
+}
+
+[data-theme="dark"] .habit-table .habit.finished {
+  background-color: var(--oc-gray-7);  /* Darker for dark mode */
+}
+
+/* Update hover states for finished rows */
+.habit-table .habit.finished:hover {
+  background-color: var(--oc-gray-3);  /* Light hover */
+}
+
+[data-theme="dark"] .habit-table .habit.finished:hover {
+  background-color: var(--oc-gray-6);  /* Dark hover */
 }
 
 .habit-table .habit.finished .habit-name,
 .habit-table .habit.finished .habit-day {
-  color: #868e96; /* Darker gray for finished items */
-}
-
-.habit-table .habit.finished {
-  background-color: #f8f9fa;
-}
-
-.habit-table .habit.finished .habit-name,
-.habit-table .habit.finished .habit-day {
-  color: #adb5bd;
+  color: var(--oc-gray-5);
   text-decoration: line-through;
   font-style: italic;
+}
+
+.habit-table .habit.finished .habit-day span.executed i {
+  /* Remove line-through from checkmarks */
+  text-decoration: none;
+  /* Add some transparency */
+  opacity: 0.5;
+  /* Add slight blur effect */
+  filter: blur(1px) saturate(0.8);
+  /* Smooth transition */
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .habit-table .habit.finished .habit-day span.executed i {
+  /* Slightly different treatment for dark mode */
+  opacity: 0.4;
+  filter: blur(1px) saturate(0.7) brightness(0.9);
+}
+
+.habit-table .habit.finished .habit-day span.executed i {
+  /* Remove line-through from checkmarks */
+  text-decoration: none;
+  /* Add some transparency */
+  opacity: 0.5;
+  /* Add slight blur effect */
+  filter: blur(0.3px) saturate(0.8);
+  /* Smooth transition */
+  transition: all 0.3s ease;
+}
+
+.habit-table .habit.finished .habit-day span.executed i {
+  /* Remove line-through from checkmarks */
+  text-decoration: none;
+  /* Add some transparency instead */
+  opacity: 0.7;
+  /* Keep the color but make it slightly muted */
+  filter: saturate(0.8);
 }
 
 .habit-table .habit-name {
@@ -362,7 +468,7 @@ h1 {
 }
 
 .habit-table .habit-day.planned {
-  color: silver;
+  color: var(--text-muted);
 }
 
 .habit-table .habit-day.executed {
@@ -462,25 +568,25 @@ h1 {
 /* Buttons */
 .habit-new {
   cursor: pointer;
-  color: var(--oc-gray-7);
-  background: var(--oc-gray-0);
+  color: var(--text-main);
+  background: var(--bg-card);
   text-align: center;
   line-height: 2rem;
-  border: 1px solid var(--oc-gray-3);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.3px;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px var(--shadow-color);
   margin: 1rem 0;
 }
 
 .habit-new:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  background-color: var(--oc-gray-1);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  background-color: var(--bg-main);
 }
 
 /* Button Styles */
@@ -1200,6 +1306,27 @@ body.banana {
   background-color: var(--oc-red-2);
 }
 
+/* Theme toggle button */
+.btn.theme-btn {
+  background-color: var(--oc-violet-1);
+  border-color: var(--oc-violet-3);
+  color: var(--oc-violet-9);
+}
+
+.btn.theme-btn:hover {
+  background-color: var(--oc-violet-2);
+}
+
+[data-theme="dark"] .btn.theme-btn {
+  background-color: var(--oc-yellow-1);
+  border-color: var(--oc-yellow-3);
+  color: var(--oc-yellow-9);
+}
+
+[data-theme="dark"] .btn.theme-btn:hover {
+  background-color: var(--oc-yellow-2);
+}
+
 /* Mobile Adjustments */
 @media screen and (max-width: 600px) {
   .button-groups-container {
@@ -1333,12 +1460,13 @@ body.banana {
 }
 
 .modal {
-  background: var(--oc-gray-0);
+  background: var(--bg-card);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 90%;
+  color: var(--text-main);
 }
 
 .modal h3 {
@@ -1366,4 +1494,9 @@ body.banana {
 
 .modal .template-btn:hover {
   background-color: var(--oc-indigo-3);
+}
+
+.habit-table .habit-day span i {
+  font-size: 1.1rem;  /* Make checkmarks bigger */
+  font-weight: 900;   /* Make them bolder */
 }
