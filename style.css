@@ -1279,3 +1279,13 @@ body.banana {
   justify-content: flex-end;
   gap: 1rem;
 }
+
+.modal .template-btn {
+  background-color: var(--oc-indigo-2);
+  border-color: var(--oc-indigo-5);
+  color: var(--oc-indigo-9);
+}
+
+.modal .template-btn:hover {
+  background-color: var(--oc-indigo-3);
+}

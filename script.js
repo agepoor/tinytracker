@@ -88,9 +88,36 @@ const template_beginner = document.getElementById("template-beginner");
 const template_medium = document.getElementById("template-medium");
 const template_advanced = document.getElementById("template-advanced");
 
-template_beginner.addEventListener("click", () => loadTemplate("beginner"));
-template_medium.addEventListener("click", () => loadTemplate("medium"));
-template_advanced.addEventListener("click", () => loadTemplate("advanced"));
+template_beginner.addEventListener("click", () => showTemplateConfirmation("beginner"));
+template_medium.addEventListener("click", () => showTemplateConfirmation("medium"));
+template_advanced.addEventListener("click", () => showTemplateConfirmation("advanced"));
+
+function showTemplateConfirmation(level) {
+  const modal = document.getElementById('template-modal');
+  const confirmBtn = document.getElementById('confirm-template');
+  const cancelBtn = document.getElementById('cancel-template');
+  
+  modal.style.display = 'flex';
+  
+  const handleConfirm = () => {
+    loadTemplate(level);
+    modal.style.display = 'none';
+    cleanup();
+  };
+  
+  const handleCancel = () => {
+    modal.style.display = 'none';
+    cleanup();
+  };
+  
+  const cleanup = () => {
+    confirmBtn.removeEventListener('click', handleConfirm);
+    cancelBtn.removeEventListener('click', handleCancel);
+  };
+  
+  confirmBtn.addEventListener('click', handleConfirm);
+  cancelBtn.addEventListener('click', handleCancel);
+}
 
 function loadTemplate(level) {
   let templateHabits = [];
