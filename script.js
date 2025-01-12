@@ -818,8 +818,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const habitRow = e.target.closest(".habit");
       contextMenu.style.display = "flex";
-      contextMenu.style.top = `${e.clientY}px`;
-      contextMenu.style.left = `${e.clientX}px`;
+      // Adjust for scrolling
+      contextMenu.style.top = `${e.clientY + window.scrollY}px`;
+      contextMenu.style.left = `${e.clientX + window.scrollX}px`;
 
       const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
       const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
@@ -843,8 +844,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const habitRow = e.target.closest(".habit");
       contextMenu.style.display = "flex";
-      contextMenu.style.top = `${e.clientY}px`;
-      contextMenu.style.left = `${e.clientX}px`;
+      // Adjust for scrolling
+      contextMenu.style.top = `${e.clientY + window.scrollY}px`;
+      contextMenu.style.left = `${e.clientX + window.scrollX}px`;
 
       const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
       const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
