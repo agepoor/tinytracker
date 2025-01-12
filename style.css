@@ -395,6 +395,11 @@ h1.title {
   border-radius: 4px;
 }
 
+[data-theme="dark"] .cal-day.current-day {
+  background-color: var(--bg-main);
+  color: var(--oc-yellow-4);
+}
+
 .habit-table tbody tr {
   background: var(--bg-card);
   color: var(--text-main);
