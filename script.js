@@ -616,7 +616,6 @@ function closeEditElements() {
   const editElements = document.querySelectorAll(".habit-edit");
   editElements.forEach((i) => {
     i.parentNode.removeChild(i);
-    console.log(i);
   });
 }
 
@@ -643,7 +642,6 @@ function deleteHabit() {
   const nameHabit = this.parentNode.dataset.hTitle;
   const filteredHabits = habits.filter((item) => item.name !== nameHabit);
   habits = filteredHabits;
-  // console.log(habits);
   this.parentNode.remove();
   updateLocalStorage();
 }
@@ -716,8 +714,6 @@ function addHabit(e) {
         color = i.value;
       }
     });
-
-    console.log(color);
 
     const habit = {
       name: habit_name.value,
@@ -800,5 +796,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeHelpButton.addEventListener("click", () => {
     helpModal.style.display = "none";
+  });
+
+  const contextMenu = document.createElement("div");
+  contextMenu.classList.add("context-menu");
+  contextMenu.innerHTML = `
+    <div class="context-menu-item">Edit</div>
+    <div class="context-menu-item">Delete</div>
+  `;
+  document.body.appendChild(contextMenu);
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".context-menu") && !e.target.closest(".habit-context-btn")) {
+      contextMenu.style.display = "none";
+    }
+  });
+
+  document.addEventListener("contextmenu", (e) => {
+    if (e.target.closest(".habit-context-btn")) {
+      e.preventDefault();
+      const habitRow = e.target.closest(".habit");
+      contextMenu.style.display = "flex";
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+
+      const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
+      const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+
+      editItem.onclick = () => {
+        habitRow.querySelector(".habit-edit-button").click();
+        contextMenu.style.display = "none";
+      };
+
+      deleteItem.onclick = () => {
+        habitRow.querySelector(".habit-delete").click();
+        contextMenu.style.display = "none";
+      };
+    } else {
+      contextMenu.style.display = "none";
+    }
+  });
+
+  document.querySelectorAll(".habit-context-btn").forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const habitRow = e.target.closest(".habit");
+      contextMenu.style.display = "flex";
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+
+      const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
+      const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+
+      editItem.onclick = () => {
+        habitRow.querySelector(".habit-edit-button").click();
+        contextMenu.style.display = "none";
+      };
+
+      deleteItem.onclick = () => {
+        habitRow.querySelector(".habit-delete").click();
+        contextMenu.style.display = "none";
+      };
+    });
   });
 });

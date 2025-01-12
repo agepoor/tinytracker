@@ -244,7 +244,6 @@ h1.title {
     background: transparent;
     cursor: grab;
     position: relative;
-    border-radius: 3px 0 0 3px;
     min-height: 3rem;
     padding: 0.5rem 1rem;
 
@@ -1655,4 +1654,37 @@ body.banana {
 .habit-table .habit-day span i {
   font-size: 1.1rem;  /* Make checkmarks bigger */
   font-weight: 900;   /* Make them bolder */
+}
+
+.context-menu {
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  border-radius: 4px;
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.context-menu-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: background-color 0.2s ease;
+}
+
+.context-menu-item:hover {
+  background-color: var(--oc-gray-2);
+}
+
+[data-theme="dark"] .context-menu {
+  background-color: var(--oc-gray-8);
+  border-color: var(--oc-gray-6);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .context-menu-item:hover {
+  background-color: var(--oc-gray-7);
 }
