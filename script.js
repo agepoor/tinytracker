@@ -324,6 +324,11 @@ function addHabitDOM(habit) {
   });
 
   habitRow.innerHTML = `
+    <td class="habit-context">
+      <button class="habit-context-btn">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+    </td>
     <td class="habit-name"><h3>${habit.name}</h3></td>
     ${habitDaysHTML}
   `;

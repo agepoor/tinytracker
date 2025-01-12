@@ -344,6 +344,13 @@ h1.title {
 
 .habit-table th:first-child,
 .habit-table td:first-child {
+  width: 5%; /* Adjusted width for context menu button */
+  text-align: center;
+  padding-left: 0.5rem;
+}
+
+.habit-table th:nth-child(2),
+.habit-table td:nth-child(2) {
   width: 30%; /* More space for habit names */
   text-align: left;
   padding-left: 1.5rem;
@@ -657,7 +664,7 @@ h1.title {
 .btn.reset-btn {
   background-color: var(--oc-red-2);
   border-color: var(--oc-red-5);
-  color: var(--oc-red-9);
+  color: var (--oc-red-9);
 }
 
 .btn.reset-btn:hover {
