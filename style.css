@@ -540,6 +540,37 @@ h1 {
   background-color: var(--oc-indigo-3);
 }
 
+/* Template Buttons with difficulty colors */
+.btn.template-btn.beginner {
+  background-color: var(--oc-green-1);
+  border-color: var(--oc-green-3);
+  color: var(--oc-green-9);
+}
+
+.btn.template-btn.beginner:hover {
+  background-color: var(--oc-green-2);
+}
+
+.btn.template-btn.medium {
+  background-color: var(--oc-yellow-1);
+  border-color: var(--oc-yellow-3);
+  color: var(--oc-yellow-9);
+}
+
+.btn.template-btn.medium:hover {
+  background-color: var(--oc-yellow-2);
+}
+
+.btn.template-btn.advanced {
+  background-color: var(--oc-red-1);
+  border-color: var(--oc-red-3);
+  color: var(--oc-red-9);
+}
+
+.btn.template-btn.advanced:hover {
+  background-color: var(--oc-red-2);
+}
+
 /* Utility Buttons */
 .btn.close-btn {
   background-color: transparent;
@@ -550,6 +581,22 @@ h1 {
 .btn.close-btn:hover {
   background-color: var(--oc-gray-1);
   color: var(--oc-gray-7);
+}
+
+/* Import Button */
+.btn.import-btn {
+  background-color: var(--oc-blue-2);
+  border-color: var(--oc-blue-5);
+  color: var(--oc-blue-9);
+}
+
+.btn.import-btn:hover {
+  background-color: var(--oc-blue-3);
+}
+
+/* Icon in buttons */
+.btn i {
+  margin-right: 0.5rem;
 }
 
 /* Button Groups */
@@ -1099,6 +1146,37 @@ body.banana {
 
 .btn.template-btn:hover {
   background-color: var(--oc-violet-2);
+}
+
+/* Template Buttons with difficulty colors */
+.btn.template-btn.beginner {
+  background-color: var(--oc-green-1);
+  border-color: var(--oc-green-3);
+  color: var(--oc-green-9);
+}
+
+.btn.template-btn.beginner:hover {
+  background-color: var(--oc-green-2);
+}
+
+.btn.template-btn.medium {
+  background-color: var(--oc-yellow-1);
+  border-color: var(--oc-yellow-3);
+  color: var(--oc-yellow-9);
+}
+
+.btn.template-btn.medium:hover {
+  background-color: var(--oc-yellow-2);
+}
+
+.btn.template-btn.advanced {
+  background-color: var(--oc-red-1);
+  border-color: var(--oc-red-3);
+  color: var(--oc-red-9);
+}
+
+.btn.template-btn.advanced:hover {
+  background-color: var(--oc-red-2);
 }
 
 /* Action Buttons */

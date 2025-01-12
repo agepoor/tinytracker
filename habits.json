@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Drink Water",
+    "color": "blue",
+    "days": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "finished": true
+  },
+  {
+    "name": "Walk 10 Minutes",
+    "color": "green",
+    "days": [
+      0,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2
+    ],
+    "finished": false
+  }
+]

@@ -22,9 +22,13 @@ const habit_colors = document
 
 const reset_tracker = document.getElementById("reset-tracker");
 const save_habits = document.getElementById("save-habits");
+const import_habits = document.getElementById("import-habits");
+const file_input = document.getElementById("file-input");
 
 reset_tracker.addEventListener("click", resetTracker);
 save_habits.addEventListener("click", saveHabitsToFile);
+import_habits.addEventListener("click", () => file_input.click());
+file_input.addEventListener("change", importHabitsFromFile);
 
 function resetTracker() {
   const modal = document.getElementById('reset-modal');
@@ -84,6 +88,69 @@ function saveHabitsToFile() {
   document.body.removeChild(a);
 }
 
+function importHabitsFromFile(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const importedHabits = JSON.parse(e.target.result);
+        
+        // Validate the imported data
+        if (Array.isArray(importedHabits) && importedHabits.every(habit => 
+          habit.name && 
+          habit.color && 
+          Array.isArray(habit.days) && 
+          habit.days.length === 7 &&
+          typeof habit.finished === 'boolean'
+        )) {
+          // Show confirmation modal
+          const modal = document.getElementById('template-modal');
+          const confirmBtn = document.getElementById('confirm-template');
+          const cancelBtn = document.getElementById('cancel-template');
+          
+          // Update modal text
+          modal.querySelector('h3').textContent = 'Import Habits';
+          modal.querySelector('p').textContent = 'Are you sure you want to import these habits? This will replace all your current habits.';
+          modal.style.display = 'flex';
+          
+          const handleConfirm = () => {
+            habits = importedHabits;
+            habitlist.innerHTML = "";
+            addHabits();
+            updateLocalStorage();
+            modal.style.display = 'none';
+            cleanup();
+          };
+          
+          const handleCancel = () => {
+            modal.style.display = 'none';
+            cleanup();
+          };
+          
+          const cleanup = () => {
+            confirmBtn.removeEventListener('click', handleConfirm);
+            cancelBtn.removeEventListener('click', handleCancel);
+            // Reset modal text
+            modal.querySelector('h3').textContent = 'Load Template';
+            modal.querySelector('p').textContent = 'Are you sure you want to load this template? This will replace all your current habits.';
+          };
+          
+          confirmBtn.addEventListener('click', handleConfirm);
+          cancelBtn.addEventListener('click', handleCancel);
+        } else {
+          alert('Invalid habits file format');
+        }
+      } catch (error) {
+        alert('Error reading file: ' + error.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+  // Reset the file input so the same file can be imported again
+  e.target.value = '';
+}
+
 const template_beginner = document.getElementById("template-beginner");
 const template_medium = document.getElementById("template-medium");
 const template_advanced = document.getElementById("template-advanced");
@@ -123,21 +190,24 @@ function loadTemplate(level) {
   let templateHabits = [];
   if (level === "beginner") {
     templateHabits = [
-      { name: "Drink Water", color: "blue", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Walk 10 Minutes", color: "green", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+      { name: "Drink Water", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
+      { name: "Take a Walk", color: "green", days: [1, 0, 1, 0, 1, 0, 0], finished: false },
+      { name: "Stretch", color: "cyan", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
     ];
   } else if (level === "medium") {
     templateHabits = [
-      { name: "Exercise", color: "red", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Read a Book", color: "yellow", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Meditate", color: "violet", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+      { name: "Exercise", color: "red", days: [1, 0, 1, 0, 1, 0, 0], finished: false },
+      { name: "Read 20min", color: "yellow", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
+      { name: "Meditate", color: "violet", days: [1, 1, 0, 1, 1, 0, 0], finished: false },
+      { name: "No Snacks", color: "orange", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
     ];
   } else if (level === "advanced") {
     templateHabits = [
-      { name: "Run 5km", color: "orange", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Learn a New Skill", color: "cyan", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Cook a New Recipe", color: "pink", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "Write a Journal", color: "violet", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+      { name: "5km Run", color: "orange", days: [1, 0, 1, 0, 1, 0, 0], finished: false },
+      { name: "Code 1hr", color: "cyan", days: [1, 1, 1, 0, 1, 0, 0], finished: false },
+      { name: "Meal Prep", color: "pink", days: [0, 0, 0, 0, 0, 1, 0], finished: false },
+      { name: "Journal", color: "violet", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
+      { name: "Cold Shower", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
     ];
   }
 

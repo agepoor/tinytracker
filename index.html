@@ -40,14 +40,14 @@
         <div class="button-group-wrapper">
           <h3 class="button-group-title">Templates</h3>
           <div class="button-group template-buttons">
-            <button id="template-beginner" class="btn template-btn">
-              Beginner
+            <button id="template-beginner" class="btn template-btn beginner">
+              <i class="fas fa-leaf"></i>Beginner
             </button>
-            <button id="template-medium" class="btn template-btn">
-              Medium
+            <button id="template-medium" class="btn template-btn medium">
+              <i class="fas fa-fire"></i>Medium
             </button>
-            <button id="template-advanced" class="btn template-btn">
-              Advanced
+            <button id="template-advanced" class="btn template-btn advanced">
+              <i class="fas fa-dragon"></i>Advanced
             </button>
           </div>
         </div>
@@ -56,11 +56,22 @@
         <div class="button-group-wrapper">
           <h3 class="button-group-title">Actions</h3>
           <div class="button-group action-buttons">
-            <button id="save-habits" class="btn save-btn">Save Habits</button>
+            <button id="save-habits" class="btn save-btn">
+              <i class="fas fa-download"></i>Export
+            </button>
+            <button id="import-habits" class="btn import-btn">
+              <i class="fas fa-upload"></i>Import
+            </button>
             <button id="reset-tracker" class="btn reset-btn">
-              Reset Tracker
+              <i class="fas fa-undo"></i>Reset
             </button>
           </div>
+          <input
+            type="file"
+            id="file-input"
+            accept=".json"
+            style="display: none"
+          />
         </div>
       </div>
       <div class="creator">
