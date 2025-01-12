@@ -622,7 +622,7 @@ h1.title {
 [data-theme="dark"] .btn {
   background-color: var(--oc-gray-8);
   border-color: var(--oc-gray-6);
-  color: var(--oc-gray-1);
+  color: var(--oc-gray-0);
 }
 
 [data-theme="dark"] .btn:hover {
@@ -1335,14 +1335,85 @@ body.banana {
   background-color: var(--oc-violet-2);
 }
 
+[data-theme="dark"] .btn {
+  background-color: var(--oc-gray-8);
+  color: var(--oc-gray-0);
+  border-color: var(--oc-gray-6);
+}
+
+[data-theme="dark"] .btn:hover {
+  background-color: var(--oc-gray-7);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .btn.template-btn {
+  background-color: var(--oc-violet-8);
+  border-color: var(--oc-violet-6);
+  color: var(--oc-violet-0);
+}
+
+[data-theme="dark"] .btn.template-btn:hover {
+  background-color: var(--oc-violet-7);
+}
+
+[data-theme="dark"] .btn.template-btn.beginner {
+  background-color: var(--oc-green-8);
+  border-color: var(--oc-green-6);
+  color: var(--oc-green-0);
+}
+
+[data-theme="dark"] .btn.template-btn.beginner:hover {
+  background-color: var(--oc-green-7);
+}
+
+[data-theme="dark"] .btn.template-btn.medium {
+  background-color: var(--oc-yellow-8);
+  border-color: var(--oc-yellow-6);
+  color: var(--oc-yellow-0);
+}
+
+[data-theme="dark"] .btn.template-btn.medium:hover {
+  background-color: var(--oc-yellow-7);
+}
+
+[data-theme="dark"] .btn.template-btn.advanced {
+  background-color: var(--oc-red-8);
+  border-color: var(--oc-red-6);
+  color: var(--oc-red-0);
+}
+
+[data-theme="dark"] .btn.template-btn.advanced:hover {
+  background-color: var(--oc-red-7);
+}
+
+[data-theme="dark"] .btn.save-btn {
+  background-color: var(--oc-green-8);
+  border-color: var(--oc-green-6);
+  color: var(--oc-green-0);
+}
+
+[data-theme="dark"] .btn.save-btn:hover {
+  background-color: var(--oc-green-7);
+}
+
+[data-theme="dark"] .btn.reset-btn {
+  background-color: var(--oc-red-8);
+  border-color: var(--oc-red-6);
+  color: var(--oc-red-0);
+}
+
+[data-theme="dark"] .btn.reset-btn:hover {
+  background-color: var(--oc-red-7);
+}
+
 [data-theme="dark"] .btn.theme-btn {
-  background-color: var(--oc-yellow-1);
-  border-color: var(--oc-yellow-3);
-  color: var(--oc-yellow-9);
+  background-color: var(--oc-yellow-8);
+  border-color: var(--oc-yellow-6);
+  color: var(--oc-yellow-0);
 }
 
 [data-theme="dark"] .btn.theme-btn:hover {
-  background-color: var(--oc-yellow-2);
+  background-color: var(--oc-yellow-7);
 }
 
 /* Mobile Adjustments */
@@ -1411,6 +1482,8 @@ body.banana {
 
 [data-theme="dark"] .creator {
   text-shadow: 0 0 6px var(--oc-violet-5);
+  background: none;
+  border-top: 1px solid var(--oc-violet-2);
 }
 
 .credits-container {
