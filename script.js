@@ -1,4 +1,4 @@
-/* Default screen */
+// Default screen elements
 const container = document.getElementById("container");
 const title = document.getElementsByTagName("H1")[0];
 const habitlist = document.getElementById("habit-list");
@@ -7,7 +7,7 @@ const habitedit = document.getElementById("habit-edit");
 const habiteditname = document.getElementById("habit-edit-name");
 const current_day = new Date().getDay();
 
-/* Prompt screen */
+// Prompt screen elements
 const prompt_container = document.getElementById("habit-prompt-container");
 const prompt = document.getElementById("habit-prompt");
 const add_habit = document.getElementById("add-habit");
@@ -20,16 +20,19 @@ const habit_colors = document
   .getElementById("habit-color")
   .getElementsByTagName("input");
 
+// Action buttons
 const reset_tracker = document.getElementById("reset-tracker");
 const save_habits = document.getElementById("save-habits");
 const import_habits = document.getElementById("import-habits");
 const file_input = document.getElementById("file-input");
 
+// Event listeners for action buttons
 reset_tracker.addEventListener("click", resetTracker);
 save_habits.addEventListener("click", saveHabitsToFile);
 import_habits.addEventListener("click", () => file_input.click());
 file_input.addEventListener("change", importHabitsFromFile);
 
+// Function to reset the tracker
 function resetTracker() {
   const modal = document.getElementById('reset-modal');
   const confirmBtn = document.getElementById('confirm-reset');
@@ -77,6 +80,7 @@ function resetTracker() {
   cancelBtn.addEventListener('click', handleCancel);
 }
 
+// Function to save habits to a file
 function saveHabitsToFile() {
   const blob = new Blob([JSON.stringify(habits, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -88,6 +92,7 @@ function saveHabitsToFile() {
   document.body.removeChild(a);
 }
 
+// Function to import habits from a file
 function importHabitsFromFile(e) {
   const file = e.target.files[0];
   if (file) {
@@ -151,6 +156,7 @@ function importHabitsFromFile(e) {
   e.target.value = '';
 }
 
+// Template buttons
 const template_beginner = document.getElementById("template-beginner");
 const template_medium = document.getElementById("template-medium");
 const template_advanced = document.getElementById("template-advanced");
@@ -167,6 +173,7 @@ template_nutrition.addEventListener("click", () => showTemplateConfirmation("nut
 template_studying.addEventListener("click", () => showTemplateConfirmation("studying"));
 template_sports.addEventListener("click", () => showTemplateConfirmation("sports"));
 
+// Function to show template confirmation modal
 function showTemplateConfirmation(level) {
   const modal = document.getElementById('template-modal');
   const confirmBtn = document.getElementById('confirm-template');
@@ -194,6 +201,7 @@ function showTemplateConfirmation(level) {
   cancelBtn.addEventListener('click', handleCancel);
 }
 
+// Function to load a template
 function loadTemplate(level) {
   let templateHabits = [];
   if (level === "beginner") {
@@ -246,6 +254,7 @@ function loadTemplate(level) {
   updateLocalStorage();
 }
 
+// Color options
 let colors = [
   "gray",
   "red",
@@ -262,6 +271,7 @@ let colors = [
   "orange",
 ];
 
+// Initial habits list
 let habitsList = [
   // {
   //   name: "Voetbal",
@@ -271,10 +281,9 @@ let habitsList = [
   // }
 ];
 
+// Load habits from local storage or use default list
 const localStorageHabits = JSON.parse(localStorage.getItem("habits"));
-
-let habits =
-  localStorage.getItem("habits") !== null ? localStorageHabits : habitsList;
+let habits = localStorage.getItem("habits") !== null ? localStorageHabits : habitsList;
 
 // Add existing habits to DOM
 function addHabits() {
@@ -283,7 +292,8 @@ function addHabits() {
   });
   addEventListeners();
 }
-// Update styleCalendar function to work with table header cells
+
+// Style calendar days
 function styleCalendar() {
   const days = [...document.querySelectorAll('.cal-day')].slice(0, current_day - 1);
   days.forEach((item) => {
@@ -291,6 +301,7 @@ function styleCalendar() {
   });
 }
 
+// Add color options to the color picker
 function addColors() {
   colors.forEach((i) => {
     addColorInput(i);
@@ -298,16 +309,18 @@ function addColors() {
   habit_color.children[0].children[0].checked = true;
 }
 
+// Add a single color option to the color picker
 function addColorInput(color) {
   const colorItem = `<label class="${color}">${color}<input type="radio" name="color" class="${color}" id="${color}" value="${color}"><span class="radio ${color}"></span></label>`;
   habit_color.innerHTML += colorItem;
 }
 
+// Initialize habits, calendar, and colors
 addHabits();
 styleCalendar();
 addColors();
 
-// Adds habit items to DOM
+// Add a habit to the DOM
 function addHabitDOM(habit) {
   const habitRow = document.createElement("tr");
   habitRow.classList.add("habit");
@@ -343,7 +356,7 @@ function addHabitDOM(habit) {
   addHabitDaysDOM();
 }
 
-// Add this new function to handle context menu events
+// Handle context menu events
 function handleContextMenu(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -368,7 +381,7 @@ function handleContextMenu(e) {
   };
 }
 
-// Inserts habit states into DOM
+// Insert habit states into the DOM
 function addHabitDaysDOM() {
   const habitDays = document.querySelectorAll(".habit-day");
 
@@ -385,7 +398,7 @@ function addHabitDaysDOM() {
   });
 }
 
-// Updates habit day data attributes and styles after click
+// Sound effects
 const clickSound = new Audio('raw/main/assets/ding.mp3');
 clickSound.volume = 0.2; // Not too loud, just a subtle tick
 
@@ -404,6 +417,7 @@ bongoDrumSound.volume = 0.5; // Bongo and drum sound
 let currentAnimationTimeout = null;
 let currentSound = null;
 
+// Stop current sound and animation
 function stopCurrentEffect() {
   if (currentAnimationTimeout) {
     clearTimeout(currentAnimationTimeout);
@@ -417,6 +431,7 @@ function stopCurrentEffect() {
   document.body.classList.remove("ecstatic", "disco", "banana");
 }
 
+// Update habits after click
 function updateHabits() {
   const spanElement = this.children[0];
   const habit_title = this.parentNode.dataset.hTitle;
@@ -486,7 +501,7 @@ function updateHabits() {
   }
 }
 
-// Updates Habits Object
+// Update habits data
 function updateHabitsData(name, index, data, state) {
   habits.forEach((item) => {
     if (item.name == name) {
@@ -498,11 +513,12 @@ function updateHabitsData(name, index, data, state) {
   updateLocalStorage();
 }
 
+// Update local storage
 function updateLocalStorage() {
   localStorage.setItem("habits", JSON.stringify(habits));
 }
 
-// Replace the showPrompt function
+// Show prompt for adding a new habit
 function showPrompt() {
   const promptContainer = document.getElementById("habit-prompt-container");
   promptContainer.style.display = "flex";
@@ -525,13 +541,13 @@ function showPrompt() {
   document.addEventListener("keydown", handleEscape);
 }
 
-// Update closePrompt
+// Close the prompt
 function closePrompt(e) {
   e.preventDefault();
   document.getElementById("habit-prompt-container").style.display = "none";
 }
 
-// Update the addHabit function to close the modal properly
+// Add a new habit
 function addHabit(e) {
   e.preventDefault();
 
@@ -597,7 +613,7 @@ function addEventListeners() {
   });
 }
 
-
+// Delete a habit
 function deleteHabit() {
   const nameHabit = this.parentNode.dataset.hTitle;
   const filteredHabits = habits.filter((item) => item.name !== nameHabit);
@@ -606,6 +622,7 @@ function deleteHabit() {
   updateLocalStorage();
 }
 
+// Change habit color
 function changeColor(e) {
   e.preventDefault();
   const currentName = this.parentNode.innerText.trim();
@@ -655,18 +672,20 @@ function swapElements(list, position1, position2) {
   updateLocalStorage();
 }
 
-// Dark mode toggle (Move these lines before using them)
+// Dark mode toggle
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const moonIcon = darkModeToggle.querySelector("i");
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 const currentTheme = localStorage.getItem("theme");
 
+// Set initial theme based on user preference or system settings
 if (currentTheme === "dark" || (!currentTheme && prefersDarkScheme.matches)) {
   document.body.setAttribute("data-theme", "dark");
   moonIcon.classList.remove("fa-moon");
   moonIcon.classList.add("fa-sun");
 }
 
+// Toggle dark mode on button click
 darkModeToggle.addEventListener("click", () => {
   if (document.body.getAttribute("data-theme") === "dark") {
     document.body.removeAttribute("data-theme");
@@ -681,10 +700,12 @@ darkModeToggle.addEventListener("click", () => {
   }
 });
 
+// Highlight the current day in the calendar
 const currentDayIndex = new Date().getDay();
 const calDays = document.querySelectorAll('.cal-day');
 calDays[currentDayIndex === 0 ? 6 : currentDayIndex - 1].classList.add('current-day');
 
+// Handle Enter key press for modals
 function handleEnterKey(modal, confirmButton) {
   modal.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -694,19 +715,23 @@ function handleEnterKey(modal, confirmButton) {
   });
 }
 
+// DOMContentLoaded event to initialize event listeners and context menu
 document.addEventListener("DOMContentLoaded", () => {
   const helpButton = document.getElementById("help-button");
   const helpModal = document.getElementById("help-modal");
   const closeHelpButton = document.getElementById("close-help");
 
+  // Show help modal
   helpButton.addEventListener("click", () => {
     helpModal.style.display = "flex";
   });
 
+  // Close help modal
   closeHelpButton.addEventListener("click", () => {
     helpModal.style.display = "none";
   });
 
+  // Create context menu
   const contextMenu = document.createElement("div");
   contextMenu.classList.add("context-menu");
   contextMenu.innerHTML = `
@@ -715,12 +740,14 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
   document.body.appendChild(contextMenu);
 
+  // Hide context menu when clicking outside
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".context-menu") && !e.target.closest(".habit-context-btn")) {
       contextMenu.style.display = "none";
     }
   });
 
+  // Show context menu on right-click
   document.addEventListener("contextmenu", (e) => {
     if (e.target.closest(".habit-context-btn")) {
       e.preventDefault();
@@ -747,6 +774,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Attach context menu to habit buttons
   document.querySelectorAll(".habit-context-btn").forEach(button => {
     button.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -760,7 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
 
       editItem.onclick = () => {
-        habitRow.querySelector(".habit-edit-button").click();
+        showEditModal(habitRow);
         contextMenu.style.display = "none";
       };
 
@@ -771,6 +799,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Show delete confirmation modal
   const showDeleteConfirmation = (habitRow) => {
     const modal = document.getElementById('delete-modal');
     const confirmBtn = document.getElementById('confirm-delete');
@@ -801,6 +830,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelBtn.addEventListener('click', handleCancel);
   };
 
+  // Edit habit modal elements
   const editModal = document.getElementById("edit-modal");
   const editForm = document.getElementById("edit-form");
   const editNameInput = document.getElementById("edit-name");
@@ -810,30 +840,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentEditHabit = null;
 
-  document.querySelectorAll(".habit-context-btn").forEach(button => {
-    button.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const habitRow = e.target.closest(".habit");
-      contextMenu.style.display = "flex";
-      // Adjust for scrolling
-      contextMenu.style.top = `${e.clientY + window.scrollY}px`;
-      contextMenu.style.left = `${e.clientX + window.scrollY}px`;
-
-      const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
-      const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
-
-      editItem.onclick = () => {
-        showEditModal(habitRow);
-        contextMenu.style.display = "none";
-      };
-
-      deleteItem.onclick = () => {
-        showDeleteConfirmation(habitRow);
-        contextMenu.style.display = "none";
-      };
-    });
-  });
-
+  // Show edit modal
   function showEditModal(habitRow) {
     currentEditHabit = habitRow;
     const habitName = habitRow.querySelector(".habit-name h3").textContent;
@@ -850,11 +857,13 @@ document.addEventListener("DOMContentLoaded", () => {
     editModal.style.display = "flex";
   }
 
+  // Cancel edit
   cancelEditButton.addEventListener("click", (e) => {
     e.preventDefault();
     editModal.style.display = "none";
   });
 
+  // Save edited habit
   saveEditButton.addEventListener("click", (e) => {
     e.preventDefault();
     const newName = editNameInput.value.trim();
@@ -877,6 +886,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Handle Enter key for modals
   const resetModal = document.getElementById('reset-modal');
   const confirmResetButton = document.getElementById('confirm-reset');
   handleEnterKey(resetModal, confirmResetButton);
