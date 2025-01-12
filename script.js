@@ -390,7 +390,8 @@ function updateHabits() {
   const spanElement = this.children[0];
   const habit_title = this.parentNode.dataset.hTitle;
   const habit_container = this.parentNode;
-  const day_index = [...this.parentNode.children].indexOf(this) - 1; // Subtract 1 to account for habit name cell
+  // Fix: Account for both context menu button and habit name columns
+  const day_index = [...this.parentNode.children].indexOf(this) - 2; 
   let habit_state = false;
 
   if (this.dataset.hDay == 0) {
@@ -400,19 +401,18 @@ function updateHabits() {
     this.dataset.hDay = 2;
     spanElement.classList.remove("planned");
     spanElement.classList.add("executed");
-    clickSound.currentTime = 0;  // Reset sound in case it's still playing
-    clickSound.play();  // Play the tick sound
+    clickSound.currentTime = 0;
+    clickSound.play();
   } else {
     this.dataset.hDay = 0;
     spanElement.classList.remove("executed");
   }
 
-  // Check if all days are either executed (2) or empty (0) - no planned days (1)
-  const days = [...habit_container.children].slice(1); // Skip the habit name cell
+  // Check all days excluding context menu and name columns
+  const days = [...habit_container.children].slice(2);
   const hasPlannedDays = days.some(day => day.dataset.hDay == 1);
   const hasExecutedDays = days.some(day => day.dataset.hDay == 2);
   
-  // Set finished state if there are no planned days and at least one executed day
   if (!hasPlannedDays && hasExecutedDays && this.dataset.hDay != 0) {
     habit_state = true;
     habit_container.classList.add("finished");
@@ -505,138 +505,139 @@ function addEditListeners() {
   });
 }
 
-function openEditHabit() {
-  const editButtons = document.querySelectorAll(".habit-edit-button");
-  editButtons.forEach((element) => {
-    element.classList.remove("clicked");
-  });
-  addEditListeners();
-  this.removeEventListener("click", openEditHabit);
-  closeEditElements();
-  this.classList.add("clicked");
-  const thisElement = this.closest(".habit").dataset.hTitle;
-  const editElement = document.createElement("div");
-  editElement.id = "habit-edit";
-  editElement.classList.add("habit-edit");
-  colorElements = ``;
-  colors.forEach((i) => {
-    colorElements += `<div class="color-btn"><input type="radio" id="${i}" name="color-edit"><label for="${i}" class="color-btn ${i}"></label></div>`;
-  });
-  // console.log(colorElements);
-  editElement.innerHTML = `
-      <h5>Edit habit</h5>
-      <form id="habit-edit-form">
-        <div class="form-control">
-          <label for="habit-edit-name"><input
-            type="text"
-            name="habit-edit-name"
-            id="habit-edit-name"
-            placeholder="Habit name"
-            value="${thisElement}"
-          /></label>
+// Old edit functionality
+// function openEditHabit() {
+//   const editButtons = document.querySelectorAll(".habit-edit-button");
+//   editButtons.forEach((element) => {
+//     element.classList.remove("clicked");
+//   });
+//   addEditListeners();
+//   this.removeEventListener("click", openEditHabit);
+//   closeEditElements();
+//   this.classList.add("clicked");
+//   const thisElement = this.closest(".habit").dataset.hTitle;
+//   const editElement = document.createElement("div");
+//   editElement.id = "habit-edit";
+//   editElement.classList.add("habit-edit");
+//   colorElements = ``;
+//   colors.forEach((i) => {
+//     colorElements += `<div class="color-btn"><input type="radio" id="${i}" name="color-edit"><label for="${i}" class="color-btn ${i}"></label></div>`;
+//   });
+//   // console.log(colorElements);
+//   editElement.innerHTML = `
+//       <h5>Edit habit</h5>
+//       <form id="habit-edit-form">
+//         <div class="form-control">
+//           <label for="habit-edit-name"><input
+//             type="text"
+//             name="habit-edit-name"
+//             id="habit-edit-name"
+//             placeholder="Habit name"
+//             value="${thisElement}"
+//           /></label>
           
-        </div>
-        <div class="clrs form-control">
-          ${colorElements}
-        </div>
-        <div class="btns form-control">
-          <button id="close-btn" class="close-btn btn">Close</button>
-          <button id="save-btn" class="save-btn btn">Save</button>
-        </div>
-      </form>`;
-  this.appendChild(editElement);
+//         </div>
+//         <div class="clrs form-control">
+//           ${colorElements}
+//         </div>
+//         <div class="btns form-control">
+//           <button id="close-btn" class="close-btn btn">Close</button>
+//           <button id="save-btn" class="save-btn btn">Save</button>
+//         </div>
+//       </form>`;
+//   this.appendChild(editElement);
 
-  /* TODO: set selected color */
-  const returnCurrentColor = colors
-    .filter((i) => {
-      return this.closest(".habit").classList.contains(i);
-    })
-    .toString();
-  const colorInput = document.querySelector(
-    `[name="color-edit"]#${returnCurrentColor}`
-  );
-  colorInput.checked = true;
+//   /* TODO: set selected color */
+//   const returnCurrentColor = colors
+//     .filter((i) => {
+//       return this.closest(".habit").classList.contains(i);
+//     })
+//     .toString();
+//   const colorInput = document.querySelector(
+//     `[name="color-edit"]#${returnCurrentColor}`
+//   );
+//   colorInput.checked = true;
 
-  // console.log(returnCurrentColor, colorInput, colorInput.checked);
+//   // console.log(returnCurrentColor, colorInput, colorInput.checked);
 
-  const habiteditclose = document.getElementById("close-btn");
-  const habiteditsave = document.getElementById("save-btn");
-  habiteditclose.addEventListener("click", closeEditHabit);
-  habiteditsave.addEventListener("click", saveEditHabit);
-}
+//   const habiteditclose = document.getElementById("close-btn");
+//   const habiteditsave = document.getElementById("save-btn");
+//   habiteditclose.addEventListener("click", closeEditHabit);
+//   habiteditsave.addEventListener("click", saveEditHabit);
+// }
 
-function saveEditHabit(e) {  // Add 'e' parameter here
-  e.preventDefault();
-  const newName = document.getElementById("habit-edit-name").value;
-  const thisElement = this.closest(".habit");
-  const oldHabit = habits.find((i) => i.name == thisElement.dataset.hTitle);
+// function saveEditHabit(e) {  // Add 'e' parameter here
+//   e.preventDefault();
+//   const newName = document.getElementById("habit-edit-name").value;
+//   const thisElement = this.closest(".habit");
+//   const oldHabit = habits.find((i) => i.name == thisElement.dataset.hTitle);
 
-  const DOMHabitIndex = [...thisElement.parentElement.children].findIndex(
-    (i) => i == thisElement
-  );
-  const checkIfExists = habits.some((i) => i.name == newName);
-  const existingIndex = habits.findIndex((i) => i.name == newName);
+//   const DOMHabitIndex = [...thisElement.parentElement.children].findIndex(
+//     (i) => i == thisElement
+//   );
+//   const checkIfExists = habits.some((i) => i.name == newName);
+//   const existingIndex = habits.findIndex((i) => i.name == newName);
 
-  /* update habit name */
-  if (checkIfExists == true && DOMHabitIndex !== existingIndex) {
-    alert("Name already exists!");
-  } else {
-    /* Update habit list*/
-    oldHabit.name = newName;
+//   /* update habit name */
+//   if (checkIfExists == true && DOMHabitIndex !== existingIndex) {
+//     alert("Name already exists!");
+//   } else {
+//     /* Update habit list*/
+//     oldHabit.name = newName;
 
-    /* DOM Updates */
-    const elementName = thisElement.getElementsByClassName("habit-name");
-    [...elementName].forEach((i) => {
-      i.innerHTML = `<h3>${newName}</h3>`;
-    });
-    thisElement.dataset.hTitle = `${newName}`;
-  }
+//     /* DOM Updates */
+//     const elementName = thisElement.getElementsByClassName("habit-name");
+//     [...elementName].forEach((i) => {
+//       i.innerHTML = `<h3>${newName}</h3>`;
+//     });
+//     thisElement.dataset.hTitle = `${newName}`;
+//   }
 
-  /* update color */
-  const selectedClr = document.querySelector('input[name="color-edit"]:checked')
-    .id;
-  console.log(selectedClr);
-  colors.forEach((element) => {
-    if (thisElement.classList.contains(element)) {
-      thisElement.classList.remove(element);
-    }
-  });
-  oldHabit.color = selectedClr;
-  thisElement.classList.add(selectedClr);
+//   /* update color */
+//   const selectedClr = document.querySelector('input[name="color-edit"]:checked')
+//     .id;
+//   console.log(selectedClr);
+//   colors.forEach((element) => {
+//     if (thisElement.classList.contains(element)) {
+//       thisElement.classList.remove(element);
+//     }
+//   });
+//   oldHabit.color = selectedClr;
+//   thisElement.classList.add(selectedClr);
 
-  /* DOM Removals */
-  this.closest(".habit-edit-button").classList.remove("clicked");
-  this.closest(".habit-edit").remove();
+//   /* DOM Removals */
+//   this.closest(".habit-edit-button").classList.remove("clicked");
+//   this.closest(".habit-edit").remove();
 
-  setTimeout(addEditListeners, 100);
-  updateLocalStorage();
-}
+//   setTimeout(addEditListeners, 100);
+//   updateLocalStorage();
+// }
 
-function closeEditElements() {
-  const editElements = document.querySelectorAll(".habit-edit");
-  editElements.forEach((i) => {
-    i.parentNode.removeChild(i);
-  });
-}
+// function closeEditElements() {
+//   const editElements = document.querySelectorAll(".habit-edit");
+//   editElements.forEach((i) => {
+//     i.parentNode.removeChild(i);
+//   });
+// }
 
-/* From https://www.blustemy.io/detecting-a-click-outside-an-element-in-javascript/ */
+// /* From https://www.blustemy.io/detecting-a-click-outside-an-element-in-javascript/ */
 
-/* Fires when clicked outside of box or with close button */
-function closeEditHabit(e) {  // Already has 'e' parameter, no change needed
-  e.preventDefault();
-  const closestEditButton = this.closest(".habit-edit-button");
-  closestEditButton.classList.remove("clicked");
+// /* Fires when clicked outside of box or with close button */
+// function closeEditHabit(e) {  // Already has 'e' parameter, no change needed
+//   e.preventDefault();
+//   const closestEditButton = this.closest(".habit-edit-button");
+//   closestEditButton.classList.remove("clicked");
 
-  closeEditElements();
-  setTimeout(addEditListeners, 100);
-  // editElementButton.parentNode.removeChild(editElementChild);
-  /* Option 1a: Clicked close */
+//   closeEditElements();
+//   setTimeout(addEditListeners, 100);
+//   // editElementButton.parentNode.removeChild(editElementChild);
+//   /* Option 1a: Clicked close */
 
-  /* Option 1: Clicked outside of box */
+//   /* Option 1: Clicked outside of box */
 
-  /* Option 2: CLicked different */
-  // addEditListeners();
-}
+//   /* Option 2: CLicked different */
+//   // addEditListeners();
+// }
 
 function deleteHabit() {
   const nameHabit = this.parentNode.dataset.hTitle;

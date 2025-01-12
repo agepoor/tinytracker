@@ -318,5 +318,32 @@
         </div>
       </div>
     </div>
+
+    <div id="edit-modal" class="modal">
+      <div class="modal-content">
+        <h3>Edit Habit</h3>
+        <form id="edit-form">
+          <div class="form-control">
+            <label for="edit-name">Name</label>
+            <input
+              type="text"
+              id="edit-name"
+              name="edit-name"
+              placeholder="Enter new name"
+            />
+          </div>
+          <div class="form-control">
+            <label>Pick a color</label>
+            <div id="edit-colors" class="clrs">
+              <!-- color options to be loaded here -->
+            </div>
+          </div>
+          <div class="form-control btns">
+            <button id="cancel-edit" class="close-btn btn">Cancel</button>
+            <button id="save-edit" class="save-btn btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
