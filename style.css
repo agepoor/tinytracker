@@ -63,6 +63,10 @@
     opacity: 0.4;
     filter: blur(1px) saturate(0.7) brightness(0.9);
   }
+  
+  h1.title {
+    color: var(--oc-yellow-5);
+  }
 }
 
 body {
@@ -79,6 +83,10 @@ h1 {
   margin-top: 3rem;
   margin-bottom: 2rem;
   color: #1c7ed6; /* Bright blue colour */
+}
+
+h1.title {
+  color: var(--oc-blue-7);
 }
 
 @media screen and (max-width: 600px) {
@@ -609,6 +617,16 @@ h1 {
   transform: translateY(-1px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: var(--oc-gray-1);
+}
+
+[data-theme="dark"] .btn {
+  background-color: var(--oc-gray-8);
+  border-color: var(--oc-gray-6);
+  color: var(--oc-gray-1);
+}
+
+[data-theme="dark"] .btn:hover {
+  background-color: var(--oc-gray-7);
 }
 
 /* Action Buttons */
@@ -1391,6 +1409,10 @@ body.banana {
   transition: all 0.2s ease;
 }
 
+[data-theme="dark"] .creator {
+  text-shadow: 0 0 6px var(--oc-violet-5);
+}
+
 .credits-container {
   display: inline-flex;
   align-items: center;
@@ -1444,6 +1466,14 @@ body.banana {
   .bolt {
     font-size: 1rem;
   }
+}
+
+.creator .credits-text {
+  color: var(--oc-gray-9);
+}
+
+[data-theme="dark"] .creator .credits-text {
+  color: var(--oc-violet-2);
 }
 
 .modal-container {
