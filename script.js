@@ -159,6 +159,14 @@ template_beginner.addEventListener("click", () => showTemplateConfirmation("begi
 template_medium.addEventListener("click", () => showTemplateConfirmation("medium"));
 template_advanced.addEventListener("click", () => showTemplateConfirmation("advanced"));
 
+const template_nutrition = document.getElementById("template-nutrition");
+const template_studying = document.getElementById("template-studying");
+const template_sports = document.getElementById("template-sports");
+
+template_nutrition.addEventListener("click", () => showTemplateConfirmation("nutrition"));
+template_studying.addEventListener("click", () => showTemplateConfirmation("studying"));
+template_sports.addEventListener("click", () => showTemplateConfirmation("sports"));
+
 function showTemplateConfirmation(level) {
   const modal = document.getElementById('template-modal');
   const confirmBtn = document.getElementById('confirm-template');
@@ -208,6 +216,27 @@ function loadTemplate(level) {
       { name: "🥗 Meal Prep", color: "pink", days: [0, 0, 0, 0, 0, 1, 0], finished: false },
       { name: "📔 Journal", color: "violet", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
       { name: "🚿 Cold Shower", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
+    ];
+  } else if (level === "nutrition") {
+    templateHabits = [
+      { name: "🍎 Eat Fruit", color: "green", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "🥗 Eat Vegetables", color: "lime", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "🍳 Healthy Breakfast", color: "yellow", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
+      { name: "🍗 Protein Intake", color: "red", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+    ];
+  } else if (level === "studying") {
+    templateHabits = [
+      { name: "📚 Study 1hr", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
+      { name: "📝 Review Notes", color: "cyan", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
+      { name: "📖 Read Textbook", color: "indigo", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
+      { name: "🧠 Practice Problems", color: "violet", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
+    ];
+  } else if (level === "sports") {
+    templateHabits = [
+      { name: "⚽ Soccer Practice", color: "green", days: [1, 0, 1, 0, 0, 0, 0], finished: false },
+      { name: "🏋️‍♂️ Gym Workout", color: "red", days: [0, 1, 0, 1, 0, 1, 0], finished: false }, 
+      { name: "🏊‍♂️ Swimming", color: "blue", days: [1, 0, 0, 1, 0, 0, 0], finished: false },
+      { name: "🚴‍♂️ Cycling", color: "yellow", days: [0, 1, 0, 0, 1, 0, 0], finished: false }
     ];
   }
 

@@ -718,6 +718,11 @@ h1.title {
   color: var(--oc-gray-7);
 }
 
+[data-theme="dark"] .btn.close-btn:hover {
+  background-color: var(--oc-gray-7);
+  color: var(--oc-gray-0);
+}
+
 /* Import Button */
 .btn.import-btn {
   background-color: var(--oc-blue-2);
@@ -737,9 +742,24 @@ h1.title {
 /* Button Groups */
 .button-group {
   display: flex;
-  gap: 0.5rem;
-  margin: 1rem 0;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.button-group .btn {
+  flex: 1 1 calc(33.333% - 0.5rem);
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group .btn {
+    width: 100%;
+  }
 }
 
 .button-group + .button-group {
