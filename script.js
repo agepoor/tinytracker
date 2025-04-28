@@ -735,6 +735,37 @@ function showEditModal(habitRow) {
   editModal.style.display = "flex";
 }
 
+// Delete confirmation modal function - moved outside DOMContentLoaded for global access
+function showDeleteConfirmation(habitRow) {
+  const modal = document.getElementById("delete-modal");
+  const confirmBtn = document.getElementById("confirm-delete");
+  const cancelBtn = document.getElementById("cancel-delete");
+
+  modal.style.display = "flex";
+
+  const handleConfirm = () => {
+    habitRow.remove();
+    const nameHabit = habitRow.dataset.hTitle;
+    habits = habits.filter((habit) => habit.name !== nameHabit);
+    updateLocalStorage();
+    modal.style.display = "none";
+    cleanup();
+  };
+
+  const handleCancel = () => {
+    modal.style.display = "none";
+    cleanup();
+  };
+
+  const cleanup = () => {
+    confirmBtn.removeEventListener("click", handleConfirm);
+    cancelBtn.removeEventListener("click", handleCancel);
+  };
+
+  confirmBtn.addEventListener("click", handleConfirm);
+  cancelBtn.addEventListener("click", handleCancel);
+}
+
 // DOMContentLoaded event to initialize event listeners and context menu
 document.addEventListener("DOMContentLoaded", () => {
   const helpButton = document.getElementById("help-button");
@@ -829,37 +860,6 @@ document.addEventListener("DOMContentLoaded", () => {
       };
     });
   });
-
-  // Show delete confirmation modal
-  const showDeleteConfirmation = (habitRow) => {
-    const modal = document.getElementById("delete-modal");
-    const confirmBtn = document.getElementById("confirm-delete");
-    const cancelBtn = document.getElementById("cancel-delete");
-
-    modal.style.display = "flex";
-
-    const handleConfirm = () => {
-      habitRow.remove();
-      const nameHabit = habitRow.dataset.hTitle;
-      habits = habits.filter((habit) => habit.name !== nameHabit);
-      updateLocalStorage();
-      modal.style.display = "none";
-      cleanup();
-    };
-
-    const handleCancel = () => {
-      modal.style.display = "none";
-      cleanup();
-    };
-
-    const cleanup = () => {
-      confirmBtn.removeEventListener("click", handleConfirm);
-      cancelBtn.removeEventListener("click", handleCancel);
-    };
-
-    confirmBtn.addEventListener("click", handleConfirm);
-    cancelBtn.addEventListener("click", handleCancel);
-  };
 
   // Edit habit modal elements
   const editModal = document.getElementById("edit-modal");
