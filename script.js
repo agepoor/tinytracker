@@ -34,55 +34,57 @@ file_input.addEventListener("change", importHabitsFromFile);
 
 // Function to reset the tracker
 function resetTracker() {
-  const modal = document.getElementById('reset-modal');
-  const confirmBtn = document.getElementById('confirm-reset');
-  const cancelBtn = document.getElementById('cancel-reset');
+  const modal = document.getElementById("reset-modal");
+  const confirmBtn = document.getElementById("confirm-reset");
+  const cancelBtn = document.getElementById("cancel-reset");
 
-  modal.style.display = 'flex';
-  
+  modal.style.display = "flex";
+
   const handleConfirm = () => {
-    habits.forEach(habit => {
-      habit.days = habit.days.map(day => day === 2 ? 1 : day);
+    habits.forEach((habit) => {
+      habit.days = habit.days.map((day) => (day === 2 ? 1 : day));
       habit.finished = false;
     });
-    
+
     // Reset DOM
-    const habitRows = document.querySelectorAll('.habit');
-    habitRows.forEach(row => {
-      row.classList.remove('finished');
-      const days = row.querySelectorAll('.habit-day');
-      days.forEach(day => {
+    const habitRows = document.querySelectorAll(".habit");
+    habitRows.forEach((row) => {
+      row.classList.remove("finished");
+      const days = row.querySelectorAll(".habit-day");
+      days.forEach((day) => {
         if (day.dataset.hDay == 2) {
           day.dataset.hDay = 1;
-          const span = day.querySelector('span');
-          span.classList.remove('executed');
-          span.classList.add('planned');
+          const span = day.querySelector("span");
+          span.classList.remove("executed");
+          span.classList.add("planned");
         }
       });
     });
-    
+
     updateLocalStorage();
-    modal.style.display = 'none';
+    modal.style.display = "none";
     cleanup();
   };
-  
+
   const handleCancel = () => {
-    modal.style.display = 'none';
+    modal.style.display = "none";
     cleanup();
   };
-  
+
   const cleanup = () => {
-    confirmBtn.removeEventListener('click', handleConfirm);
-    cancelBtn.removeEventListener('click', handleCancel);
+    confirmBtn.removeEventListener("click", handleConfirm);
+    cancelBtn.removeEventListener("click", handleCancel);
   };
-  
-  confirmBtn.addEventListener('click', handleConfirm);
-  cancelBtn.addEventListener('click', handleCancel);
+
+  confirmBtn.addEventListener("click", handleConfirm);
+  cancelBtn.addEventListener("click", handleCancel);
 }
 
 // Function to save habits to a file
 function saveHabitsToFile() {
-  const blob = new Blob([JSON.stringify(habits, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify(habits, null, 2)], {
+    type: "application/json",
+  });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -97,63 +99,69 @@ function importHabitsFromFile(e) {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       try {
         const importedHabits = JSON.parse(e.target.result);
-        
+
         // Validate the imported data
-        if (Array.isArray(importedHabits) && importedHabits.every(habit => 
-          habit.name && 
-          habit.color && 
-          Array.isArray(habit.days) && 
-          habit.days.length === 7 &&
-          typeof habit.finished === 'boolean'
-        )) {
+        if (
+          Array.isArray(importedHabits) &&
+          importedHabits.every(
+            (habit) =>
+              habit.name &&
+              habit.color &&
+              Array.isArray(habit.days) &&
+              habit.days.length === 7 &&
+              typeof habit.finished === "boolean"
+          )
+        ) {
           // Show confirmation modal
-          const modal = document.getElementById('template-modal');
-          const confirmBtn = document.getElementById('confirm-template');
-          const cancelBtn = document.getElementById('cancel-template');
-          
+          const modal = document.getElementById("template-modal");
+          const confirmBtn = document.getElementById("confirm-template");
+          const cancelBtn = document.getElementById("cancel-template");
+
           // Update modal text
-          modal.querySelector('h3').textContent = 'Import Habits';
-          modal.querySelector('p').textContent = 'Are you sure you want to import these habits? This will replace all your current habits.';
-          modal.style.display = 'flex';
-          
+          modal.querySelector("h3").textContent = "Import Habits";
+          modal.querySelector("p").textContent =
+            "Are you sure you want to import these habits? This will replace all your current habits.";
+          modal.style.display = "flex";
+
           const handleConfirm = () => {
             habits = importedHabits;
             habitlist.innerHTML = "";
             addHabits();
             updateLocalStorage();
-            modal.style.display = 'none';
+            modal.style.display = "none";
             cleanup();
           };
-          
+
           const handleCancel = () => {
-            modal.style.display = 'none';
+            modal.style.display = "none";
             cleanup();
           };
-          
+
           const cleanup = () => {
-            confirmBtn.removeEventListener('click', handleConfirm);
-            cancelBtn.removeEventListener('click', handleCancel);
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
             // Reset modal text
-            modal.querySelector('h3').textContent = 'Load Template';
-            modal.querySelector('p').textContent = 'Are you sure you want to load this template? This will replace all your current habits.';
+            modal.querySelector("h3").textContent = "Load Template";
+            modal.querySelector("p").textContent =
+              "Are you sure you want to load this template? This will replace all your current habits.";
           };
-          
-          confirmBtn.addEventListener('click', handleConfirm);
-          cancelBtn.addEventListener('click', handleCancel);
+
+          confirmBtn.addEventListener("click", handleConfirm);
+          cancelBtn.addEventListener("click", handleCancel);
         } else {
-          alert('Invalid habits file format');
+          alert("Invalid habits file format");
         }
       } catch (error) {
-        alert('Error reading file: ' + error.message);
+        alert("Error reading file: " + error.message);
       }
     };
     reader.readAsText(file);
   }
   // Reset the file input so the same file can be imported again
-  e.target.value = '';
+  e.target.value = "";
 }
 
 // Template buttons
@@ -161,44 +169,56 @@ const template_beginner = document.getElementById("template-beginner");
 const template_medium = document.getElementById("template-medium");
 const template_advanced = document.getElementById("template-advanced");
 
-template_beginner.addEventListener("click", () => showTemplateConfirmation("beginner"));
-template_medium.addEventListener("click", () => showTemplateConfirmation("medium"));
-template_advanced.addEventListener("click", () => showTemplateConfirmation("advanced"));
+template_beginner.addEventListener("click", () =>
+  showTemplateConfirmation("beginner")
+);
+template_medium.addEventListener("click", () =>
+  showTemplateConfirmation("medium")
+);
+template_advanced.addEventListener("click", () =>
+  showTemplateConfirmation("advanced")
+);
 
 const template_nutrition = document.getElementById("template-nutrition");
 const template_studying = document.getElementById("template-studying");
 const template_sports = document.getElementById("template-sports");
 
-template_nutrition.addEventListener("click", () => showTemplateConfirmation("nutrition"));
-template_studying.addEventListener("click", () => showTemplateConfirmation("studying"));
-template_sports.addEventListener("click", () => showTemplateConfirmation("sports"));
+template_nutrition.addEventListener("click", () =>
+  showTemplateConfirmation("nutrition")
+);
+template_studying.addEventListener("click", () =>
+  showTemplateConfirmation("studying")
+);
+template_sports.addEventListener("click", () =>
+  showTemplateConfirmation("sports")
+);
 
 // Function to show template confirmation modal
 function showTemplateConfirmation(level) {
-  const modal = document.getElementById('template-modal');
-  const confirmBtn = document.getElementById('confirm-template');
-  const cancelBtn = document.getElementById('cancel-template');
-  
-  modal.style.display = 'flex';
-  
+  const modal = document.getElementById("template-modal");
+  const confirmBtn = document.getElementById("confirm-template");
+  const cancelBtn = document.getElementById("cancel-template");
+
+  modal.style.display = "flex";
+
   const handleConfirm = () => {
     loadTemplate(level);
-    modal.style.display = 'none';
+    modal.style.display = "none";
     cleanup();
   };
-  
+
   const handleCancel = () => {
-    modal.style.display = 'none';
+    modal.style.display = "none";
     cleanup();
   };
-  
+
   const cleanup = () => {
-    confirmBtn.removeEventListener('click', handleConfirm);
-    cancelBtn.removeEventListener('click', handleCancel);
+    confirmBtn.removeEventListener("click", handleConfirm);
+    cancelBtn.removeEventListener("click", handleCancel);
   };
-  
-  confirmBtn.addEventListener('click', handleConfirm);
-  cancelBtn.addEventListener('click', handleCancel);
+
+  confirmBtn.addEventListener("click", handleConfirm);
+  cancelBtn.addEventListener("click", handleCancel);
 }
 
 // Function to load a template
@@ -206,45 +226,165 @@ function loadTemplate(level) {
   let templateHabits = [];
   if (level === "beginner") {
     templateHabits = [
-      { name: "💧 Drink Water", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
-      { name: "🚶 Take a Walk", color: "green", days: [1, 0, 1, 0, 1, 0, 0], finished: false },
-      { name: "🧘 Stretch", color: "cyan", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
+      {
+        name: "💧 Drink Water",
+        color: "blue",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🚶 Take a Walk",
+        color: "green",
+        days: [1, 0, 1, 0, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🧘 Stretch",
+        color: "cyan",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
     ];
   } else if (level === "medium") {
     templateHabits = [
-      { name: "💪 Exercise", color: "red", days: [1, 0, 1, 0, 1, 0, 0], finished: false },
-      { name: "📚 Read 20min", color: "yellow", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
-      { name: "🧘‍♂️ Meditate", color: "violet", days: [1, 1, 0, 1, 1, 0, 0], finished: false },
-      { name: "🍎 No Snacks", color: "orange", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
+      {
+        name: "💪 Exercise",
+        color: "red",
+        days: [1, 0, 1, 0, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "📚 Read 20min",
+        color: "yellow",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🧘‍♂️ Meditate",
+        color: "violet",
+        days: [1, 1, 0, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🍎 No Snacks",
+        color: "orange",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
     ];
   } else if (level === "advanced") {
     templateHabits = [
-      { name: "🏃 5km Run", color: "orange", days: [1, 0, 1, 0, 1, 0, 0], finished: false },
-      { name: "💻 Code 1hr", color: "cyan", days: [1, 1, 1, 0, 1, 0, 0], finished: false },
-      { name: "🥗 Meal Prep", color: "pink", days: [0, 0, 0, 0, 0, 1, 0], finished: false },
-      { name: "📔 Journal", color: "violet", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
-      { name: "🚿 Cold Shower", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
+      {
+        name: "🏃 5km Run",
+        color: "orange",
+        days: [1, 0, 1, 0, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "💻 Code 1hr",
+        color: "cyan",
+        days: [1, 1, 1, 0, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🥗 Meal Prep",
+        color: "pink",
+        days: [0, 0, 0, 0, 0, 1, 0],
+        finished: false,
+      },
+      {
+        name: "📔 Journal",
+        color: "violet",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🚿 Cold Shower",
+        color: "blue",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
     ];
   } else if (level === "nutrition") {
     templateHabits = [
-      { name: "🍎 Eat Fruit", color: "green", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "🥗 Eat Vegetables", color: "lime", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "🍳 Healthy Breakfast", color: "yellow", days: [1, 1, 1, 1, 1, 1, 1], finished: false },
-      { name: "🍗 Protein Intake", color: "red", days: [1, 1, 1, 1, 1, 1, 1], finished: false }
+      {
+        name: "🍎 Eat Fruit",
+        color: "green",
+        days: [1, 1, 1, 1, 1, 1, 1],
+        finished: false,
+      },
+      {
+        name: "🥗 Eat Vegetables",
+        color: "lime",
+        days: [1, 1, 1, 1, 1, 1, 1],
+        finished: false,
+      },
+      {
+        name: "🍳 Healthy Breakfast",
+        color: "yellow",
+        days: [1, 1, 1, 1, 1, 1, 1],
+        finished: false,
+      },
+      {
+        name: "🍗 Protein Intake",
+        color: "red",
+        days: [1, 1, 1, 1, 1, 1, 1],
+        finished: false,
+      },
     ];
   } else if (level === "studying") {
     templateHabits = [
-      { name: "📚 Study 1hr", color: "blue", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
-      { name: "📝 Review Notes", color: "cyan", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
-      { name: "📖 Read Textbook", color: "indigo", days: [1, 1, 1, 1, 1, 0, 0], finished: false },
-      { name: "🧠 Practice Problems", color: "violet", days: [1, 1, 1, 1, 1, 0, 0], finished: false }
+      {
+        name: "📚 Study 1hr",
+        color: "blue",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "📝 Review Notes",
+        color: "cyan",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "📖 Read Textbook",
+        color: "indigo",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🧠 Practice Problems",
+        color: "violet",
+        days: [1, 1, 1, 1, 1, 0, 0],
+        finished: false,
+      },
     ];
   } else if (level === "sports") {
     templateHabits = [
-      { name: "⚽ Soccer Practice", color: "green", days: [1, 0, 1, 0, 0, 0, 0], finished: false },
-      { name: "🏋️‍♂️ Gym Workout", color: "red", days: [0, 1, 0, 1, 0, 1, 0], finished: false }, 
-      { name: "🏊‍♂️ Swimming", color: "blue", days: [1, 0, 0, 1, 0, 0, 0], finished: false },
-      { name: "🚴‍♂️ Cycling", color: "yellow", days: [0, 1, 0, 0, 1, 0, 0], finished: false }
+      {
+        name: "⚽ Soccer Practice",
+        color: "green",
+        days: [1, 0, 1, 0, 0, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🏋️‍♂️ Gym Workout",
+        color: "red",
+        days: [0, 1, 0, 1, 0, 1, 0],
+        finished: false,
+      },
+      {
+        name: "🏊‍♂️ Swimming",
+        color: "blue",
+        days: [1, 0, 0, 1, 0, 0, 0],
+        finished: false,
+      },
+      {
+        name: "🚴‍♂️ Cycling",
+        color: "yellow",
+        days: [0, 1, 0, 0, 1, 0, 0],
+        finished: false,
+      },
     ];
   }
 
@@ -283,7 +423,8 @@ let habitsList = [
 
 // Load habits from local storage or use default list
 const localStorageHabits = JSON.parse(localStorage.getItem("habits"));
-let habits = localStorage.getItem("habits") !== null ? localStorageHabits : habitsList;
+let habits =
+  localStorage.getItem("habits") !== null ? localStorageHabits : habitsList;
 
 // Add existing habits to DOM
 function addHabits() {
@@ -295,7 +436,10 @@ function addHabits() {
 
 // Style calendar days
 function styleCalendar() {
-  const days = [...document.querySelectorAll('.cal-day')].slice(0, current_day - 1);
+  const days = [...document.querySelectorAll(".cal-day")].slice(
+    0,
+    current_day - 1
+  );
   days.forEach((item) => {
     item.classList.add("past");
   });
@@ -347,7 +491,7 @@ function addHabitDOM(habit) {
   `;
 
   habitlist.appendChild(habitRow);
-  
+
   // Add context menu handlers for the new habit
   const contextBtn = habitRow.querySelector(".habit-context-btn");
   contextBtn.addEventListener("click", handleContextMenu);
@@ -362,13 +506,15 @@ function handleContextMenu(e) {
   e.stopPropagation();
   const habitRow = e.target.closest(".habit");
   const contextMenu = document.querySelector(".context-menu");
-  
+
   contextMenu.style.display = "flex";
   contextMenu.style.top = `${e.clientY + window.scrollY}px`;
-  contextMenu.style.left = `${e.clientX + window.scrollX}px`;
+  contextMenu.style.left = `${e.clientX + window.scrollY}px`;
 
   const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
-  const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+  const deleteItem = contextMenu.querySelector(
+    ".context-menu-item:nth-child(2)"
+  );
 
   editItem.onclick = () => {
     showEditModal(habitRow);
@@ -399,19 +545,19 @@ function addHabitDaysDOM() {
 }
 
 // Sound effects
-const clickSound = new Audio('raw/main/assets/ding.mp3');
+const clickSound = new Audio("raw/main/assets/ding.mp3");
 clickSound.volume = 0.2; // Not too loud, just a subtle tick
 
-const applauseSound = new Audio('raw/main/assets/applause.mp3');
+const applauseSound = new Audio("raw/main/assets/applause.mp3");
 applauseSound.volume = 0.5; // A bit louder for the applause
 
-const applauseCheerSound = new Audio('raw/main/assets/applause-cheer.mp3');
+const applauseCheerSound = new Audio("raw/main/assets/applause-cheer.mp3");
 applauseCheerSound.volume = 0.5; // Even louder for the cheer
 
-const discoFunkSound = new Audio('raw/main/assets/disco-funk.mp3');
+const discoFunkSound = new Audio("raw/main/assets/disco-funk.mp3");
 discoFunkSound.volume = 0.5; // Funky disco sound
 
-const bongoDrumSound = new Audio('raw/main/assets/bongo-and-drum.mp3');
+const bongoDrumSound = new Audio("raw/main/assets/bongo-and-drum.mp3");
 bongoDrumSound.volume = 0.5; // Bongo and drum sound
 
 let currentAnimationTimeout = null;
@@ -437,7 +583,7 @@ function updateHabits() {
   const habit_title = this.parentNode.dataset.hTitle;
   const habit_container = this.parentNode;
   // Fix: Account for both context menu button and habit name columns
-  const day_index = [...this.parentNode.children].indexOf(this) - 2; 
+  const day_index = [...this.parentNode.children].indexOf(this) - 2;
   let habit_state = false;
 
   if (this.dataset.hDay == 0) {
@@ -451,14 +597,14 @@ function updateHabits() {
     clickSound.play();
   } else {
     this.dataset.hDay = 0;
-    spanElement.classList.remove('executed');
+    spanElement.classList.remove("executed");
   }
 
   // Check all days excluding context menu and name columns
   const days = [...habit_container.children].slice(2);
-  const hasPlannedDays = days.some(day => day.dataset.hDay == 1);
-  const hasExecutedDays = days.some(day => day.dataset.hDay == 2);
-  
+  const hasPlannedDays = days.some((day) => day.dataset.hDay == 1);
+  const hasExecutedDays = days.some((day) => day.dataset.hDay == 2);
+
   if (!hasPlannedDays && hasExecutedDays && this.dataset.hDay != 0) {
     habit_state = true;
     habit_container.classList.add("finished");
@@ -470,34 +616,34 @@ function updateHabits() {
   updateHabitsData(habit_title, day_index, this.dataset.hDay, habit_state);
 
   // Check if all habits are finished and no checkmark was set to 0
-  const allFinished = habits.every(habit => habit.finished);
+  const allFinished = habits.every((habit) => habit.finished);
   if (allFinished) {
     stopCurrentEffect();
     const effects = [
       { sound: applauseCheerSound, animation: "ecstatic", duration: 8000 },
       { sound: discoFunkSound, animation: "disco", duration: 15000 },
-      { sound: bongoDrumSound, animation: "banana", duration: 15000 }
+      { sound: bongoDrumSound, animation: "banana", duration: 15000 },
     ];
     const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-    
-    randomEffect.sound.currentTime = 0;  // Reset sound in case it's still playing
-    randomEffect.sound.play();  // Play the random sound
+
+    randomEffect.sound.currentTime = 0; // Reset sound in case it's still playing
+    randomEffect.sound.play(); // Play the random sound
     currentSound = randomEffect.sound;
-    document.body.classList.add(randomEffect.animation);  // Add random animation to body
+    document.body.classList.add(randomEffect.animation); // Add random animation to body
     currentAnimationTimeout = setTimeout(() => {
       document.body.classList.remove(randomEffect.animation);
       currentSound = null;
-    }, randomEffect.duration);  // Remove animation after specified duration
+    }, randomEffect.duration); // Remove animation after specified duration
   } else if (habit_state) {
     stopCurrentEffect();
-    applauseSound.currentTime = 0;  // Reset sound in case it's still playing
-    applauseSound.play();  // Play the applause sound
+    applauseSound.currentTime = 0; // Reset sound in case it's still playing
+    applauseSound.play(); // Play the applause sound
     currentSound = applauseSound;
-    habit_container.classList.add("celebrate");  // Add celebration animation
+    habit_container.classList.add("celebrate"); // Add celebration animation
     currentAnimationTimeout = setTimeout(() => {
       habit_container.classList.remove("celebrate");
       currentSound = null;
-    }, 15000);  // Remove animation after 15 seconds
+    }, 15000); // Remove animation after 15 seconds
   }
 }
 
@@ -522,12 +668,12 @@ function updateLocalStorage() {
 function showPrompt() {
   const promptContainer = document.getElementById("habit-prompt-container");
   promptContainer.style.display = "flex";
-  
+
   // Reset form
   habit_name.value = "";
-  habit_days.forEach(day => day.checked = false);
+  habit_days.forEach((day) => (day.checked = false));
   habit_colors[0].checked = true;
-  
+
   // Focus on input
   habit_name.focus();
 
@@ -571,7 +717,7 @@ function addHabit(e) {
       }
     });
 
-    let color = '';
+    let color = "";
     [...habit_colors].forEach((i) => {
       if (i.checked == true) {
         color = i.value;
@@ -702,8 +848,10 @@ darkModeToggle.addEventListener("click", () => {
 
 // Highlight the current day in the calendar
 const currentDayIndex = new Date().getDay();
-const calDays = document.querySelectorAll('.cal-day');
-calDays[currentDayIndex === 0 ? 6 : currentDayIndex - 1].classList.add('current-day');
+const calDays = document.querySelectorAll(".cal-day");
+calDays[currentDayIndex === 0 ? 6 : currentDayIndex - 1].classList.add(
+  "current-day"
+);
 
 // Handle Enter key press for modals
 function handleEnterKey(modal, confirmButton) {
@@ -713,6 +861,33 @@ function handleEnterKey(modal, confirmButton) {
       confirmButton.click();
     }
   });
+}
+
+// Edit habit modal function - moved outside DOMContentLoaded for global access
+function showEditModal(habitRow) {
+  const editModal = document.getElementById("edit-modal");
+  const editForm = document.getElementById("edit-form");
+  const editNameInput = document.getElementById("edit-name");
+  const editColorsContainer = document.getElementById("edit-colors");
+
+  const habitName = habitRow.querySelector(".habit-name h3").textContent;
+  const habitColor = habitRow.classList[1];
+
+  editNameInput.value = habitName;
+  editColorsContainer.innerHTML = colors
+    .map(
+      (color) => `
+    <label class="color-btn">
+      <input type="radio" name="edit-color" value="${color}" ${
+        color === habitColor ? "checked" : ""
+      }>
+      <span class="radio ${color}"></span>
+    </label>
+  `
+    )
+    .join("");
+
+  editModal.style.display = "flex";
 }
 
 // DOMContentLoaded event to initialize event listeners and context menu
@@ -742,7 +917,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Hide context menu when clicking outside
   document.addEventListener("click", (e) => {
-    if (!e.target.closest(".context-menu") && !e.target.closest(".habit-context-btn")) {
+    if (
+      !e.target.closest(".context-menu") &&
+      !e.target.closest(".habit-context-btn")
+    ) {
       contextMenu.style.display = "none";
     }
   });
@@ -757,8 +935,12 @@ document.addEventListener("DOMContentLoaded", () => {
       contextMenu.style.top = `${e.clientY + window.scrollY}px`;
       contextMenu.style.left = `${e.clientX + window.scrollY}px`;
 
-      const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
-      const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+      const editItem = contextMenu.querySelector(
+        ".context-menu-item:nth-child(1)"
+      );
+      const deleteItem = contextMenu.querySelector(
+        ".context-menu-item:nth-child(2)"
+      );
 
       editItem.onclick = () => {
         habitRow.querySelector(".habit-edit-button").click();
@@ -775,7 +957,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Attach context menu to habit buttons
-  document.querySelectorAll(".habit-context-btn").forEach(button => {
+  document.querySelectorAll(".habit-context-btn").forEach((button) => {
     button.addEventListener("click", (e) => {
       e.stopPropagation();
       const habitRow = e.target.closest(".habit");
@@ -784,8 +966,12 @@ document.addEventListener("DOMContentLoaded", () => {
       contextMenu.style.top = `${e.clientY + window.scrollY}px`;
       contextMenu.style.left = `${e.clientX + window.scrollY}px`;
 
-      const editItem = contextMenu.querySelector(".context-menu-item:nth-child(1)");
-      const deleteItem = contextMenu.querySelector(".context-menu-item:nth-child(2)");
+      const editItem = contextMenu.querySelector(
+        ".context-menu-item:nth-child(1)"
+      );
+      const deleteItem = contextMenu.querySelector(
+        ".context-menu-item:nth-child(2)"
+      );
 
       editItem.onclick = () => {
         showEditModal(habitRow);
@@ -801,33 +987,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show delete confirmation modal
   const showDeleteConfirmation = (habitRow) => {
-    const modal = document.getElementById('delete-modal');
-    const confirmBtn = document.getElementById('confirm-delete');
-    const cancelBtn = document.getElementById('cancel-delete');
+    const modal = document.getElementById("delete-modal");
+    const confirmBtn = document.getElementById("confirm-delete");
+    const cancelBtn = document.getElementById("cancel-delete");
 
-    modal.style.display = 'flex';
+    modal.style.display = "flex";
 
     const handleConfirm = () => {
       habitRow.remove();
       const nameHabit = habitRow.dataset.hTitle;
-      habits = habits.filter(habit => habit.name !== nameHabit);
+      habits = habits.filter((habit) => habit.name !== nameHabit);
       updateLocalStorage();
-      modal.style.display = 'none';
+      modal.style.display = "none";
       cleanup();
     };
 
     const handleCancel = () => {
-      modal.style.display = 'none';
+      modal.style.display = "none";
       cleanup();
     };
 
     const cleanup = () => {
-      confirmBtn.removeEventListener('click', handleConfirm);
-      cancelBtn.removeEventListener('click', handleCancel);
+      confirmBtn.removeEventListener("click", handleConfirm);
+      cancelBtn.removeEventListener("click", handleCancel);
     };
 
-    confirmBtn.addEventListener('click', handleConfirm);
-    cancelBtn.addEventListener('click', handleCancel);
+    confirmBtn.addEventListener("click", handleConfirm);
+    cancelBtn.addEventListener("click", handleCancel);
   };
 
   // Edit habit modal elements
@@ -840,22 +1026,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentEditHabit = null;
 
-  // Show edit modal
-  function showEditModal(habitRow) {
+  // Show edit modal (just update currentEditHabit)
+  const originalShowEditModal = showEditModal;
+  showEditModal = function (habitRow) {
     currentEditHabit = habitRow;
-    const habitName = habitRow.querySelector(".habit-name h3").textContent;
-    const habitColor = habitRow.classList[1];
-
-    editNameInput.value = habitName;
-    editColorsContainer.innerHTML = colors.map(color => `
-      <label class="color-btn">
-        <input type="radio" name="edit-color" value="${color}" ${color === habitColor ? 'checked' : ''}>
-        <span class="radio ${color}"></span>
-      </label>
-    `).join('');
-
-    editModal.style.display = "flex";
-  }
+    originalShowEditModal(habitRow);
+  };
 
   // Cancel edit
   cancelEditButton.addEventListener("click", (e) => {
@@ -867,15 +1043,18 @@ document.addEventListener("DOMContentLoaded", () => {
   saveEditButton.addEventListener("click", (e) => {
     e.preventDefault();
     const newName = editNameInput.value.trim();
-    const newColor = editForm.querySelector('input[name="edit-color"]:checked').value;
+    const newColor = editForm.querySelector(
+      'input[name="edit-color"]:checked'
+    ).value;
 
     if (newName && newColor) {
-      const oldName = currentEditHabit.querySelector(".habit-name h3").textContent;
+      const oldName =
+        currentEditHabit.querySelector(".habit-name h3").textContent;
       currentEditHabit.querySelector(".habit-name h3").textContent = newName;
       currentEditHabit.classList.remove(currentEditHabit.classList[1]);
       currentEditHabit.classList.add(newColor);
 
-      const habitIndex = habits.findIndex(habit => habit.name === oldName);
+      const habitIndex = habits.findIndex((habit) => habit.name === oldName);
       habits[habitIndex].name = newName;
       habits[habitIndex].color = newColor;
 
@@ -887,16 +1066,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle Enter key for modals
-  const resetModal = document.getElementById('reset-modal');
-  const confirmResetButton = document.getElementById('confirm-reset');
+  const resetModal = document.getElementById("reset-modal");
+  const confirmResetButton = document.getElementById("confirm-reset");
   handleEnterKey(resetModal, confirmResetButton);
 
-  const templateModal = document.getElementById('template-modal');
-  const confirmTemplateButton = document.getElementById('confirm-template');
+  const templateModal = document.getElementById("template-modal");
+  const confirmTemplateButton = document.getElementById("confirm-template");
   handleEnterKey(templateModal, confirmTemplateButton);
 
-  const deleteModal = document.getElementById('delete-modal');
-  const confirmDeleteButton = document.getElementById('confirm-delete');
+  const deleteModal = document.getElementById("delete-modal");
+  const confirmDeleteButton = document.getElementById("confirm-delete");
   handleEnterKey(deleteModal, confirmDeleteButton);
 
   handleEnterKey(helpModal, closeHelpButton);
