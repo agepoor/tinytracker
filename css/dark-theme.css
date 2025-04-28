@@ -1,0 +1,208 @@
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-main: var(--oc-gray-9);
+  --bg-card: var(--oc-gray-8);
+  --text-main: var(--oc-gray-1);
+  --text-muted: var(--oc-gray-4);
+  --border-color: var(--oc-gray-7);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+
+  /* Dark theme title */
+  h1.title {
+    color: var(--oc-yellow-5);
+  }
+
+  /* Dark theme specific table styles */
+  .habit-table tbody tr:hover {
+    background: var(--oc-gray-7);
+  }
+
+  .habit-table .habit.finished {
+    background-color: var(--oc-gray-7); /* Darker for dark mode */
+  }
+
+  .habit-table .habit.finished .habit-name,
+  .habit-table .habit.finished .habit-day {
+    color: var(--oc-gray-5);
+  }
+
+  .habit-prompt {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+  }
+
+  .github-corner svg {
+    fill: var(--oc-gray-7);
+    color: var(--bg-card);
+  }
+
+  .habit-table .habit-day span.executed i {
+    /* Better contrast in dark mode */
+    text-shadow: 0 0 1px var(--oc-gray-9);
+    filter: brightness(1.2);
+  }
+
+  .habit-table .habit.finished:hover {
+    background-color: var(--oc-gray-6); /* Dark hover */
+  }
+
+  .habit-table .habit.finished .habit-day span.executed i {
+    /* Slightly different treatment for dark mode */
+    opacity: 0.4;
+    filter: blur(1px) saturate(0.7) brightness(0.9);
+  }
+
+  /* Dark theme buttons */
+  .btn {
+    background-color: var(--oc-gray-8);
+    color: var(--oc-gray-0);
+    border-color: var(--oc-gray-6);
+  }
+
+  .btn:hover {
+    background-color: var(--oc-gray-7);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn.template-btn {
+    background-color: var(--oc-violet-8);
+    border-color: var(--oc-violet-6);
+    color: var(--oc-violet-0);
+  }
+
+  .btn.template-btn:hover {
+    background-color: var(--oc-violet-7);
+  }
+
+  .btn.template-btn.beginner {
+    background-color: var(--oc-green-8);
+    border-color: var(--oc-green-6);
+    color: var(--oc-green-0);
+  }
+
+  .btn.template-btn.beginner:hover {
+    background-color: var(--oc-green-7);
+  }
+
+  .btn.template-btn.medium {
+    background-color: var(--oc-yellow-8);
+    border-color: var(--oc-yellow-6);
+    color: var(--oc-yellow-0);
+  }
+
+  .btn.template-btn.medium:hover {
+    background-color: var(--oc-yellow-7);
+  }
+
+  .btn.template-btn.advanced {
+    background-color: var(--oc-red-8);
+    border-color: var(--oc-red-6);
+    color: var(--oc-red-0);
+  }
+
+  .btn.template-btn.advanced:hover {
+    background-color: var(--oc-red-7);
+  }
+
+  .btn.save-btn {
+    background-color: var(--oc-green-8);
+    border-color: var(--oc-green-6);
+    color: var(--oc-green-0);
+  }
+
+  .btn.save-btn:hover {
+    background-color: var(--oc-green-7);
+  }
+
+  .btn.reset-btn {
+    background-color: var(--oc-red-8);
+    border-color: var(--oc-red-6);
+    color: var(--oc-red-0);
+  }
+
+  .btn.reset-btn:hover {
+    background-color: var(--oc-red-7);
+  }
+
+  .btn.theme-btn {
+    background-color: var(--oc-yellow-8);
+    border-color: var(--oc-yellow-6);
+    color: var(--oc-yellow-0);
+  }
+
+  .btn.theme-btn:hover {
+    background-color: var(--oc-yellow-7);
+  }
+
+  .btn.close-btn:hover {
+    background-color: var(--oc-gray-7);
+    color: var(--oc-gray-0);
+  }
+
+  /* Dark theme form elements */
+  .days-picker label {
+    border-color: var(--oc-gray-6);
+  }
+
+  .days-picker input[type="checkbox"]:checked + label {
+    background: var(--oc-blue-8);
+    border-color: var(--oc-blue-8);
+  }
+
+  input[type="text"] {
+    border-color: var(--oc-gray-6);
+  }
+
+  input[type="text"]:focus {
+    border-color: var(--oc-blue-6);
+    box-shadow: 0 0 0 2px var(--oc-blue-8);
+  }
+
+  /* Dark theme modals */
+  .modal {
+    background: var(--oc-gray-8);
+    color: var(--oc-gray-1);
+  }
+
+  .modal h3 {
+    color: var(--oc-gray-1);
+  }
+
+  .modal p {
+    color: var(--oc-gray-4);
+  }
+
+  /* Dark theme context menu */
+  .context-menu {
+    background-color: var(--oc-gray-8);
+    border-color: var(--oc-gray-6);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .context-menu-item:hover {
+    background-color: var(--oc-gray-7);
+  }
+
+  /* Dark theme color picker */
+  #edit-colors .color-btn input[type="radio"]:checked + .radio {
+    border-color: var(--oc-gray-3);
+  }
+
+  /* Dark theme credits */
+  .creator {
+    text-shadow: 0 0 6px var(--oc-violet-5);
+    background: none;
+    border-top: 1px solid var(--oc-violet-2);
+  }
+
+  .creator .credits-text {
+    color: var(--oc-violet-2);
+  }
+
+  /* Calendar styles */
+  .cal-day.current-day {
+    background-color: var(--bg-main);
+    color: var(--oc-yellow-4);
+  }
+}

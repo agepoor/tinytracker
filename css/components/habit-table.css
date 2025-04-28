@@ -1,0 +1,541 @@
+.habit-table {
+  width: 100%;
+  table-layout: fixed; /* This ensures equal column widths */
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+  margin-bottom: 1rem;
+  background: transparent;
+  border-radius: 8px;
+}
+
+.habit-table th,
+.habit-table td {
+  border: none;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  width: 10%; /* Equal width for day columns */
+  position: relative;
+}
+
+.habit-table th:first-child,
+.habit-table td:first-child {
+  width: 5%; /* Adjusted width for context menu button */
+  text-align: center;
+  padding-left: 0.5rem;
+}
+
+.habit-table th:nth-child(2),
+.habit-table td:nth-child(2) {
+  width: 30%; /* More space for habit names */
+  text-align: left;
+  padding-left: 1.5rem;
+}
+
+.habit-table .habit-header,
+.habit-table td:first-child {
+  width: 30%; /* Changed from 23% to match the above change */
+  text-align: left;
+  padding-left: 1.5rem;
+  font-weight: 500;
+  border-radius: 12px 0 0 12px;
+}
+
+.habit-table td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+/* Remove any conflicting border styles */
+.habit-table .habit-name,
+.habit-table .habit-days,
+.habit-table tbody tr:last-child td,
+.habit-table thead th {
+  border: none;
+}
+
+.habit-table .habit-header,
+.habit-table td:first-child {
+  text-align: left;
+  padding-left: 1.5rem;
+  font-weight: 500;
+}
+
+.habit-table .cal-day {
+  color: var(--text-main);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.habit-table .cal-day.past {
+  color: var(--text-muted);
+}
+
+.cal-day.current-day {
+  background-color: var(--oc-gray-2);
+  color: var(--oc-gray-9);
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.habit-table tbody tr {
+  background: var(--bg-card);
+  color: var(--text-main);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.habit-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Update the finished state styles */
+.habit-table .habit.finished {
+  background-color: var(--oc-gray-2); /* Light default */
+}
+
+/* Update hover states for finished rows */
+.habit-table .habit.finished:hover {
+  background-color: var(--oc-gray-3); /* Light hover */
+}
+
+.habit-table .habit.finished .habit-name,
+.habit-table .habit.finished .habit-day {
+  color: var(--oc-gray-5);
+  text-decoration: line-through;
+  font-style: italic;
+}
+
+.habit-table .habit.finished .habit-day span.executed i {
+  /* Remove line-through from checkmarks */
+  text-decoration: none;
+  /* Add some transparency */
+  opacity: 0.7;
+  /* Keep the color but make it slightly muted */
+  filter: saturate(0.8);
+}
+
+.habit-table .habit-name {
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.habit-table .habit-day {
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.habit-table .habit-day.planned {
+  color: var(--text-muted);
+}
+
+.habit-table .habit-day.executed {
+  color: green;
+}
+
+.habit-table .habit-day:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.habit-table .habit-day span.executed i {
+  color: var(--habit-color); /* Use the original color instead of teal */
+  transform-origin: center;
+  display: inline-block;
+  animation: check-mark 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.habit-table .habit-day span i {
+  font-size: 1.1rem; /* Make checkmarks bigger */
+  font-weight: 900; /* Make them bolder */
+}
+
+/* Sortable styles */
+.habit-table tbody tr {
+  cursor: grab;
+}
+
+.habit-table tbody tr.sortable-ghost {
+  opacity: 0.4;
+  background-color: var(--oc-gray-2);
+}
+
+.habit-table tbody tr.sortable-drag {
+  opacity: 1;
+  background-color: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.habit-table tbody tr.sortable-chosen {
+  background-color: white;
+  cursor: grabbing;
+}
+
+.habit {
+  background: var(--bg-card);
+  position: relative;
+  line-height: 2rem;
+  margin: 0.4rem 0;
+  border-radius: 3px;
+  padding: 0.25rem 0;
+  box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
+    0 1px 3px 1px rgba(60, 64, 67, 0.16);
+}
+
+/* Habit colors */
+.habit.gray,
+.habit.red,
+.habit.pink,
+.habit.grape,
+.habit.violet,
+.habit.indigo,
+.habit.blue,
+.habit.cyan,
+.habit.teal,
+.habit.green,
+.habit.lime,
+.habit.yellow,
+.habit.orange {
+  --habit-color: inherit;
+  --habit-color-finished: inherit;
+}
+
+.habit.gray {
+  --habit-color: var(--oc-gray-7);
+  --habit-color-finished: var(--oc-gray-3);
+}
+
+.habit.red {
+  --habit-color: var(--oc-red-7);
+  --habit-color-finished: var(--oc-red-3);
+}
+
+.habit.pink {
+  --habit-color: var(--oc-pink-7);
+  --habit-color-finished: var(--oc-pink-3);
+}
+
+.habit.grape {
+  --habit-color: var(--oc-grape-7);
+  --habit-color-finished: var(--oc-grape-3);
+}
+
+.habit.violet {
+  --habit-color: var(--oc-violet-7);
+  --habit-color-finished: var(--oc-violet-3);
+}
+
+.habit.indigo {
+  --habit-color: var(--oc-indigo-7);
+  --habit-color-finished: var(--oc-indigo-3);
+}
+
+.habit.blue {
+  --habit-color: var(--oc-blue-7);
+  --habit-color-finished: var(--oc-blue-3);
+}
+
+.habit.cyan {
+  --habit-color: var(--oc-cyan-7);
+  --habit-color-finished: var(--oc-cyan-3);
+}
+
+.habit.teal {
+  --habit-color: var(--oc-teal-7);
+  --habit-color-finished: var(--oc-teal-3);
+}
+
+.habit.green {
+  --habit-color: var(--oc-green-7);
+  --habit-color-finished: var(--oc-green-3);
+}
+
+.habit.lime {
+  --habit-color: var(--oc-lime-7);
+  --habit-color-finished: var(--oc-lime-3);
+}
+
+.habit.yellow {
+  --habit-color: var(--oc-yellow-7);
+  --habit-color-finished: var(--oc-yellow-3);
+}
+
+.habit.orange {
+  --habit-color: var(--oc-orange-7);
+  --habit-color-finished: var(--oc-orange-3);
+}
+
+.habit.finished {
+  .habit-name,
+  .habit-days,
+  .habit-day > span.executed > i {
+    color: var(--habit-color-finished);
+    text-decoration: line-through;
+    font-style: italic;
+  }
+}
+
+.habit .habit-name,
+.habit .habit-days {
+  background: white;
+  border-color: lightgray;
+}
+
+.habit .habit-name,
+.habit .habit-days,
+.habit .habit-day > span.executed > i {
+  transition-duration: 1000ms;
+  color: var(--habit-color);
+}
+
+.habit .habit-delete {
+  -webkit-filter: opacity(0);
+  filter: opacity(0);
+  position: absolute;
+  right: -1.5rem;
+  cursor: pointer;
+  color: lightgray;
+  line-height: 2rem;
+}
+
+.habit .habit-delete:hover {
+  color: red;
+}
+
+.habit:hover > .habit-delete {
+  -webkit-filter: opacity(1);
+  filter: opacity(1);
+}
+
+.habit .habit-name {
+  background: transparent;
+  cursor: grab;
+  position: relative;
+  min-height: 3rem;
+  padding: 0.5rem 1rem;
+}
+
+.habit .habit-name:active {
+  cursor: grabbing;
+}
+
+.habit .habit-name h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-weight: 500;
+}
+
+.habit .habit-context-btn {
+  background: transparent;
+  border: none;
+  padding: 0.25rem;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0; /* Prevent button from shrinking */
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: all 0.2s ease;
+  color: var(--habit-color, #666);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit .habit-context-btn:hover,
+.habit .habit-context-btn.active {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.habit:hover .habit-context-btn {
+  opacity: 0.7;
+}
+
+.habit .habit-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-radius: 0 3px 3px 0;
+}
+
+.habit .habit-day {
+  background: transparent;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.habit .habit-day > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  color: transparent;
+}
+
+.habit .habit-day > span.planned {
+  color: silver;
+}
+
+.habit .habit-day > span i {
+  background-color: transparent;
+}
+
+.context-menu {
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  border-radius: 4px;
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.context-menu-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: background-color 0.2s ease;
+}
+
+.context-menu-item:hover {
+  background-color: var(--oc-gray-2);
+}
+
+@media screen and (max-width: 600px) {
+  .habit-name h3 {
+    font-size: 0.8rem;
+  }
+
+  .habit-day {
+    font-size: 0.7rem;
+  }
+}
+
+/* Habit Edit */
+@media (hover: none) {
+  .habit .habit-edit-button {
+    color: lightgray;
+  }
+  .habit .habit-delete {
+    color: pink;
+    -webkit-filter: opacity(1);
+    filter: opacity(1);
+  }
+}
+
+.habit:hover > .habit-edit-button {
+  color: lightgray;
+}
+
+.habit-edit-button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.habit-edit-button:hover {
+  color: var(--text-main);
+}
+
+.habit-edit-button {
+  background: transparent;
+  color: transparent;
+  position: absolute;
+  left: -1.8rem;
+  padding-right: 0.6rem;
+}
+
+.habit-edit-button.clicked {
+  z-index: 999;
+}
+
+.habit-edit-button.clicked > i {
+  background: rgba(211, 211, 211, 0.5);
+  color: #f5f5f5;
+  border-radius: 0.7rem;
+}
+
+.habit-edit-button.clicked > .habit-edit {
+  color: black;
+  background: white;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
+    0 1px 3px 1px rgba(60, 64, 67, 0.16);
+  box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.08),
+    0 1px 3px 1px rgba(60, 64, 67, 0.16);
+  border-radius: 3px;
+  visibility: visible;
+  -webkit-filter: opacity(1);
+  filter: opacity(1);
+}
+
+.habit-edit-button.clicked > .habit-edit h5 {
+  border-radius: 3px 3px 0 0;
+  text-transform: uppercase;
+  text-align: center;
+  background: darkslategray;
+  color: white;
+  margin: 0;
+}
+
+.habit-edit-button.clicked > .habit-edit #habit-edit-form {
+  max-width: 220px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.habit-edit-button.clicked > .habit-edit #habit-edit-form .form-control {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.habit-edit-button.clicked
+  > .habit-edit
+  #habit-edit-form
+  .form-control:last-child {
+  border-top: 1px solid #aecfcf;
+}
+
+.habit-edit-button i {
+  margin-right: 0.25rem;
+  padding: 0.2rem;
+}
+
+.habit-edit-button i:hover {
+  cursor: pointer;
+  color: gray;
+}
+
+.habit-new {
+  cursor: pointer;
+  color: var(--text-main);
+  background: var(--bg-card);
+  text-align: center;
+  line-height: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px var(--shadow-color);
+  margin: 1rem 0;
+}
+
+.habit-new:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  background-color: var(--bg-main);
+}

@@ -1,0 +1,33 @@
+/* Mobile media queries */
+@media screen and (max-width: 600px) {
+  .habit-prompt {
+    width: 90%;
+    left: 5%;
+  }
+}
+
+/* Screen size adjustments */
+@media screen and (max-width: 600px) {
+  .creator {
+    padding: 1rem;
+  }
+
+  .credits-container {
+    padding: 0.4rem 0.8rem;
+  }
+
+  .credits-text {
+    font-size: 0.8rem;
+  }
+
+  .bolt {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .github-corner > svg {
+    width: 50px;
+    height: 50px;
+  }
+}

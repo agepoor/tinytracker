@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Light theme (default) */
+  --bg-main: var(--oc-gray-1);
+  --bg-card: var(--oc-white);
+  --text-main: var(--oc-gray-9);
+  --text-muted: var(--oc-gray-6);
+  --border-color: var(--oc-gray-3);
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  margin: 0;
+  padding: 1rem;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  color: #1c7ed6; /* Bright blue colour */
+}
+
+h1.title {
+  color: var(--oc-blue-7);
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+  }
+}

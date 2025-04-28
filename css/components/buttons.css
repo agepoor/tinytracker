@@ -1,0 +1,160 @@
+/* Button Styles */
+.btn {
+  background-color: var(--oc-gray-0);
+  color: var(--oc-gray-7);
+  border: 1px solid var(--oc-gray-3);
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin: 0.5rem;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Action Buttons */
+.btn.save-btn,
+.btn.add-btn {
+  background-color: var(--oc-teal-2);
+  border-color: var(--oc-teal-5);
+  color: var(--oc-teal-9);
+}
+
+.btn.save-btn:hover,
+.btn.add-btn:hover {
+  background-color: var(--oc-teal-3);
+}
+
+/* Warning Button */
+.btn.reset-btn {
+  background-color: var(--oc-red-2);
+  border-color: var(--oc-red-5);
+  color: var(--oc-red-9);
+}
+
+.btn.reset-btn:hover {
+  background-color: var(--oc-red-3);
+}
+
+/* Template Buttons */
+.btn.template-btn {
+  background-color: var(--oc-violet-1);
+  border-color: var(--oc-violet-3);
+  color: var(--oc-violet-9);
+}
+
+.btn.template-btn:hover {
+  background-color: var(--oc-violet-2);
+}
+
+/* Template Buttons with difficulty colors */
+.btn.template-btn.beginner {
+  background-color: var(--oc-green-1);
+  border-color: var(--oc-green-3);
+  color: var(--oc-green-9);
+}
+
+.btn.template-btn.beginner:hover {
+  background-color: var(--oc-green-2);
+}
+
+.btn.template-btn.medium {
+  background-color: var(--oc-yellow-1);
+  border-color: var(--oc-yellow-3);
+  color: var(--oc-yellow-9);
+}
+
+.btn.template-btn.medium:hover {
+  background-color: var(--oc-yellow-2);
+}
+
+.btn.template-btn.advanced {
+  background-color: var(--oc-red-1);
+  border-color: var(--oc-red-3);
+  color: var(--oc-red-9);
+}
+
+.btn.template-btn.advanced:hover {
+  background-color: var(--oc-red-2);
+}
+
+/* Utility Buttons */
+.btn.close-btn {
+  background-color: transparent;
+  border-color: var(--oc-gray-3);
+  color: var(--oc-gray-6);
+}
+
+.btn.close-btn:hover {
+  background-color: var(--oc-gray-1);
+  color: var(--oc-gray-7);
+}
+
+/* Import Button */
+.btn.import-btn {
+  background-color: var(--oc-blue-2);
+  border-color: var(--oc-blue-5);
+  color: var(--oc-blue-9);
+}
+
+.btn.import-btn:hover {
+  background-color: var(--oc-blue-3);
+}
+
+.btn.help-btn {
+  background-color: var(--oc-blue-2);
+  border-color: var(--oc-blue-5);
+  color: var(--oc-blue-9);
+}
+
+.btn.help-btn:hover {
+  background-color: var(--oc-blue-3);
+}
+
+/* Theme toggle button */
+.btn.theme-btn {
+  background-color: var(--oc-violet-1);
+  border-color: var(--oc-violet-3);
+  color: var(--oc-violet-9);
+}
+
+.btn.theme-btn:hover {
+  background-color: var(--oc-violet-2);
+}
+
+/* Icon in buttons */
+.btn i {
+  margin-right: 0.5rem;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 600px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+@media (max-width: 500px) {
+  .github-corner > svg {
+    width: 50px;
+    height: 50px;
+  }
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
+}

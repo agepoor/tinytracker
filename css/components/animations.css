@@ -1,0 +1,128 @@
+@keyframes check-mark {
+  0% {
+    transform: scale(0.5) rotate(-15deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes subtle-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes subtle-glow {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@keyframes celebrate {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.habit.finished.celebrate {
+  animation: celebrate 0.5s ease-in-out;
+}
+
+@keyframes ecstatic {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+}
+
+body.ecstatic {
+  animation: ecstatic 1s ease-in-out infinite;
+}
+
+@keyframes disco {
+  0%,
+  100% {
+    background-color: var(--oc-blue-0);
+  }
+  25% {
+    background-color: var(--oc-pink-0);
+  }
+  50% {
+    background-color: var(--oc-yellow-0);
+  }
+  75% {
+    background-color: var(--oc-green-0);
+  }
+}
+
+body.disco {
+  animation: disco 0.5s linear infinite;
+}
+
+@keyframes banana {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+body.banana {
+  background: url("raw/main/assets/banana.gif") center center / cover no-repeat;
+  animation: banana 1s ease-in-out forwards;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}

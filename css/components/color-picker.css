@@ -1,0 +1,292 @@
+#habit-prompt .color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+/* Color picker styles */
+.color-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.color-picker label {
+  display: inline-block;
+  height: 2rem;
+  width: 120px;
+}
+
+.color-picker label input {
+  float: left;
+  margin-right: 1rem;
+}
+
+/* Color classes */
+.color-picker .gray {
+  color: #495057;
+}
+.color-picker .red {
+  color: #f03e3e;
+}
+.color-picker .pink {
+  color: #d6336c;
+}
+.color-picker .grape {
+  color: #ae3ec9;
+}
+.color-picker .violet {
+  color: #7048e8;
+}
+.color-picker .indigo {
+  color: #4263eb;
+}
+.color-picker .blue {
+  color: #1c7ed6;
+}
+.color-picker .cyan {
+  color: #1098ad;
+}
+.color-picker .teal {
+  color: #0ca678;
+}
+.color-picker .green {
+  color: #37b24d;
+}
+.color-picker .lime {
+  color: #74b816;
+}
+.color-picker .yellow {
+  color: #f59f00;
+}
+.color-picker .orange {
+  color: #f76707;
+}
+
+/* Edit Modal Color Picker */
+#edit-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+#edit-colors .color-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+#edit-colors .color-btn:hover {
+  transform: scale(1.1);
+}
+
+#edit-colors .color-btn input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+#edit-colors .color-btn .radio {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  border: 2px solid transparent;
+}
+
+#edit-colors .color-btn input[type="radio"]:checked + .radio {
+  border-color: var(--oc-gray-7);
+  box-shadow: 0 0 0 2px var(--bg-card) inset;
+}
+
+/* Color classes for the radio buttons */
+#edit-colors .radio.gray {
+  background-color: var(--oc-gray-7);
+}
+#edit-colors .radio.red {
+  background-color: var(--oc-red-7);
+}
+#edit-colors .radio.pink {
+  background-color: var(--oc-pink-7);
+}
+#edit-colors .radio.grape {
+  background-color: var(--oc-grape-7);
+}
+#edit-colors .radio.violet {
+  background-color: var(--oc-violet-7);
+}
+#edit-colors .radio.indigo {
+  background-color: var(--oc-indigo-7);
+}
+#edit-colors .radio.blue {
+  background-color: var(--oc-blue-7);
+}
+#edit-colors .radio.cyan {
+  background-color: var(--oc-cyan-7);
+}
+#edit-colors .radio.teal {
+  background-color: var(--oc-teal-7);
+}
+#edit-colors .radio.green {
+  background-color: var(--oc-green-7);
+}
+#edit-colors .radio.lime {
+  background-color: var(--oc-lime-7);
+}
+#edit-colors .radio.yellow {
+  background-color: var(--oc-yellow-7);
+}
+#edit-colors .radio.orange {
+  background-color: var(--oc-orange-7);
+}
+
+.clrs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.color-btn input {
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+}
+
+.color-btn label {
+  width: 20px;
+  height: 20px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.gray {
+  background: #606a73;
+}
+.color-btn [type="radio"]:checked + label.gray {
+  background: #32373b;
+  border: 4px solid #606a73;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.red {
+  background: #f46d6d;
+}
+.color-btn [type="radio"]:checked + label.red {
+  background: #e91212;
+  border: 4px solid #f46d6d;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.pink {
+  background: #df5d8b;
+}
+.color-btn [type="radio"]:checked + label.pink {
+  background: #b22456;
+  border: 4px solid #df5d8b;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.grape {
+  background: #bf66d4;
+}
+.color-btn [type="radio"]:checked + label.grape {
+  background: #8e2ea6;
+  border: 4px solid #bf66d4;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.violet {
+  background: #9375ee;
+}
+.color-btn [type="radio"]:checked + label.violet {
+  background: #4d1ce1;
+  border: 4px solid #9375ee;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.indigo {
+  background: #7089f0;
+}
+.color-btn [type="radio"]:checked + label.indigo {
+  background: #183fe2;
+  border: 4px solid #7089f0;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.blue {
+  background: #3f97e6;
+}
+.color-btn [type="radio"]:checked + label.blue {
+  background: #1663a9;
+  border: 4px solid #3f97e6;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.cyan {
+  background: #14c1dc;
+}
+.color-btn [type="radio"]:checked + label.cyan {
+  background: #0c6f7e;
+  border: 4px solid #14c1dc;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.teal {
+  background: #0fd69a;
+}
+.color-btn [type="radio"]:checked + label.teal {
+  background: #097656;
+  border: 4px solid #0fd69a;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.green {
+  background: #52ca68;
+}
+.color-btn [type="radio"]:checked + label.green {
+  background: #2b8b3c;
+  border: 4px solid #52ca68;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.lime {
+  background: #90e41d;
+}
+.color-btn [type="radio"]:checked + label.lime {
+  background: #578a11;
+  border: 4px solid #90e41d;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.yellow {
+  background: #ffb429;
+}
+.color-btn [type="radio"]:checked + label.yellow {
+  background: #c27e00;
+  border: 4px solid #ffb429;
+}
+
+.color-btn [type="radio"]:not(:checked) + label.orange {
+  background: #f98538;
+}
+.color-btn [type="radio"]:checked + label.orange {
+  background: #c55206;
+  border: 4px solid #f98538;
+}
